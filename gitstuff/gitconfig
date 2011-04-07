@@ -1,0 +1,15 @@
+[core]
+  excludesfile = ~/.gitignore
+  quotepath = false
+[difftool]
+  prompt = false
+[branch]
+  autosetuprebase = always
+[Alias]
+  ci = commit
+  co = checkout
+  d = diff
+  dt = difftool
+  pl = pull -v --log --stat
+  pp = !git pull -v --log --stat && git push
+  st = status
