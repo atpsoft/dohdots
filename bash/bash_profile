@@ -1,3 +1,3 @@
 if [ "${BASHRCLOADED}" != "true" ]; then
-  [ -r ~/.bashrc ] && . ~/.bashrc
+  [ -r ~/.bashrc ] && source ~/.bashrc
 fi
