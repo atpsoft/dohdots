@@ -1,0 +1,26 @@
+# in conjunction with code in .bash_profile, attempts to standardize dot file loading for the different kinds of shell contexts (login, non-interactive, etc.)
+export BASHRCLOADED=true
+
+### this section of commands is to make losing command history less likely
+# limits the number of lines in the history file
+export HISTFILESIZE=100000
+# number of commands to remember
+export HISTSIZE=10000
+# before the prompt is displayed, any history being buffered is flushed
+export PROMPT_COMMAND="history -a"
+# history is appended to the file, rather than overwriting (for multiple shell instances running at same time)
+shopt -s histappend
+
+# typically used for bug fix branches
+function gitmergecommit
+{
+  git cherry-pick $1
+  git reset --soft HEAD^
+  git commit -m "merge of commit $1"
+}
+
+# hook for user,platform,whatever additions
+[[ -s "$HOME/.bashrc.local" ]] && source "$HOME/.bashrc.local"
+
+# this loads RVM
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
