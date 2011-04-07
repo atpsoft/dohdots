@@ -1,0 +1,7 @@
+[user]
+  name = Makani Mason
+  email = mhmstuff@gmail.com
+[difftool "Kaleidoscope"]
+  cmd = ksdiff-wrapper git \"$LOCAL\" \"$REMOTE\"
+[diff]
+  tool = Kaleidoscope
