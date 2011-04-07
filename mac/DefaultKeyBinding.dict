@@ -1,0 +1,13 @@
+{
+  "^o" = "moveWordForward:";
+  "^u" = "moveWordBackward:";
+  "^j" = {
+    "^a" = "moveToBeginningOfDocument:";
+    "^e" = "moveToEndOfDocument:";
+  };
+  "^ " = "setMark:";
+  "^w" = "deleteToMark:";
+  "^x" = {
+    " " = "selectToMark:";
+  };
+}

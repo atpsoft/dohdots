@@ -1,0 +1,3 @@
+if [ "${BASHRCLOADED}" != "true" ]; then
+  [ -r ~/.bashrc ] && . ~/.bashrc
+fi
