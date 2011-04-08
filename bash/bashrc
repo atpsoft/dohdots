@@ -19,8 +19,11 @@ function gitmergecommit
   git commit -m "merge of commit $1"
 }
 
-# hook for user,platform,whatever additions
+# hook for platform,whatever additions
 [[ -s "$HOME/.bashrc.local" ]] && source "$HOME/.bashrc.local"
+
+# hook for user specific additions
+[[ -s "$HOME/.bashrc.user" ]] && source "$HOME/.bashrc.user"
 
 # this loads RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
