@@ -4,7 +4,7 @@ export BASHRCLOADED=true
 ### this section of commands is to make losing command history less likely
 # limits the number of lines in the history file
 # you can use this script: http://dohdots.eegore.com/archive_bash_history.rb
-# if you want to archive them above 100k lines
+# if you want to archive them above 100k lines -- cron it up weekly or something
 export HISTFILESIZE=100000
 # number of commands to remember in ram
 export HISTSIZE=10000
