@@ -3,8 +3,10 @@ export BASHRCLOADED=true
 
 ### this section of commands is to make losing command history less likely
 # limits the number of lines in the history file
+# you can use this script: http://dohdots.eegore.com/archive_bash_history.rb
+# if you want to archive them above 100k lines
 export HISTFILESIZE=100000
-# number of commands to remember
+# number of commands to remember in ram
 export HISTSIZE=10000
 # before the prompt is displayed, any history being buffered is flushed
 export PROMPT_COMMAND="history -a"
