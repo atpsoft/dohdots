@@ -1,0 +1,793 @@
+;;to get keystrokes, can record macro, name-last-kbd-macro
+;;then insert-kbd-macro and get
+;;(fset 'joe
+;;   "\C-f\C-f=n\C-?\C-?=\C-?-\C-n\C-a")
+;;or might get below -- dunno why difference
+;;(fset 'joe
+;;   [?\C-f ?\C-f ?= ?n backspace backspace ?= backspace ?- ?\C-n ?\C-a])
+;;
+;;then call
+;;(execute-kbd-macro 'joe)
+;;to execute it -- can do any global-set-key you can do with the M-x global-set-key this way
+;;just record the M-x global-set-key that you use
+;;
+
+(fset 'switch-buffers
+   [?\C-x ?b return ?\C-x ?o ?\C-x ?b return ?\C-x ?o ?\C-x ?b return])
+
+(global-font-lock-mode 't)
+;;(load "/home/kem/elisp/emacs-ror.el")
+;;(require 'mmm-mode)
+
+(fset 'kem-insert-trace
+   "\C-m\C-p\C-iSystem.out.println(\"foohere\C-[xinsert  ne   \C-m\");\C-n\C-a")
+
+(fset 'kem-get-sql-from-log
+   "\C-@\C-ssending query: \C-f\C-b\C-w\C-e;\C-n\C-a")
+
+;;format for file on remote system
+;;/remote-user@remote-ip:/remote/dir/structure
+
+;;prevent annoying splash screen / startup help screen
+(setq inhibit-startup-message t)
+
+;; create a shell automatically unless a file was passed in to open
+(add-hook 'shell-mode-hook 'my-shell-prefs)
+
+(defun my-mode-key-bindings()
+  (local-unset-key "\C-j")
+  (local-set-key "\C-j\C-j" 'shell)
+  (local-set-key "\C-j\C-l\C-s" 'set-working-log)
+  (local-set-key "\C-j\C-l\C-l" 'goto-working-log)
+  (local-set-key "\C-j\C-b\C-s" 'set-working-file)
+  (local-set-key "\C-j\C-b\C-b" 'goto-working-file)
+  (local-set-key "\C-j\C-k" 'kill-word)
+  )
+
+(defun replace-ctrl-m()
+	(interactive)
+	(replace-string (char-to-string ?\r) (make-string 1 ?\n));; char-to-string does the same thing as make-string 1
+)
+
+(defun delete-trailing-replace-ctrl-m-save-buffer()
+	(interactive)
+	(save-excursion
+		(beginning-of-buffer)
+		(replace-ctrl-m)
+		(delete-trailing-save-buffer)
+		))
+
+
+(defun delete-trailing-save-buffer()
+  (interactive)
+  (if (not (eq major-mode 'nothing-mode))
+		(delete-trailing-whitespace))
+  (save-buffer)
+  )
+
+(defun nothing-mode()
+  (interactive)
+  (setq major-mode 'nothing-mode))
+
+(defun my-shell-prefs()
+  (local-unset-key "\M-s");; 'switch-buffers)
+	(local-set-key "\C-a" 'comint-bol)
+	(local-set-key "\C-c\C-c" 'kemint-interrupt-subjob)
+	(local-set-key "\C-c\C-z" 'kemint-stop-subjob)
+	(local-set-key "\C-j\C-p" 'comint-previous-input)
+	(local-set-key "\C-j\C-n" 'comint-next-input)
+;add password-filter so you can't see passwords typed all the time
+	(add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
+	(setq shell-dirstack-query "echo $PWD")
+	(setq comint-input-ring-size 1000)
+	(setq foreground-color "LightSlateBlue")
+	(add-to-list 'exec-path "/usr/share/emacs/site-lisp/")
+	(setq comint-input-ring (make-ring comint-input-ring-size))
+;;	(process-send-string "*shell*" ". ~/.bash_profile\n")
+;;	(process-send-string "*shell*" (concat "path = " exec-path))
+	(sleep-for 1.0)
+	(let ((path (shell-copy-environment-variable "PATH")))
+	  (if (eq (type-of path) 'string)
+	      (setq exec-path (parse-colon-path path))))
+;;   (add-hook 'comint-input-filter-functions 'shell-directory-tracker)
+	)
+
+(defun windows-system-p()
+  (interactive)
+  (or (eq system-type 'windows-nt)
+		(eq system-type 'ms-dos)))
+
+(setq-default inhibit-eol-conversion (not (windows-system-p)))
+
+(if (and (< (length command-line-args) 2) (not (windows-system-p)))
+	 (progn
+		(shell)
+		)
+ )
+(setq display-hourglass nil)
+;(add-to-list 'load-path "/usr/share/tramp/lisp/")
+;(add-to-list 'load-path "/usr/share/tramp/contrib/")
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/elib/")
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/")
+;;(add-to-list 'load-path "/usr/share/emacs/site-lisp/speedbar-0.14beta4/")
+;;(add-to-list 'load-path "/usr/share/emacs/site-lisp/eieio-0.17/")
+;;(add-to-list 'load-path "/usr/share/emacs/site-lisp/semantic-1.4.4/")
+(autoload 'speedbar-frame-mode "speedbar" "Popup a speedbar frame" t)
+(autoload 'speedbar-get-focus "speedbar" "Jump to speedbar frame" t)
+;;(setq semantic-load-turn-everything-on t)
+;;(require 'semantic-load)
+
+(defun try-complete-abbrev (old)
+  (if (expand-abbrev) t nil))
+(setq hippie-expand-try-functions-list
+   '(try-complete-abbrev
+     try-complete-file-name
+     try-expand-dabbrev))
+(add-to-list 'load-path "~/.emacs.d/elisp/")
+(add-to-list 'load-path "/usr/share/xemacs/xemacs-packages/lisp/elib/")
+
+(if (> emacs-major-version 21)
+	 (load "~/.emacs.d/emacs-ruby.el")
+  )
+(load "~/.emacs.d/elisp/kem-string.el")
+(load "~/.emacs.d/elisp/css-mode.el")
+(load "~/.emacs.d/elisp/php-mode.el")
+(load "~/.emacs.d/elisp/uniquify.el")
+
+(setq css-mode-indent-depth 3)
+
+;(require 'tramp)
+(require 'string)
+(setenv "LD_LIBRARY_PATH" "/usr/local/lib;/usr/lib")
+(keyboard-translate ?\C-h ?\C-?)  ; translate `C-h' to DEL
+;;(keyboard-translate ?\C-? ?\C-h)  ; translate DEL to `C-h'.
+(global-set-key "\C-x\C-l" 'goto-line)
+(global-set-key "\C-u" 'backward-word)
+(global-set-key "\C-o" 'forward-word)
+;; this is Ctrl -
+(global-set-key [?\C--] 'call-last-kbd-macro)
+(global-set-key "\C-\\" 'kem-insert-trace)
+(global-set-key "\C-n" 'next-line)
+(global-set-key "\C-x\C-s" 'delete-trailing-replace-ctrl-m-save-buffer)
+(global-unset-key "\C-j")
+(global-set-key "\C-j\C-d\C-p" 'goto-matching-paren)
+(global-set-key "\C-j\C-i" 'kem-insert-trace)
+(global-set-key "\C-j\C-j" 'shell)
+(global-set-key "\C-j\C-t" 'open-my-todo)
+(global-set-key "\C-j\C-x\C-f" 'quickload-file)
+(global-set-key "\C-j\C-f" 'open-doc-at-point)
+(global-set-key "\C-j\C-c" 'open-current-working-doc)
+(global-set-key "\C-j\C-l\C-d" 'goto-working-directory)
+(global-set-key "\C-j\C-l\C-x" 'make-current-buffers-file-executable)
+(global-set-key "\C-j\C-l\C-s" 'set-working-log)
+(global-set-key "\C-j\C-l\C-l" 'goto-working-log)
+(global-set-key "\C-j\C-l\C-c" 'set-working-document)
+(global-set-key "\C-j\C-b\C-s" 'set-working-file)
+(global-set-key "\C-j\C-b\C-b" 'goto-working-file)
+(global-set-key "\C-j\C-b\C-j" 'switch-java-html)
+(global-set-key "\C-j\C-m\C-e" 'edit-migrations)
+;;(global-set-key "\C-j\C-s" 'switch-header-cpp)
+(global-set-key "\C-j\C-k" 'kill-word)
+(global-set-key "\C-j\C-o" 'open-grepped-file-on-line)
+(global-set-key "\C-x\C-c" 'save-buffers-kill-emacs-dont-ask-about-processes)
+(global-set-key "\C-x\g" 'goto-shell)
+(global-set-key "\M-s" 'switch-buffers)
+
+(global-set-key "\C-j\C-a" 'beginning-of-buffer)
+(global-set-key "\C-j\C-e" 'end-of-buffer)
+(global-set-key "\C-j\C-r" 'replace-string)
+
+; Description stuff - help editing and getting
+(global-set-key "\C-j\C-d\C-b" 'describe-bindings)
+(global-set-key "\C-j\C-d\C-f" 'describe-function)
+(global-set-key "\C-j\C-d\C-k" 'describe-key)
+(global-set-key "\C-j\C-d\C-v" 'describe-variable)
+(global-set-key "\C-j\C-v" 'scroll-down)
+(global-set-key "\C-j\C-d\C-a" 'apropos)
+(global-set-key [?\C-\;] 'kem-dabbrev-completion)
+
+
+; Misc
+(global-set-key "\C-j\C-w" 'copy-region-as-kill)
+(global-set-key "\M-e" 'copy-region-as-kill); is forward-sentence by default
+(global-unset-key "\M-w")
+
+;; display time and load average in mode lines
+(display-time)
+
+;;if file size is > 100MB, don't display line number -- can use what-line function if you want anyway
+(setq line-number-display-limit 100000000)
+
+(setq default-major-mode 'text-mode)
+(setq default-tab-width 3)
+(setq line-number-mode 't)
+(setq indent-tabs-mode nil)
+(setq column-number-mode 't)
+;; set truncate-* variables to nil so man pages wrap properly in half-width windows
+(setq truncate-lines nil)
+(setq truncate-partial-width-windows nil)
+
+(setq history-length 10000);; 't is infinite command history but doesn't seem to work
+
+;; this doesn't work -- but would be nice to have something like this work
+;;(setq icon-title-format '(multiple-frames "%b"
+;;														("" user-login-name "@" system-name)))
+;(iconify-frame)
+
+(setq default-abbrev-mode t)
+(setq dabbrev-case-replace nil)
+
+;hide the toolbar
+(defun hide-toolbar()
+  (if (and (fboundp 'tool-bar-mode) tool-bar-mode)
+		(tool-bar-mode)
+	 )
+  )
+
+(defun kem-dabbrev-completion()
+  (interactive)
+  (let ((current-pos (current-column)))
+	 (dabbrev-completion)
+	 (if (not (= current-pos (current-column)))
+		  (if (get-buffer " *Completions*")
+				(kill-buffer (get-buffer " *Completions*"))))))
+
+
+;;  (setq toolbar-visible-p nil)
+;;  (setq initial-toolbar-spec nil)
+;;  (restore-initial-toolbar)
+;;)
+
+;;only hide it if those functions are valid
+(if (>= emacs-major-version 21)
+	 (hide-toolbar)
+  )
+
+(load-file "~/.emacs.d/elisp/paren.el")
+(load-file "~/.emacs.d/elisp/fff.el")
+
+;; This is how emacs tells the file type by the file suffix.
+(setq auto-mode-alist
+      (append '(("\\.tst$" . c++-mode))
+	      auto-mode-alist))
+
+(add-hook 'emacs-startup-hook 'my-startup-prefs)
+(add-hook 'c-mode-hook 'my-c-prefs)
+(add-hook 'c++-mode-hook 'my-c-prefs)
+(add-hook 'objc-mode-hook 'my-c-prefs)
+(add-hook 'perl-mode-hook 'my-c-prefs)
+(add-hook 'lisp-interaction-mode-hook 'my-mode-key-bindings)
+(add-hook 'help-mode-hook 'my-mode-key-bindings)
+(add-hook 'Man-mode-hook 'my-man-mode-prefs)
+
+(defun my-man-mode-prefs()
+	(setq truncate-lines nil)
+	)
+
+(add-hook 'java-mode-hook 'my-java-prefs)
+
+(defun mac-system-p()
+	(interactive)
+  (eq system-type 'darwin)
+  )
+
+(defun my-startup-prefs()
+	(maximize-frame-startup 't);; true specifies to autosave the position of the window
+	)
+
+(defun my-common-prefs()
+  (c-set-offset 'statement-cont 0)
+  (c-set-offset 'substatement-open 0)
+  (setq tab-width default-tab-width)
+  (setq c-basic-offset tab-width)
+  (setq indent-tabs-mode nil)
+  (font-lock-mode 't)
+  (abbrev-mode 't)
+	)
+
+(my-common-prefs)
+
+(defun my-c-prefs()
+  (my-common-prefs)
+	)
+
+(defun my-java-prefs()
+  (my-common-prefs)
+	)
+
+(defvar kem-got-password-prompt nil)
+
+(defun ssh-start()
+  (interactive)
+  (process-send-string "*shell*" "eval `ssh-agent -s`\nssh-add\n")
+  )
+
+;; maybe fix these up a little and bind them to keys
+(defun begin-get-keystrokes ()
+  (interactive)
+  (start-kbd-macro nil))
+
+(defun end-get-keystrokes ()
+  (interactive)
+  (progn
+	 (end-kbd-macro)
+	 (name-last-kbd-macro 'smoe-kbd-macro)
+	 (insert-kbd-macro 'smoe-kbd-macro)))
+
+(defun kemint-interrupt-subjob ()
+  (interactive)
+  (process-send-string nil "\C-c"))
+
+(defun kemint-stop-subjob ()
+  (interactive)
+  (process-send-string nil "\C-z"))
+
+(defun switch-between-two-file-types(type1 type2)
+  (let* ((buffer-filename (buffer-file-name))
+			(found-type1 (string-match (concat "\\." type1) buffer-filename))
+			(found-type2 (string-match (concat "\\." type2) buffer-filename)))
+	 (if found-type1
+		  (find-file (string-replace-match (concat "\\." type1) buffer-filename (concat "." type2))))
+	 (if found-type2
+		  (find-file (string-replace-match (concat "\\." type2) buffer-filename (concat "." type1))))))
+
+(defun switch-header-cpp()
+  (interactive)
+  (switch-between-two-file-types "h" "cpp"))
+
+(defun switch-java-html()
+  (interactive)
+  (interactive)
+  (switch-between-two-file-types "html" "java"))
+
+(defvar kem-working-file 'nil "the current working file to switch to with c-jc-bc-b")
+(defvar kem-working-log 'nil "the current working logfile to switch to with c-jc-lc-l")
+
+(defun set-working-file()
+  (interactive)
+  (setq kem-working-file (buffer-file-name)))
+
+(defun goto-working-file()
+  (interactive)
+  (if kem-working-file
+		(find-file kem-working-file)))
+
+(defun set-working-log()
+  (interactive)
+  (setq kem-working-log (buffer-file-name)))
+
+(defun set-working-document()
+  (interactive)
+  (setq current-working-doc (buffer-file-name)))
+
+(defun goto-working-log()
+  (interactive)
+  (if kem-working-log
+		(find-file kem-working-log)))
+
+(defun goto-working-directory()
+  (interactive)
+  (if kem-working-directory
+		(let ((cmd (concat "cd " kem-working-directory "\n"))
+				(start-mark (point)))
+;;change the current directory, but don't display it (displays just the result of the command, which looks funny)
+		  (process-send-string nil cmd)
+		  (sleep-for 0.01)
+		  (delete-region start-mark (point))
+;;update the internal pointer
+		  (shell-cd kem-working-directory)
+;;now display the cd
+		  (process-send-string nil (concat "echo cd " kem-working-directory "\n"))
+		  )))
+
+(defun get-current-dir ()
+  (interactive)
+  (progn
+	 (end-of-buffer)
+	 (setq end-point (point))
+	 (beginning-of-line)
+	 (setq beg-point (point))
+	 (end-of-buffer)
+    (let* ((ds (buffer-substring beg-point end-point)))
+		(setq ds (substring ds (+ 1 (string-match ":" ds))))
+		(setq ds (substring ds 0 (string-match ">" ds) ))
+;;		(traceinf ds)
+		ds
+		)))
+
+;;write this to wait for something to get spit out to the shell, return when something has come back
+;;(defun wait-for-next-input (max-wait-time)
+
+(defun kemint-watch-for-password-login (string)
+  "Prompt in the minibuffer for password and send without echoing.
+This function uses `send-invisible' to read and send a password to the buffer's
+process if STRING contains a password prompt defined by
+`comint-password-prompt-regexp'.
+
+This function could be in the list `comint-output-filter-functions'."
+  (if (string-match comint-password-prompt-regexp string)
+		(progn
+		  (send-invisible nil)
+;;the next input means we got the password
+		  (setq kem-got-password-prompt 't))
+	 (if kem-got-password-prompt
+		  (progn
+			 (finish-login-to-old-prod)
+			 (setq kem-got-password-prompt nil)
+			 ))))
+
+(defun traceinf(string)
+  (progn
+	 (setq saved-buffer (current-buffer))
+	 (set-buffer "*scratch*")
+	 (insert (prin1-to-string string))
+	 (insert "\n")
+	 (set-buffer saved-buffer)))
+
+(defvar kems-trace-number 0
+	"*trace number for next 'here' trace -- used by insert-here-trace")
+
+(defvar kems-inc-number 0
+	"*next inc-number for use with get-next-inc-number function")
+(defvar kems-inc-amount 1
+	"*used by get-next-inc-number as increment value")
+(defvar kems-round-amount 100
+	"*used by get-next-inc number -- value to round to (look at code)")
+(defvar kems-inc-number-type 0
+	"*used by get-next-inc-number -- if 0 then it's an integer, if 1 then float")
+
+
+(defun get-next-inc-number()
+	(interactive)
+	(progn
+	  (setq orig-number kems-inc-number)
+	  (setq local-inc-number (* (+ kems-inc-amount kems-inc-number) kems-round-amount))
+	  (setq kems-inc-number (/
+									 (if (= kems-inc-number-type 0)
+										  (round local-inc-number)
+										(fround local-inc-number))
+									 kems-round-amount))
+	  (int-to-string orig-number)
+	  )
+	)
+
+(defun insert-next-inc-number()
+	(interactive)
+	(progn
+		(insert (get-next-inc-number))
+		)
+	)
+
+(defun print-plist()
+	(interactive)
+	(apropos-describe-plist 'title)
+	)
+
+
+;; AIX puts the name of the person being su'd to in front of the prompt.
+;; kinit prints a prompt like `Password for devnull@GNU.ORG: '.
+;; ksu prints a prompt like `Kerberos password for devnull/root@GNU.ORG: '.
+;; ssh-add prints a prompt like `Enter passphrase: '.
+;; Some implementations of passwd use "Password (again)" as the 2nd prompt.
+(customize-set-variable 'comint-password-prompt-regexp
+  "\\(\\([Oo]ld \\|[Nn]ew \\|Kerberos \\|'s \\|login \\|CVS \\|\\[sudo] \\|^\\)\
+[Pp]assword\\( (again)\\)?\\|pass phrase\\|Enter password\\|Enter passphrase\\|Repeat passphrase\\)\
+\\(?: for [^:]+\\)?:\\s *\\'")
+
+(setq my-todo-directory "~/todo/")
+(defun my-todo-file() (concat my-todo-directory (user-login-name) "-main.txt"))
+
+(defun open-my-todo()
+  (interactive)
+  (find-file (my-todo-file))
+  (todo-mode)
+)
+
+(string-match ".*\\.txt$" "smoe..txt")
+
+(defun open-doc-at-point()
+  (interactive)
+  (let ((curword (current-whitespace-delimited-word))
+		  (todo-file nil))
+	 (setq curword (after curword "file:"))
+	 (if (not (or (equal (substring curword 0 1) "~")
+					  (equal (substring curword 0 1) "/")))
+		  (progn
+			 (setq todo-file t)
+			 (setq curword (concat my-todo-directory curword))))
+	 (if (string-match ".*\\.txt$" curword)
+		  (setq todo-file t))
+	 (if (directory-p curword)
+		  (dired curword)
+		(progn
+		  (find-file curword)
+		  (if todo-file
+				(todo-mode)
+			 )
+		  )
+		)
+	 )
+  )
+
+(defvar current-working-doc "you-should-set-current-working-doc-to-some-value-ask-kem-for-instructions")
+
+(defun open-current-working-doc()
+  (interactive)
+  (progn
+	 (find-file (if (equal (substring current-working-doc 0 1) "/")
+						 current-working-doc
+					  (concat my-todo-directory current-working-doc)))
+	 (todo-mode)
+	 )
+  )
+
+
+
+(defun current-whitespace-delimited-word()
+  "Return the word point is on (or a nearby word) as a string.
+    differs from current-word in that it is whitespace only delimited
+    and doesn't have strict optional param"
+  (interactive)
+  (save-excursion
+    (let ((oldpoint (point)) (start (point)) (end (point)))
+      (skip-syntax-backward "^-") (setq start (point))
+      (goto-char oldpoint)
+      (skip-syntax-forward "^-") (setq end (point))
+      (if (and (eq start oldpoint) (eq end oldpoint))
+	  ;; Point is neither within nor adjacent to a word.
+	       (progn
+		 ;; Look for preceding word
+				(skip-syntax-backward "-")
+				(current-whitespace-delimited-word))
+		  (buffer-substring-no-properties start end)))))
+
+(define-derived-mode todo-mode text-mode "doc")
+
+(defvar todo-mode-heading-face 'todo-mode-heading-face
+  "Face name to use for headings")
+(defface todo-mode-heading-face
+  '((((class color) (background light))
+     :foreground "red")
+    (((class color) (background dark))
+     :foreground "yellow")
+    (t
+     :bold t))
+  "Face for highlighting headings in a doc."
+  :group 'docmode)
+
+
+(defvar todo-mode-link-face 'todo-mode-link-face
+  "Face name to use for links")
+(defface todo-mode-link-face
+  '((((class color) (background light))
+     :foreground "blue")
+    (((class color) (background dark))
+     :foreground "light-blue")
+    (t
+     :bold t))
+  "Face for highlighting links in a doc."
+  :group 'docmode)
+
+(defvar todo-mode-important-face 'todo-mode-important-face
+  "Face name to use for links")
+(defface todo-mode-important-face
+  '((((class color) (background light))
+     :foreground "darkgreen" :italic t)
+    (((class color) (background dark))
+     :foreground "light-green")
+    (t
+     :bold t))
+  "Face for highlighting important info in a doc."
+  :group 'docmode)
+
+;;(
+
+(defvar doc-font-lock-keywords
+  '(
+	 ("^!!.*$" . todo-mode-heading-face)
+	 ("^!\\*.*$" . todo-mode-important-face)
+	 ("file:\\S-+" . todo-mode-link-face)
+	 )
+  "Default expressions to highlight in doc mode.")
+
+;; c++-font-lock-keywords
+;; (("^#[ 	]*error[ 	]+\\(.+\\)" 1 font-lock-warning-face prepend)
+;;  ("^#[ 	]*\\(import\\|include\\)[ 	]*\\(<[^>\"\n]*>?\\)" 2 font-lock-string-face)
+;;  ("^#[ 	]*define[ 	]+\\(\\sw+\\)(" 1 font-lock-function-name-face)
+;;  ("^#[ 	]*\\(elif\\|if\\)\\>"
+;;   ("\\<\\(defined\\)\\>[ 	]*(?\\(\\sw+\\)?" nil nil
+;; 	(1 font-lock-builtin-face)
+;; 	(2 font-lock-variable-name-face nil t)))
+;;  ("^#[ 	]*\\(define\\|e\\(?:l\\(?:if\\|se\\)\\|ndif\\|rror\\)\\|file\\|i\\(?:f\\(?:n?def\\)?\\|nclude\\)\\|line\\|pragma\\|undef\\)\\>[ 	!]*\\(\\sw+\\)?"
+;;   (1 font-lock-builtin-face)
+;;   (6 font-lock-variable-name-face nil t))
+;;  ("^\\(\\sw+\\)\\>\\([ 	]*<\\([^>\n]+\\)[ 	*&]*>\\)?\\([ 	]*::[ 	*~]*\\(\\sw+\\)\\)*[ 	]*("
+;;   (1
+;; 	(if
+;; 		 (or
+;; 		  (match-beginning 2)
+;; 		  (match-beginning 4))
+;; 		 font-lock-type-face font-lock-function-name-face))
+;;   (3 font-lock-type-face nil t)
+;;   (5 font-lock-function-name-face nil t)))
+
+(add-hook 'todo-mode-hook
+			 (function (lambda ()
+							 (make-local-variable 'font-lock-defaults)
+							 (setq font-lock-defaults '(doc-font-lock-keywords t))
+							 (turn-on-font-lock)
+							 (local-set-key "\C-j\C-i" 'commit-docs)
+							 )))
+
+(defun commit-docs (comment)
+  (interactive "sCVS comment: \n")
+  (progn
+	 (shell-command (concat "cvs commit -m \"" comment "\" " (buffer-file-name)))
+	 )
+  )
+
+(put 'downcase-region 'disabled nil)
+
+(defun directory-p(dir)
+  (let ((attrs (file-attributes dir)))
+	 (equal t (car attrs))))
+(setq kem-working-directory "~")
+
+
+
+(put 'upcase-region 'disabled nil)
+(setq visible-bell t)
+;; make region visible -- also makes replace-string work on the region
+(setq transient-mark-mode t)
+
+
+(defun assign-frame-name()
+  (let ((system-name (if (mac-system-p) "mac" "linux"))
+		  (user-name (if (equal (user-login-name) "root") "root_" "")))
+	 (set-frame-name (concat system-name "_" user-name "emacs"))))
+
+(assign-frame-name)
+
+;;returns true if the frame was activated
+(defun activate-x11(apptitle)
+  (interactive "sApplication title: \n")
+  (setq process-result (call-process "/usr/local/bin/xwit" nil nil nil "-pop" "-focus" "-names" apptitle))
+  (equal process-result 0)
+  )
+
+;; i'm keeping this in, possibly useful for logging into other machines, getting emacs windows open on them
+(defun linux-ip() "example.com")
+(defun host-ip() "192.168.1.8")
+
+(defun activate-mac-root-emacs()
+  (interactive)
+  (if (not (activate-x11 "mac_root_emacs"))
+		(progn
+		  (start-process "mac-root-emacs" nil "ssh" "-o" "VerifyHostKeyDNS no" (concat "root@" (host-ip)) "/usr/local/bin/emacs" "-d" (concat (host-ip) ":0.0"))
+;;		  (sleep-for 3.0)
+;;		  (activate-x11 "mac_root_emacs")
+		  )))
+
+(defun activate-mac-emacs()
+  (interactive)
+  (if (not (activate-x11 "mac_emacs"))
+		(progn
+		  (start-process "mac-emacs" nil "ssh" "-o" "VerifyHostKeyDNS no" (concat (host-username) "@" (host-ip)) "/usr/local/bin/emacs" "-d" (concat (host-ip) ":0.0"))
+;;		  (sleep-for 3.0)
+;;		  (activate-x11 "mac_emacs")
+		  )))
+
+(defun activate-linux-root-emacs()
+  (interactive)
+  (if (not (activate-x11 "linux_root_emacs"))
+		(progn
+		  (start-process "linux-root-emacs" nil "ssh" "-o" "VerifyHostKeyDNS no" (concat "root@" (linux-ip)) "/usr/local/bin/emacs" "-d" (concat (host-ip) ":0.0"))
+;;		  (sleep-for 3.0)
+;;		  (activate-x11 "linux_root_emacs")
+		  )))
+
+(defun activate-linux-emacs()
+  (interactive)
+  (if (not (activate-x11 "linux_emacs"))
+		(progn
+		  (start-process "linux-emacs" nil "ssh" "-o" "VerifyHostKeyDNS no" (concat "dev@" (linux-ip)) "/usr/local/bin/emacs" "-d" (concat (host-ip) ":0.0") "-ms" "DarkBlue")
+;;		  (sleep-for 3.0)
+;;		  (activate-x11 "linux_emacs")
+		  )))
+
+
+(global-set-key "\C-j\C-s\C-e\C-e" 'activate-mac-emacs)
+(global-set-key "\C-j\C-s\C-e\C-r" 'activate-mac-root-emacs)
+(global-set-key "\C-j\C-s\C-l\C-e" 'activate-linux-emacs)
+(global-set-key "\C-j\C-s\C-l\C-r" 'activate-linux-root-emacs)
+;(call-process "/usr/local/bin/xwit" nil nil nil "-pop" "-focus" "-names" "mac_root_emacs")
+;(call-process "/usr/bin/sudo" nil nil nil "-pop" "-focus" "-names" "mac_root_emacs")
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(column-number-mode t)
+ '(display-time-mode t)
+ '(line-move-visual nil)
+ '(show-paren-mode nil)
+ '(transient-mark-mode t))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+
+;;ignore case set for quickload files
+(setq completion-ignore-case t)
+
+(setq save-abbrevs 'silently)
+
+(defun make-current-buffers-file-executable()
+  (interactive)
+  (call-process "chmod" nil nil nil "a+x" buffer-file-name)
+  )
+
+(load "~/.emacs.d/elisp/kem-file-util.el")
+(load "~/.emacs.d/elisp/kem-frame-util.el")
+(load "~/.emacs.d/elisp/kem-shell-util.el")
+(load "~/.emacs.d/elisp/kem-csv-util.el")
+(load "~/.emacs.d/elisp/kem-doh-util.el")
+(load "~/.emacs.d/elisp/kem-bookmark-util.el")
+(load "~/.emacs.d/elisp/kem-bookmark-menu.el")
+(load "~/.emacs.d/elisp/kem-ring-bell.el")
+
+
+(defun execute-post-custom-load-stuff()
+  (message "about to execute post-custom-load-stuff")
+;;  (message (concat "quickload-paths-alist = " quickload-paths-alist))
+  (add-files-for-quickload-from-alist quickload-paths-alist)
+  )
+
+(defun save-buffers-kill-emacs-dont-ask-about-processes(&optional arg)
+  "Offer to save each buffer, then kill this Emacs process.
+With prefix arg, silently save all file-visiting buffers, then kill.
+Don't ask about killing processes -- just kill them."
+  (interactive "P")
+  (dolist (process (process-list))
+	 (process-kill-without-query process))
+  (save-buffers-kill-emacs arg))
+
+;; load ~/.emacs.login  (e.g. ~/.emacs.kem) if it exists
+(let ((file1 "~/.emacs.user")
+			(file2 "~/.emacs.local"))
+  (message "loading .emacs.user and .emacs.local")
+	(let ((exists1 (file-exists-p file1))
+				(exists2 (file-exists-p file2)))
+		(if (or exists1 exists2)
+				(progn
+					(if exists1
+							(load file1))
+					(if exists2
+							(load file2))
+					(execute-post-custom-load-stuff)
+					))))
+
+;; file for machine specific customization
+(setq frame-file "~/.emacs.local.frame")
+(if (file-exists-p frame-file)
+		(load frame-file))
+
+;; emacs 23 carbon disabled my command key as my meta key, this puts it back the way I had it
+;; also changes the cursor color to black
+(if (and (eq emacs-major-version 23) (mac-system-p))
+		(progn
+			(set-cursor-color 'black)
+			(setq mac-option-key-is-meta nil)
+			(setq mac-command-key-is-meta t)
+			(setq mac-command-modifier 'meta)
+			(setq mac-option-modifier nil)))
+
+(define-key global-map [ns-drag-file] 'my-ns-open-files)
+(defun my-ns-open-files ()
+ "Open files in the list `ns-input-file'."
+ (interactive)
+ (mapc 'find-file ns-input-file)
+ (setq ns-input-file nil))
+

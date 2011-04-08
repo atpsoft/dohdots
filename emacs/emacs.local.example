@@ -1,0 +1,6 @@
+;; to use the quickload stuff (c-j c-x c-f) -- you need to have something like this set up in your .emacs.local
+(setq quickload-paths-alist
+		(list (cons "/Users/kem/work/src/main/java" ".java$")
+				(cons "/Users/kem/personal/src/main" ".rb$")
+				(cons "/Users/kem/personal/src/main" ".html$")
+				))

@@ -1,0 +1,16 @@
+(setq go-fullscreen t)
+(setq enable_ruby_pabbrev -1)
+(setq enable_ruby_abbrev -1)
+(setq current-working-doc "kem-main.txt")
+(defun host-username() "kem")
+(setq default-tab-width 2)
+(global-set-key "\C-x\C-s" 'delete-trailing-replace-ctrl-m-save-buffer)
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(font-lock-string-face ((((class color) (min-colors 88) (background light)) (:foreground "orange4"))))
+ '(font-lock-type-face ((((class color) (min-colors 88) (background light)) (:foreground "ForestGreen"))))
+ '(font-lock-variable-name-face ((((class color) (min-colors 88) (background light)) (:foreground "SeaGreen")))))
+(setq grepped-file-keep-current-window nil)
