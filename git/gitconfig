@@ -13,3 +13,4 @@
   pl = pull -v --log --stat
   pp = !git pull -v --log --stat && git push
   st = status
+  unci = reset --soft HEAD^
