@@ -21,6 +21,16 @@ function gitmergecommit
   git commit -m "merge of commit $1"
 }
 
+# recursive grep, ignoring vcs data, log files, preferences, etc.
+function fl {
+ grep -rnI --exclude-dir=.svn --exclude-dir=.git --exclude-dir=.metadata --exclude=i18n-dump.sql --exclude=*.log --exclude=jquery*.js --exclude=jwplayer.js --exclude=swfobject.js --exclude=iftables.sql --exclude-dir=target --exclude=*~ --exclude-dir=WEB-INF --exclude-dir=actionscriptResources "$@" .
+}
+
+# same as fl, but only list the filenames
+function ff {
+ fl -l "$@"
+}
+
 # hook for platform,whatever additions
 [[ -s "$HOME/.bashrc.local" ]] && source "$HOME/.bashrc.local"
 

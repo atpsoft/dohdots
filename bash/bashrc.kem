@@ -1,6 +1,6 @@
 export VISUAL=emacs
 export PAGER=cat
-			 
+
 #note: $* expands to $1 $2 $3
 #for functions
 #while $@ expands to "$1 $2 $3 ..."
@@ -13,7 +13,7 @@ PS1="\w \$(parse_git_branch)\$ "
 
 alias cl='create_database.rb -z'
 
-# use this to go to a dev directory 
+# use this to go to a dev directory
 function cdd {
 		cd ~/dev
 		if [ $# -gt 0 ]
@@ -64,15 +64,3 @@ function gitchanged
 {
 		git diff --name-status $1^..$1 | cut -f2
 }
-
-#find in non-ignore files, recursively
-function fl {
- grep -rnI --exclude-dir=.svn --exclude-dir=.git --exclude-dir=.metadata --exclude=i18n-dump.sql --exclude=*.log --exclude=jquery*.js --exclude=jwplayer.js --exclude=swfobject.js --exclude=iftables.sql --exclude-dir=target --exclude=*~ --exclude-dir=WEB-INF --exclude-dir=actionscriptResources "$@" .
-}
-
-#find, but just list the filenames it's found in
-function ff {
- fl -l "$@"
-}
-
-
