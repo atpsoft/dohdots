@@ -37,5 +37,8 @@ function ff {
 # hook for user specific additions
 [[ -s "$HOME/.bashrc.user" ]] && source "$HOME/.bashrc.user"
 
+# hook for platform,whatever additions
+[[ -s "$HOME/.bashrc.local" ]] && source "$HOME/.bashrc.local"
+
 # this loads RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
