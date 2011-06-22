@@ -191,7 +191,7 @@
 (global-set-key "\C-j\C-w" 'copy-region-as-kill)
 (global-set-key "\M-e" 'copy-region-as-kill); is forward-sentence by default
 (global-unset-key "\M-w")
-
+(defalias 'insert-eval 'eval-print-last-sexp)
 ;; display time and load average in mode lines
 (display-time)
 
