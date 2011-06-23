@@ -1,0 +1,9 @@
+alias ll='ls -la'
+alias grep='grep -i'
+
+function parse_git_branch {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo "("${ref#refs/heads/}")"
+}
+
+PS1="\H: \w \$(parse_git_branch)\$ "
