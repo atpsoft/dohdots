@@ -3,6 +3,7 @@
 *.log
 *.log
 *~
+*.#*
 .gitk-tmp*
 .classpath
 .metadata
