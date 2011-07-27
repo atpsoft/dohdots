@@ -199,7 +199,7 @@
 (setq line-number-display-limit 100000000)
 
 (setq default-major-mode 'text-mode)
-(setq default-tab-width 3)
+(setq default-tab-width 2)
 (setq line-number-mode 't)
 (setq indent-tabs-mode nil)
 (setq column-number-mode 't)
@@ -216,6 +216,7 @@
 
 (setq default-abbrev-mode t)
 (setq dabbrev-case-replace nil)
+(setq sh-indentation 2)
 
 ;hide the toolbar
 (defun hide-toolbar()
@@ -248,7 +249,7 @@
 
 ;; This is how emacs tells the file type by the file suffix.
 (setq auto-mode-alist
-      (append '(("\\.tst$" . c++-mode))
+      (append '(("\\.tst$" . c++-mode) ("\\.html$" . nxml-mode))
 	      auto-mode-alist))
 
 (add-hook 'emacs-startup-hook 'my-startup-prefs)
@@ -259,6 +260,17 @@
 (add-hook 'lisp-interaction-mode-hook 'my-mode-key-bindings)
 (add-hook 'help-mode-hook 'my-mode-key-bindings)
 (add-hook 'Man-mode-hook 'my-man-mode-prefs)
+(add-hook 'nxml-mode-hook 'my-nxml-prefs)
+(add-hook 'sh-mode-hook 'my-sh-prefs)
+
+(defun my-nxml-prefs()
+  (local-set-key "\C-j\C-n" 'nxml-forward-element)
+  (local-set-key "\C-j\C-p" 'nxml-backward-element)
+	)
+
+(defun my-sh-prefs()
+	(my-common-prefs)
+	)
 
 (defun my-man-mode-prefs()
 	(setq truncate-lines nil)
