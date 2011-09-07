@@ -31,6 +31,9 @@ function ff {
  fl -l "$@"
 }
 
+#for windows, harmless elsewhere
+export CYGWIN="binmode ntsec tty"
+
 # hook for platform,whatever additions
 [[ -s "$HOME/.bashrc.local" ]] && source "$HOME/.bashrc.local"
 
