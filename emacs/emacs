@@ -99,9 +99,10 @@
 		(eq system-type 'cygwin)))
 
 (if (windows-system-p)
-		(setq explicit-shell-file-name "C:/cygwin/bin/bash")
-	(setq explicit-bash-args "--login")
-	)
+    (progn
+      (setq explicit-shell-file-name "C:/cygwin/bin/bash")
+      (setq explicit-bash-args "--login"))
+  )
 
 (setq-default inhibit-eol-conversion (not (windows-system-p)))
 
