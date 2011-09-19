@@ -98,15 +98,21 @@
 		(eq system-type 'ms-dos)
 		(eq system-type 'cygwin)))
 
+(defun shell-system-p()
+  (interactive)
+  (or (not (windows-system-p))
+		(eq system-type 'cygwin)))
+
+
 (if (windows-system-p)
     (progn
-      (setq explicit-shell-file-name "C:/cygwin/bin/bash")
-      (setq explicit-bash-args "--login"))
-  )
+;;      (setq explicit-shell-file-name "C:/cygwin/bin/bash")
+;;      (setq explicit-bash-args "--login")
+  ))
 
 (setq-default inhibit-eol-conversion (not (windows-system-p)))
 
-(if (and (< (length command-line-args) 2) (not (windows-system-p)))
+(if (and (< (length command-line-args) 2) (shell-system-p))
 	 (progn
 		(shell)
 		)
