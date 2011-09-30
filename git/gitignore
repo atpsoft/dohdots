@@ -17,3 +17,6 @@ build
 classes
 classpath
 target
+Debug
+Release
+*.suo
