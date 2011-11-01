@@ -238,6 +238,16 @@
 	 )
   )
 
+(defun region-goto-start()
+	(interactive)
+	(goto-char (region-beginning))
+)
+
+(defun region-goto-end()
+	(interactive)
+	(goto-char (region-end))
+)
+
 (defun kem-dabbrev-completion()
   (interactive)
   (let ((current-pos (current-column)))
