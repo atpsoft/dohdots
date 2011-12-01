@@ -56,7 +56,7 @@ function gitdiffbranch
 
 function gitdiffcommit
 {
-		git difftool $1^..$1 $2
+		git difftool --extcmd=/usr/bin/chdiff $1^..$1 $2
 }
 
 #show the filenames that changed in a given commit
