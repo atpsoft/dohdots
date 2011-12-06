@@ -14,7 +14,6 @@
 .settings
 .svn
 auto-save-list
-build
 classpath
 target
 Debug
