@@ -59,6 +59,11 @@ function gitdiffcommit
 		git difftool --extcmd=/usr/bin/chdiff $1^..$1 $2
 }
 
+function cpsshkey
+{
+		cat ~/.ssh/id_dsa.pub | ssh $1 "cat >> ~/.ssh/authorized_keys"
+}
+
 #show the filenames that changed in a given commit
 function gitchanged
 {
