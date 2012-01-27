@@ -19,3 +19,4 @@ target
 Debug
 Release
 *.suo
+#*
