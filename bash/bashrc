@@ -34,9 +34,6 @@ function ff {
 #for windows, harmless elsewhere
 export CYGWIN="binmode ntsec tty"
 
-# hook for platform,whatever additions
-[[ -s "$HOME/.bashrc.local" ]] && source "$HOME/.bashrc.local"
-
 # hook for user specific additions
 [[ -s "$HOME/.bashrc.user" ]] && source "$HOME/.bashrc.user"
 
