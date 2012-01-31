@@ -1,7 +1,7 @@
 # in conjunction with code in .bash_profile, attempts to standardize dot file loading for the different kinds of shell contexts (login, non-interactive, etc.)
 export BASHRCLOADED=true
 
-### this section of commands is to make losing command history less likely
+### this section of commands is to make losing command history less likely, especially when having multiple terminals open
 # limits the number of lines in the history file
 # you can use this script: https://raw.github.com/atpsoft/dohdots/master/bash/archive_bash_history
 # if you want to archive them above 100k lines -- cron it up weekly or something
