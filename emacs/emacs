@@ -45,6 +45,7 @@
   )
 
 (setq ns-pop-up-frames nil)
+(setq default-tab-width 2)
 
 (defun replace-ctrl-m()
 	(interactive)
