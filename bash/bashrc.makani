@@ -1,3 +1,5 @@
+export PAGER=cat
+
 alias ll='ls -la'
 alias grep='grep -i'
 
