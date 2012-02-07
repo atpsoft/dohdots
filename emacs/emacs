@@ -44,6 +44,8 @@
   (local-set-key "\C-j\C-k" 'kill-word)
   )
 
+(setq ns-pop-up-frames nil)
+
 (defun replace-ctrl-m()
 	(interactive)
 	(replace-string (char-to-string ?\r) (make-string 1 ?\n));; char-to-string does the same thing as make-string 1
