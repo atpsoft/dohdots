@@ -162,7 +162,9 @@
   )
 (load "~/.emacs.d/elisp/kem-string.el")
 (load "~/.emacs.d/elisp/css-mode.el")
-(load "~/.emacs.d/elisp/php-mode.el")
+(if (> emacs-major-version 21)
+               (load "~/.emacs.d/elisp/php-mode.el")
+)
 (load "~/.emacs.d/elisp/uniquify.el")
 
 (setq css-mode-indent-depth 3)
