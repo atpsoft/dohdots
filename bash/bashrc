@@ -27,8 +27,13 @@ function gitmergecommit
 }
 
 # recursive grep, ignoring vcs data, log files, preferences, etc.
-function fl {
+function fc {
  grep -rnI --exclude-dir=.svn --exclude-dir=.git --exclude-dir=.metadata --exclude=i18n-dump.sql --exclude=*.log --exclude=jquery*.js --exclude=jwplayer.js --exclude=swfobject.js --exclude=iftables.sql --exclude-dir=target --exclude=*~ --exclude-dir=WEB-INF --exclude-dir=actionscriptResources "$@" .
+}
+
+# same as fc, but case insensitive
+function fl {
+ fc -i "$@"
 }
 
 # same as fl, but only list the filenames
