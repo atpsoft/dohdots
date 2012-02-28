@@ -2,10 +2,10 @@
 (global-unset-key "\C-x\m")
 
 ; replace ctrl-v with ctrl-dot for scroll-up and meta-v with ctrl-comma for scroll-down
-(global-unset-key "\C-v")
-(global-set-key (quote [67108910]) (quote scroll-up))
-(global-unset-key "\M-v")
-(global-set-key (quote [67108908]) (quote scroll-down))
+;(global-unset-key "\C-v")
+;(global-set-key (quote [67108910]) (quote scroll-up))
+;(global-unset-key "\M-v")
+;(global-set-key (quote [67108908]) (quote scroll-down))
 
 ; I like to have a single sequence binding for undo
 (global-set-key "\C-z" 'undo)
