@@ -62,10 +62,10 @@
 	(condition-case nil (scroll-down)
 		(beginning-of-buffer (goto-char (point-min)))))
 
-(global-set-key [?\C-,] 'doh-scroll-up)
-(global-set-key [?\C-.] 'doh-scroll-down)
-(global-set-key "\C-v" 'doh-scroll-up)
+(global-set-key [?\C-,] 'doh-scroll-down)
+(global-set-key [?\C-.] 'doh-scroll-up)
 (global-set-key "\M-v" 'doh-scroll-down)
+(global-set-key "\C-v" 'doh-scroll-up)
 
 (defun func-region (start end func)
   "run a function over the region between START and END in current buffer."
