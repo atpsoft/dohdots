@@ -52,6 +52,24 @@
 	(replace-string (char-to-string ?\r) (make-string 1 ?\n));; char-to-string does the same thing as make-string 1
 )
 
+(defun doh-scroll-down ()
+	(interactive)
+	(next-line
+	 (- (window-text-height)
+			next-screen-context-lines)))
+
+(defun doh-scroll-up ()
+	(interactive)
+	(previous-line
+	 (- (window-text-height)
+			next-screen-context-lines)))
+
+(global-set-key [?\C-,] 'doh-scroll-up)
+(global-set-key [?\C-.] 'doh-scroll-down)
+(global-set-key "\C-v" 'doh-scroll-down)
+(global-set-key "\M-v" 'doh-scroll-up)
+
+
 (defun func-region (start end func)
   "run a function over the region between START and END in current buffer."
   (save-excursion
@@ -95,6 +113,7 @@
 	(local-set-key "\C-c\C-z" 'kemint-stop-subjob)
 	(local-set-key "\C-j\C-p" 'comint-previous-input)
 	(local-set-key "\C-j\C-n" 'comint-next-input)
+	(ansi-color-for-comint-mode-on)
 ;add password-filter so you can't see passwords typed all the time
 	(add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
 	(setq shell-dirstack-query "echo $PWD")
