@@ -54,23 +54,18 @@
 
 (defun doh-scroll-down ()
 	(interactive)
-	(setq this-command 'next-line)
-	(next-line
-	 (- (window-text-height)
-			next-screen-context-lines)))
+	(condition-case nil (scroll-up)
+		(end-of-buffer (goto-char (point-max)))))
 
 (defun doh-scroll-up ()
 	(interactive)
-	(setq this-command 'previous-line)
-	(previous-line
-	 (- (window-text-height)
-			next-screen-context-lines)))
+	(condition-case nil (scroll-down)
+		(beginning-of-buffer (goto-char (point-min)))))
 
 (global-set-key [?\C-,] 'doh-scroll-up)
 (global-set-key [?\C-.] 'doh-scroll-down)
 (global-set-key "\C-v" 'doh-scroll-down)
 (global-set-key "\M-v" 'doh-scroll-up)
-
 
 (defun func-region (start end func)
   "run a function over the region between START and END in current buffer."
