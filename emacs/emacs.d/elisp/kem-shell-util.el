@@ -46,7 +46,7 @@
 ;; e.g.  use irb and execute
 ;; puts "joe\r\n"
 ;; with this variable set to nil, you won't see the joe
-(setq comint-inhibit-carriage-motion t)
+(setq comint-inhibit-carriage-motion nil)
 
 (defun shell-filter-ctrl-m (string)
   "Remove `^M' characters from comint output.

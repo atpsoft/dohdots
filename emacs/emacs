@@ -113,11 +113,13 @@
 	(ansi-color-for-comint-mode-on)
 ;add password-filter so you can't see passwords typed all the time
 	(add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
+	(add-hook 'comint-output-filter-functions 'ansi-color-process-output)
 	(setq shell-dirstack-query "echo $PWD")
 	(setq comint-input-ring-size 1000)
 	(setq foreground-color "LightSlateBlue")
 	(add-to-list 'exec-path "/usr/share/emacs/site-lisp/")
 	(setq comint-input-ring (make-ring comint-input-ring-size))
+	(setq comint-inhibit-carriage-motion nil)
 ;;	(process-send-string "*shell*" ". ~/.bash_profile\n")
 ;;	(process-send-string "*shell*" (concat "path = " exec-path))
 	(sleep-for 1.0)
@@ -804,6 +806,9 @@ This function could be in the list `comint-output-filter-functions'."
 (load "~/.emacs.d/elisp/kem-file-util.el")
 (load "~/.emacs.d/elisp/kem-frame-util.el")
 (load "~/.emacs.d/elisp/kem-shell-util.el")
+;; uncomment the next line if you would prefer to not have carriage return wipe the line when it is displayed
+;; (setq comint-inhibit-carriage-motion t)
+
 (load "~/.emacs.d/elisp/kem-csv-util.el")
 (load "~/.emacs.d/elisp/kem-doh-util.el")
 (load "~/.emacs.d/elisp/kem-bookmark-util.el")
