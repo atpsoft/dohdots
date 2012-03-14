@@ -11,6 +11,7 @@
   co = checkout
   d = diff
   dt = difftool
+  dts = difftool --staged
   pl = pull -v --log --stat
   pp = !git pull -v --log --stat && git push
   st = status
