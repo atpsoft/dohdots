@@ -2,21 +2,22 @@
 (global-unset-key "\C-x\m")
 
 ; replace ctrl-v with ctrl-dot for scroll-up and meta-v with ctrl-comma for scroll-down
-(global-unset-key "\C-v")
-(global-set-key (quote [67108910]) (quote scroll-up))
-(global-unset-key "\M-v")
-(global-set-key (quote [67108908]) (quote scroll-down))
+;(global-unset-key "\C-v")
+;(global-set-key (quote [67108910]) (quote scroll-up))
+;(global-unset-key "\M-v")
+;(global-set-key (quote [67108908]) (quote scroll-down))
 
 ; I like to have a single sequence binding for undo
 (global-set-key "\C-z" 'undo)
+
+(global-set-key "\M-w" 'kill-ring-save)
 
 ; I kept accidentally hit this bind somehow when I was going fast.  I very rarely need to do this, so I decided a 3 sequence binding was a good solution
 (global-unset-key "\C-x\C-c")
 (global-set-key "\C-x\C-y\C-q" 'save-buffers-kill-emacs-dont-ask-about-processes)
 
-; not sure exactly what these do
+; not sure exactly what this does
 (setq x-select-enable-clipboard t)
-(global-set-key "\M-w" 'kill-ring-save)
 
 ; the backup files drive me crazy
 (custom-set-variables
@@ -50,7 +51,7 @@
 )
 
 
-; scratch buffer
+; scratch buffer -- nuke initial message
 (setq initial-scratch-message nil)
 
 ; delete text instead of killing *scratch* buffer
@@ -60,5 +61,4 @@
 	      (delete-region (point-min) (point-max))
 	      nil)
 	  t))
-
 (add-hook 'kill-buffer-query-functions 'unkillable-scratch-buffer)
