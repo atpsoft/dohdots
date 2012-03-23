@@ -42,3 +42,5 @@
 (setq auto-mode-alist (cons '("\\.rhtml\\'" . rhtml-mode) auto-mode-alist))
 
 ;;(add-hook 'ruby-mode-hook 'kems-ruby-mode-hook)
+;; can also include the 3 quotes ?\' ?\" ?\`
+(setq ruby-electric-expand-delimiters-list '(?\{ ?\[ ?\( ?\| ))
