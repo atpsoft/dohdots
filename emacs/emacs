@@ -783,6 +783,7 @@ This function could be in the list `comint-output-filter-functions'."
   ;; If there is more than one, they won't work right.
  '(column-number-mode t)
  '(display-time-mode t)
+ '(js-indent-level 2)
  '(line-move-visual nil)
  '(show-paren-mode nil)
  '(transient-mark-mode t))
