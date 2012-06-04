@@ -21,3 +21,4 @@ Release
 *.suo
 #*
 *.gem
+.DS_Store
