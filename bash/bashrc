@@ -41,6 +41,14 @@ function ff {
  fl -l "$@"
 }
 
+function fn {
+  find . -name "$@" -print
+}
+
+function mfn {
+  mdfind -onlyin . -name "$@"
+}
+
 function stopdots {
   touch .metadata_never_index; rm -rf .Spotlight-*; sudo rm -rf .Trashes; touch .Trashes; rm -rf .fseventsd; mkdir .fseventsd; touch .fseventsd/no_log;
 }
