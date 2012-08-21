@@ -25,7 +25,9 @@ alias gr='git remote -v'
 alias gs='git status'
 alias gc='git commit -m'
 alias gco='git checkout'
-alias gl='git log -n10'
+alias gl='git log -n10 --decorate'
+alias gll='git log -n50 --decorate'
+alias glll='git log -n500 --decorate'
 alias gls='git log -n3'
 #alias gsc='git svn dcommit'
 #alias gsl='git svn log -n10'
@@ -48,6 +50,7 @@ alias gitbranchdiff='git diff master..HEAD'
 alias gitbranchlog='git log master..HEAD'
 alias gitwhatwillupdate='git fetch; git diff master origin/master'
 alias irb='echo "use pry instead"; pry'
+alias fixlineendings="perl -pi -e 's/\r/\n/g' "
 #show what will be merged if you merge the given branch to the master (... means changes since the branch branched)
 function gitdiffbranch
 {
