@@ -123,11 +123,20 @@
 ;;	(process-send-string "*shell*" ". ~/.bash_profile\n")
 ;;	(process-send-string "*shell*" (concat "path = " exec-path))
 	(sleep-for 1.0)
+	(fix-exec-path)
+;;   (add-hook 'comint-input-filter-functions 'shell-directory-tracker)
+	)
+
+;; separated this out because sometimes it gets messed up
+;; if you start getting this error: apply: Searching for program: No such file or directory, git
+;; then it's a symptom, calling the method below from a shell buffer will fix it
+;; the root cause should be figured out, but that's a work in progress
+(defun fix-exec-path()
+	(interactive)
 	(let ((path (shell-copy-environment-variable "PATH")))
 	  (if (eq (type-of path) 'string)
 	      (setq exec-path (parse-colon-path path))))
-;;   (add-hook 'comint-input-filter-functions 'shell-directory-tracker)
-	)
+)
 
 (defun windows-system-p()
   (interactive)
