@@ -311,7 +311,7 @@
 ;;)
 
 ;;only hide it if those functions are valid
-(if (>= emacs-major-version 21)
+(if (and (>= emacs-major-version 21) (<= emacs-major-version 23))
 	 (hide-toolbar)
   )
 
@@ -795,14 +795,13 @@ This function could be in the list `comint-output-filter-functions'."
  '(js-indent-level 2)
  '(line-move-visual nil)
  '(show-paren-mode nil)
- '(transient-mark-mode t))
+ '(tool-bar-mode nil))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
-
 ;;ignore case set for quickload files
 (setq completion-ignore-case t)
 
@@ -849,7 +848,7 @@ Don't ask about killing processes -- just kill them."
 
 ;; emacs 23 carbon disabled my command key as my meta key, this puts it back the way I had it
 ;; also changes the cursor color to black
-(if (and (eq emacs-major-version 23) (mac-system-p))
+(if (and (>= emacs-major-version 23) (mac-system-p))
 		(progn
 			(set-cursor-color 'black)
 			(setq mac-option-key-is-meta nil)

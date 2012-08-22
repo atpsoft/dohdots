@@ -6,7 +6,7 @@
   window-system)
 
 ;; for some reason my setting doesn't match my getting, the y is always 3 less, so add it back in when saving the file
-(defvar fudge-y-offset 3)
+(defvar fudge-y-offset (if (>= emacs-major-version 24) 0 3))
 (if (eq emacs-major-version 23)
 		(setq fudge-y-offset 0))
 (defvar kem-frame-position nil)
