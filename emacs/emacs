@@ -127,6 +127,10 @@
 ;;   (add-hook 'comint-input-filter-functions 'shell-directory-tracker)
 	)
 
+(add-to-list 'load-path "~/.emacs.d/elisp/emacs-bash-completion/")
+(require 'bash-completion)
+(bash-completion-setup)
+
 ;; separated this out because sometimes it gets messed up
 ;; if you start getting this error: apply: Searching for program: No such file or directory, git
 ;; then it's a symptom, calling the method below from a shell buffer will fix it
@@ -158,11 +162,7 @@
 
 (setq-default inhibit-eol-conversion (not (windows-system-p)))
 
-(if (and (< (length command-line-args) 2) (shell-system-p))
-	 (progn
-		(shell)
-		)
- )
+
 (setq display-hourglass nil)
 ;(add-to-list 'load-path "/usr/share/tramp/lisp/")
 ;(add-to-list 'load-path "/usr/share/tramp/contrib/")
@@ -877,3 +877,9 @@ Don't ask about killing processes -- just kill them."
 							(load file2))
 					(execute-post-custom-load-stuff)
 					))))
+
+(if (and (< (length command-line-args) 2) (shell-system-p))
+	 (progn
+		(shell)
+		)
+ )
