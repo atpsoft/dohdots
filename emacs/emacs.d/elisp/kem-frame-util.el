@@ -30,8 +30,8 @@
 		(let ((disp (getenv "DISPLAY"))
 				(position)
 				(size)
-				(defaultpos)
-				(defaultsize))
+				(defaultpos '(1 . 1))
+				(defaultsize '(234 . 66)))
 		  (if disp
 				(if (string-match ":0" disp)
 					 (progn
@@ -42,11 +42,7 @@
 						(progn
 						  (setq defaultpos '(100 . 90))
 						  (setq defaultsize '(200 . 68))
-						  )))
-			 (progn
-				(setq defaultposition '(1 . 1))
-				(setq defaultsize '(234 . 66)))
-			 )
+						  ))))
 		  (setq position (or kem-frame-position defaultpos))
 		  (setq size (or (get-kem-frame-size) defaultsize))
 		  (set-frame-position (selected-frame) (car position) (cdr position))
@@ -85,4 +81,3 @@
 		  (height (frame-height)))
 	 (if autosave-position
 		  (save-frame-to-local width height))))
-
