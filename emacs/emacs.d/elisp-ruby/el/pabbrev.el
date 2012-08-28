@@ -644,9 +644,7 @@ start and end positions")
 
 (defun pabbrev-mode-on()
   "Turn `pabbrev-mode' on."
-  (make-local-hook 'pre-command-hook)
   (add-hook 'pre-command-hook 'pabbrev-pre-command-hook nil t)
-  (make-local-hook 'post-command-hook)
   (add-hook 'post-command-hook 'pabbrev-post-command-hook nil t))
 
 (defun pabbrev-mode-off()
