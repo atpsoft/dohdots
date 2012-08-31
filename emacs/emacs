@@ -189,13 +189,13 @@
 	 (load "~/.emacs.d/emacs-ruby.el")
   )
 (load "~/.emacs.d/elisp/kem-string.el")
-(load "~/.emacs.d/elisp/css-mode.el")
+;;(load "~/.emacs.d/elisp/css-mode.el")
 (if (> emacs-major-version 21)
                (load "~/.emacs.d/elisp/php-mode.el")
 )
 (load "~/.emacs.d/elisp/uniquify.el")
 
-(setq css-mode-indent-depth 3)
+(setq-default css-indent-offset 2)
 
 ;(require 'tramp)
 (require 'string)
@@ -261,9 +261,10 @@
 
 (setq default-major-mode 'text-mode)
 (setq default-tab-width 2)
-(setq line-number-mode 't)
-(setq indent-tabs-mode nil)
-(setq column-number-mode 't)
+(setq-default default-tab-width 2)
+(setq-default line-number-mode 't)
+(setq-default indent-tabs-mode nil)
+(setq-default column-number-mode 't)
 ;; set truncate-* variables to nil so man pages wrap properly in half-width windows
 (setq truncate-lines nil)
 (setq truncate-partial-width-windows nil)
@@ -326,6 +327,8 @@
 (add-hook 'emacs-startup-hook 'my-startup-prefs)
 (add-hook 'c-mode-hook 'my-c-prefs)
 (add-hook 'c++-mode-hook 'my-c-prefs)
+;; css-mode-hook doesn't exist atm in emacs 24 -- but they've started a native css-mode, so I'm adopting that
+;;(add-hook 'css-mode-hook 'my-c-prefs)
 (add-hook 'objc-mode-hook 'my-c-prefs)
 (add-hook 'perl-mode-hook 'my-c-prefs)
 (add-hook 'lisp-interaction-mode-hook 'my-mode-key-bindings)
