@@ -237,6 +237,7 @@
 (global-set-key "\C-j\C-a" 'beginning-of-buffer)
 (global-set-key "\C-j\C-e" 'end-of-buffer)
 (global-set-key "\C-j\C-r" 'replace-string)
+(global-set-key "\C-j\C-q" 'query-replace)
 
 ; Description stuff - help editing and getting
 (global-set-key "\C-j\C-d\C-b" 'describe-bindings)
