@@ -61,6 +61,10 @@
 (and (fboundp 'blink-cursor-mode) (blink-cursor-mode (- (*) (*) (*))))
 
 
+; need my theme in the erb files
+(setq auto-mode-alist (cons '("\\.erb$" . sgml-mode) auto-mode-alist))
+
+
 ;--------------------
 ; Themes
 ;--------------------
@@ -70,6 +74,8 @@
 ; I need to adjust the color on selection highlighting
 (load-theme 'twilight t)
 
+;(load-theme-buffer-local 'wheatgrass (current-buffer))
+;(add-hook 'java-mode (lambda nil (color-theme-buffer-local 'color-theme-robin-hood (current-buffer))))
 
 ;--------------------
 ; Improved buffer switching using built-in Iswitch Buffers
@@ -77,15 +83,15 @@
 (iswitchb-mode 1)
 
 ; allow left and right arrow keys to function
-;(defun iswitchb-local-keys ()
-;      (mapc (lambda (K)
-;	      (let* ((key (car K)) (fun (cdr K)))
-;    	        (define-key iswitchb-mode-map (edmacro-parse-keys key) fun)))
-;	    '(("<right>" . iswitchb-next-match)
-;	      ("<left>"  . iswitchb-prev-match)
-;	      ("<up>"    . ignore             )
-;	      ("<down>"  . ignore             ))))
-;    (add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
+(defun iswitchb-local-keys ()
+      (mapc (lambda (K)
+	      (let* ((key (car K)) (fun (cdr K)))
+    	        (define-key iswitchb-mode-map (edmacro-parse-keys key) fun)))
+	    '(("<right>" . iswitchb-next-match)
+	      ("<left>"  . iswitchb-prev-match)
+	      ("<up>"    . ignore             )
+	      ("<down>"  . ignore             ))))
+    (add-hook 'iswitchb-define-mode-map-hook 'iswitchb-local-keys)
 
 ; buffers to ignore with switching
 ;(setq iswitchb-buffer-ignore '("^ " "*Buffer")) ;hide all *...* buffers
@@ -110,6 +116,20 @@
 	      nil)
 	  t))
 (add-hook 'kill-buffer-query-functions 'unkillable-scratch-buffer)
+
+
+;--------------------
+; open groups of files
+;--------------------
+
+; emacs files
+(defun jakemacs-files()
+  (interactive)
+
+  (find-file "~/src/dohdots/emacs/emacs.jake")
+  (find-file "~/.emacs.local")
+)
+
 
 
 ;--------------------------------------------------
