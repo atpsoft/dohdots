@@ -25,3 +25,4 @@ Release
 *.esproj
 *.vb#
 *.pyc
+*.last-run
