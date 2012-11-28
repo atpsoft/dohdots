@@ -27,3 +27,4 @@ Release
 *.pyc
 *.last-run
 *.sublime-workspace
+*.tmLanguage.cache
