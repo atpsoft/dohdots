@@ -26,3 +26,4 @@ Release
 *.vb#
 *.pyc
 *.last-run
+*.sublime-workspace
