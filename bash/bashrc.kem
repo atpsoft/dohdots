@@ -42,7 +42,7 @@ alias gpl='git pl'
 #use gd -b to ignore whitespace
 alias gd='git diff'
 alias gdd='git difftool'
-alias gph='git push heroku'
+alias herokudb='heroku pg:psql'
 alias gitpulltags='git fetch --tags'
 alias gitpushtags='git push --tags'
 alias gitundocommit='git reset --soft HEAD^'
@@ -73,3 +73,7 @@ function gitchanged
 {
 		git diff --name-status $1^..$1 | cut -f2
 }
+
+# from git-atpsoft@pl3.projectlocker.com:sandbox_kem.git
+. ~/.aliases.bash
+
