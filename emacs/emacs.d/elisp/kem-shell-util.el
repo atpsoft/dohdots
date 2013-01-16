@@ -77,12 +77,12 @@ The argument STRING is ignored."
          (filename (if firstcolon
                        (substring line 0 firstcolon)
                      line))
-         (secondcolon (string-match ":" line (+ firstcolon 1)))
-         (lineno (substring line (+ firstcolon 1) secondcolon))
+         (secondcolon (if firstcolon (string-match ":" line (+ firstcolon 1))
+                        nil))
+         (lineno (if firstcolon (substring line (+ firstcolon 1) secondcolon)
+                 nil))
          )
-    (cons filename (string-to-number lineno))))
-
-
+    (cons filename (if lineno (string-to-number lineno)))))
 
   
 
