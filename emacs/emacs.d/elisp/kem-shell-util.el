@@ -69,21 +69,22 @@ The argument STRING is ignored."
 		(end-of-line)
 		(let ((eolpoint (point)))
 			(beginning-of-line)
-			(let* ((begpoint (point))
-						 (foundfile (re-search-forward "[^:]*:" eolpoint t))
-						 (filename (if foundfile
-												 (buffer-substring-no-properties begpoint (- (point) 1))
-												 (buffer-substring-no-properties begpoint eolpoint)))
-						 (begpoint (point))
-						 (foundline (re-search-forward "[^:]*:" eolpoint t))
-						 (lineno (if foundline
-											 (string-to-number (buffer-substring-no-properties begpoint (- (point) 1)))
-											 nil)))
-				(message "filename: %s lineno: %s" filename lineno)
-				(cons filename lineno))
-			)
-		)
-	)
+      (get-filename-and-lineno-from-string (buffer-substring-no-properties (point) eolpoint)))))
+
+(defun get-filename-and-lineno-from-string(line)
+  (interactive)
+  (let* ((firstcolon (string-match ":" line))
+         (filename (if firstcolon
+                       (substring line 0 firstcolon)
+                     line))
+         (secondcolon (string-match ":" line (+ firstcolon 1)))
+         (lineno (substring line (+ firstcolon 1) secondcolon))
+         )
+    (cons filename (string-to-number lineno))))
+
+
+
+  
 
 (defvar grepped-file-keep-current-window 't)
 (defun open-grepped-file-on-line()
@@ -92,8 +93,9 @@ The argument STRING is ignored."
 				 (curfile (car filename-lineno))
 				 (curlinenum (cdr filename-lineno))
 				 (curdir default-directory))
+    (message "opening grepped file default directory: %s" curdir)
 		(other-window 1)
-		(find-file (concat curdir curfile))
+		(find-file (if (string-match "^\/" curfile) curfile (concat curdir curfile)))
 		(if curlinenum
 				(goto-line curlinenum)
 			)
@@ -102,4 +104,5 @@ The argument STRING is ignored."
 			)
 		)
 	)
+
 
