@@ -39,6 +39,8 @@ alias gp='git push'
 alias gpp='git pp'
 #git pull with logging
 alias gpl='git pl'
+alias ll='ls -latrL'
+alias llt='ls -latrL /tmp'
 #use gd -b to ignore whitespace
 alias gd='git diff'
 alias gdd='git difftool'
@@ -75,5 +77,4 @@ function gitchanged
 }
 
 # from git-atpsoft@pl3.projectlocker.com:sandbox_kem.git
-. ~/.aliases.bash
-
+. ~/.bash.alias.utilities
