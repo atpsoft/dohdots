@@ -127,6 +127,21 @@
 ;;   (add-hook 'comint-input-filter-functions 'shell-directory-tracker)
 	)
 
+
+;; with a prompt setting like:
+;; PS1="\w \$(parse_git_branch)\$ "
+;; (which looks like the following line:)
+;; ~/src/dohdots (master)$
+;; this will make emacs track the directory, regardless of how you got there, so autocomplete will work properly with aliases that cd, e.g.
+(defun my-dirtrack-mode ()
+  "Add to shell-mode-hook to use dirtrack mode in shell buffers."
+  (shell-dirtrack-mode 0)
+;;  (set-variable 'dirtrack-list '("^.*[^ ]+:\\(.*\\)>" 1 nil)
+  (set-variable 'dirtrack-list '("\\(.*+\\):[ ]" 1 nil)
+  (dirtrack-mode 1)))
+(add-hook 'shell-mode-hook 'my-dirtrack-mode)
+
+
 (add-to-list 'load-path "~/.emacs.d/elisp/emacs-bash-completion/")
 (require 'bash-completion)
 (bash-completion-setup)
