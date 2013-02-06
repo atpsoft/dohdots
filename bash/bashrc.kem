@@ -76,5 +76,4 @@ function gitchanged
 		git diff --name-status $1^..$1 | cut -f2
 }
 
-# from git-atpsoft@pl3.projectlocker.com:sandbox_kem.git
-. ~/.bash.alias.utilities
+-. ~/src/dohdots/bash/bash.alias.utilities
