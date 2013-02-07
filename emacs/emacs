@@ -129,7 +129,7 @@
 
 
 ;; with a prompt setting like:
-;; PS1="\w \$(parse_git_branch)\$ "
+;; PS1="\w: \$(parse_git_branch)\$ "
 ;; (which looks like the following line:)
 ;; ~/src/dohdots (master)$
 ;; this will make emacs track the directory, regardless of how you got there, so autocomplete will work properly with aliases that cd, e.g.
