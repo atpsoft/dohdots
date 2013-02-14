@@ -38,7 +38,7 @@ function fl {
 
 # use fl, then grep for def at the beginning, followed by the argument (find definition of a method)
 function fd {
- fl -i "$@" | grep -E "^.*:.*:[[:space:]]+def[[:space:]]+$@"
+ fl -i "$@" | grep -E "^.*:.*:[[:space:]]*def[[:space:]]+(self\.)?$@"
 }
 
 # same as fl, but only list the filenames
