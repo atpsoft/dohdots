@@ -1,3 +1,6 @@
+(fset 'kem-insert-trace
+   "\C-m\C-p\C-iputs(\"foohere\C-[xinsert  ne   \C-m\"\C-n\C-a")
+
 (setq go-fullscreen t)
 (setq enable_ruby_pabbrev -1)
 (setq enable_ruby_abbrev -1)

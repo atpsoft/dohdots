@@ -19,9 +19,6 @@
 ;;(load "/home/kem/elisp/emacs-ror.el")
 ;;(require 'mmm-mode)
 
-(fset 'kem-insert-trace
-   "\C-m\C-p\C-iSystem.out.println(\"foohere\C-[xinsert  ne   \C-m\");\C-n\C-a")
-
 (fset 'kem-get-sql-from-log
    "\C-@\C-ssending query: \C-f\C-b\C-w\C-e;\C-n\C-a")
 
@@ -682,12 +679,26 @@ This function could be in the list `comint-output-filter-functions'."
   "Face for highlighting important info in a doc."
   :group 'docmode)
 
+(defvar todo-mode-remember-face 'todo-mode-remember-face
+  "Face name to use for stuff to remember")
+(defface todo-mode-remember-face
+  '((((class color) (background light))
+     :foreground "purple")
+    (((class color) (background dark))
+     :foreground "gray30")
+    (t
+     :bold t))
+  "Face for highlighting links in a doc."
+  :group 'docmode)
+
+
 ;;(
 
 (defvar doc-font-lock-keywords
   '(
-	 ("^!!.*$" . todo-mode-heading-face)
-	 ("^!\\*.*$" . todo-mode-important-face)
+	 ("!!.*$" . todo-mode-heading-face)
+	 ("!\\*.*$" . todo-mode-important-face)
+	 ("!\\%.*$" . todo-mode-remember-face)
 	 ("file:\\S-+" . todo-mode-link-face)
 	 )
   "Default expressions to highlight in doc mode.")
