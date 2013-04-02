@@ -174,6 +174,12 @@
 
 (setq-default inhibit-eol-conversion (not (windows-system-p)))
 
+;; in order to create your own themes, use M-x customize-create-theme
+(add-to-list 'load-path "~/.emacs.d/elisp/color-theme-buffer-local/")
+(require 'load-theme-buffer-local)
+(setq custom-theme-directory "~/.emacs.d/elisp/custom-color-themes/")
+(add-to-list 'custom-theme-load-path "~/.emacs.d/elisp/custom-color-themes/")
+;; to use this, do load-theme-buffer-local
 
 (setq display-hourglass nil)
 ;(add-to-list 'load-path "/usr/share/tramp/lisp/")
@@ -816,22 +822,28 @@ This function could be in the list `comint-output-filter-functions'."
 ;(call-process "/usr/local/bin/xwit" nil nil nil "-pop" "-focus" "-names" "mac_root_emacs")
 ;(call-process "/usr/bin/sudo" nil nil nil "-pop" "-focus" "-names" "mac_root_emacs")
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(column-number-mode t)
+ '(comint-password-prompt-regexp "\\(\\([Oo]ld \\|[Nn]ew \\|Kerberos \\|'s \\|login \\|CVS \\|\\[sudo] \\|^\\)[Pp]assword\\( (again)\\)?\\|pass phrase\\|Enter password\\|Enter passphrase\\|Repeat passphrase\\)\\(?: for [^:]+\\)?:\\s *\\'")
+ '(custom-safe-themes (quote ("52a043e58bb35eeeb1dd220f71875e52714c5e18fdf5b574a87556409906aab3" "581c5f2c3be4b2f11ec5b4c1099f9a3442ef2cfe6ee91e24081205fb1a441617" "d30deb009e3c6824297c1a13e424851a611725c41f7912b9c14ffdc5265b2794" "8973b1e7ffb48bf6676df1e5ce565f52f6dad755008627bee02b522da588fc6c" "bf39247c36af108b0b931d098c339fd0e2dd62acaff881bc3d84a03ed5d1e6cf" default)))
  '(display-time-mode t)
- '(js-indent-level 2)
+ '(gud-gdb-command-name "gdb --annotate=1" t)
+ '(js-indent-level 2 t)
+ '(large-file-warning-threshold nil)
  '(line-move-visual nil)
  '(show-paren-mode nil)
  '(tool-bar-mode nil))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(font-lock-string-face ((((class color) (min-colors 88) (background light)) (:foreground "orange4"))))
+ '(font-lock-type-face ((((class color) (min-colors 88) (background light)) (:foreground "ForestGreen"))))
+ '(font-lock-variable-name-face ((((class color) (min-colors 88) (background light)) (:foreground "SeaGreen")))))
 ;;ignore case set for quickload files
 (setq completion-ignore-case t)
 
