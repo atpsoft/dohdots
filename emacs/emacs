@@ -175,10 +175,13 @@
 (setq-default inhibit-eol-conversion (not (windows-system-p)))
 
 ;; in order to create your own themes, use M-x customize-create-theme
-(add-to-list 'load-path "~/.emacs.d/elisp/color-theme-buffer-local/")
-(require 'load-theme-buffer-local)
-(setq custom-theme-directory "~/.emacs.d/elisp/custom-color-themes/")
-(add-to-list 'custom-theme-load-path "~/.emacs.d/elisp/custom-color-themes/")
+(if (>= emacs-major-version 24)
+    (progn
+      (add-to-list 'load-path "~/.emacs.d/elisp/color-theme-buffer-local/")
+      (require 'load-theme-buffer-local)
+      (setq custom-theme-directory "~/.emacs.d/elisp/custom-color-themes/")
+      (add-to-list 'custom-theme-load-path "~/.emacs.d/elisp/custom-color-themes/")
+  ))
 ;; to use this, do load-theme-buffer-local
 
 (setq display-hourglass nil)
