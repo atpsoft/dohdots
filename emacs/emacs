@@ -138,7 +138,6 @@
   (dirtrack-mode 1)))
 (add-hook 'shell-mode-hook 'my-dirtrack-mode)
 
-
 (add-to-list 'load-path "~/.emacs.d/elisp/emacs-bash-completion/")
 (require 'bash-completion)
 (bash-completion-setup)
@@ -205,6 +204,8 @@
      try-expand-dabbrev))
 (add-to-list 'load-path "~/.emacs.d/elisp/")
 (add-to-list 'load-path "/usr/share/xemacs/xemacs-packages/lisp/elib/")
+
+(require 'fill-column-indicator)
 
 (if (> emacs-major-version 21)
 	 (load "~/.emacs.d/emacs-ruby.el")
@@ -341,6 +342,14 @@
 (load-file "~/.emacs.d/elisp/paren.el")
 (load-file "~/.emacs.d/elisp/fff.el")
 
+(defun fill-column-prefs()
+  (setq fci-rule-width 1)
+  (setq fci-rule-color "#EEE")
+  (setq fill-column 0) ;; don't want to automatically space-fill at all
+  (setq fci-rule-column 140) ;; but draw a line at 140
+  (fci-mode)
+  )
+
 ;; This is how emacs tells the file type by the file suffix.
 (setq auto-mode-alist
       (append '(("\\.tst$" . c++-mode) ("\\.html$" . nxml-mode))
@@ -353,6 +362,7 @@
 ;;(add-hook 'css-mode-hook 'my-c-prefs)
 (add-hook 'objc-mode-hook 'my-c-prefs)
 (add-hook 'perl-mode-hook 'my-c-prefs)
+(add-hook 'ruby-mode-hook 'fill-column-prefs)
 (add-hook 'lisp-interaction-mode-hook 'my-mode-key-bindings)
 (add-hook 'help-mode-hook 'my-mode-key-bindings)
 (add-hook 'Man-mode-hook 'my-man-mode-prefs)
