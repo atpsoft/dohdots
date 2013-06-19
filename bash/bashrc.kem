@@ -21,6 +21,13 @@ function cdd {
 		fi
 }
 
+function gitclone {
+  dir=`git clone "$@" | ruby -e 'STDIN.readlines.join("") =~ /Cloning into .(\w+)./; puts $1'`
+  cd $dir
+  git config branch.master.rebase true
+  cd -
+}
+
 alias top='top -o cpu'
 alias gr='git remote -v'
 alias gs='git status'
@@ -64,8 +71,14 @@ function gitdiffbranch
 
 function gitdiffcommit
 {
-		git difftool --extcmd=/usr/bin/chdiff $1^..$1 $2
+		git difftool $1^..$1 $2
 }
+
+function gitclone {
+  git clone "$@" | ruby -e 'STDIN.readlines.join("") =~ /Cloning into .(\w+)./; puts $1' | xargs cd
+  git config branch.master.rebase true
+}
+
 
 function cpsshkey
 {
