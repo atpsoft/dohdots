@@ -60,7 +60,7 @@ def get_dohdots
   if (!File.exist?(get_path('src/dohdots')))
     puts "gitting dohdots from github"
     ensure_exists('src')
-    puts `git clone git://github.com/atpsoft/dohdots.git ~/src/dohdots`
+    puts `git clone https://github.com/atpsoft/dohdots.git ~/src/dohdots`
   else
     puts "updating dohdots from github"
     puts `cd ~/src/dohdots; git pull`
