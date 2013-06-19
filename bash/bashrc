@@ -18,6 +18,14 @@ export PROMPT_COMMAND="history -a"
 # history is appended to the file, rather than overwriting (for multiple shell instances running at same time)
 shopt -s histappend
 
+# clone and make master be rebase default
+function gitclone {
+  dir=`git clone "$@" | ruby -e 'STDIN.readlines.join("") =~ /Cloning into .(\w+)./; puts $1'`
+  cd $dir
+  git config branch.master.rebase true
+  cd -
+}
+
 # typically used for bug fix branches
 function gitmergecommit
 {
