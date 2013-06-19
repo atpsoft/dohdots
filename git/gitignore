@@ -28,6 +28,3 @@ Release
 *.last-run
 *.sublime-workspace
 *.tmLanguage.cache
-tmptest
-testach.txt
-util_sftp_client.*.stderr
