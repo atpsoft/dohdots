@@ -347,7 +347,7 @@
   (setq fci-rule-color "#EEE")
   (setq fill-column 0) ;; don't want to automatically space-fill at all
   (setq fci-rule-column 140) ;; but draw a line at 140
-  (fci-mode)
+  (fci-mode t)
   )
 
 ;; This is how emacs tells the file type by the file suffix.
@@ -363,6 +363,7 @@
 (add-hook 'objc-mode-hook 'my-c-prefs)
 (add-hook 'perl-mode-hook 'my-c-prefs)
 (add-hook 'ruby-mode-hook 'fill-column-prefs)
+(add-hook 'js-mode-hook 'fill-column-prefs)
 (add-hook 'lisp-interaction-mode-hook 'my-mode-key-bindings)
 (add-hook 'help-mode-hook 'my-mode-key-bindings)
 (add-hook 'Man-mode-hook 'my-man-mode-prefs)
