@@ -48,7 +48,7 @@ function ff {
 }
 
 function fn {
-  find . -name "$@" -print
+  find . -name "*$@*" -print
 }
 
 function mfn {
