@@ -86,7 +86,10 @@ def link_files
   if (File.exist?(get_path("src/dohdots/emacs/emacs.#{user}")))
     link_file("src/dohdots/emacs/emacs.#{user}", '.emacs.user')
   end
-  merge_files(user, 'src/dohdots/git/gitconfig', '.gitconfig')
+  link_file('src/dohdots/git/gitconfig', '.gitconfig')
+  if (File.exist?(get_path("src/dohdots/git/gitconfig.#{user}")))
+    link_file("src/dohdots/git/gitconfig.#{user}", '.gitconfig.user')
+  end
 end
 
 get_dohdots

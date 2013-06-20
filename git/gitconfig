@@ -5,7 +5,7 @@
 [difftool]
   prompt = false
 [branch]
-  autosetuprebase = always
+  autosetuprebase = never
 [Alias]
   ci = commit
   co = checkout
@@ -16,3 +16,5 @@
   pp = !git pull -v --log --stat && git push
   st = status
   unci = reset --soft HEAD^
+[include]
+  path = ~/.gitconfig.user
