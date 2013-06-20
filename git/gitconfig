@@ -18,3 +18,5 @@
   unci = reset --soft HEAD^
 [include]
   path = ~/.gitconfig.user
+[push]
+	default = simple
