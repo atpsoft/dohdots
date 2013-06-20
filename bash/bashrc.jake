@@ -1,7 +1,10 @@
 
-export PATH=.:~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/bin:/usr/sbin:/sbin:/opt/local/bin:/usr/local/mysql/bin:/usr/bin:/opt/local/sbin:~/.rvm/bin:~/src/lsfs_main/bin
+export PATH=.:~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/bin:/usr/sbin:/sbin:/opt/local/bin:/usr/local/mysql/bin:/usr/bin:/opt/local/sbin:~/.rvm/bin:~/src/lsfs_main/bin:~/Dropbox/bin
 
 export EDITOR='subl -w'
+
+# dwc develevopment
+export RACK_ENV=development
 
 # Aliases
 
@@ -37,6 +40,7 @@ alias sourcea='source ~/.bashrc.user'
 # Correct common typos:
 #-----------------------
 alias mann='man'
+alias 'cd..'='cd ..'
 
 #------------------------------
 # Terminal & shell management:
@@ -114,4 +118,59 @@ showTimes () { stat -f "%N:   %m %c %a" "$@" ; }
 finderComment () { mdls "$1" | grep kMDItemFinderComment ; }
 
 # to remove filename extensions in bash: ${file%\.[^.]*}
+
+
+#------------------------
+# Git & repo management:
+#------------------------
+
+# unalias gpl
+function gpl() {
+  if [ "$PWD" == "/Users/$USER/src/lsfs_main" ]
+  then
+     git pl
+     cd ../bootstrap_ai
+     git pl
+     cd ../bootstrap_mi
+     git pl
+     cd ../lsfs_devops
+     git pl
+     cd ~/src/lsfs_main
+  else
+     git pl
+  fi
+}
+
+# git commands to lsfs_main & bootstrap repos
+function git_ai {
+  if [ "$PWD" == "/Users/$USER/src/lsfs_main" ]
+  then
+     git "$@"
+     cd ../bootstrap_ai
+     git "$@"
+     cd ~/src/lsfs_main
+  else
+    echo "You must be in /Users/$USER/src/lsfs_main"
+  fi
+}
+function git_mi {
+  if [ "$PWD" == "/Users/$USER/src/lsfs_main" ]
+  then
+     git "$@"
+     cd ../bootstrap_mi
+     git "$@"
+     cd ~/src/lsfs_main
+  else
+    echo "You must be in /Users/$USER/src/lsfs_main"
+  fi
+}
+
+#---------------------
+# Image Manipulation:
+#---------------------
+
+# imagemagick
+# export MAGICK_HOME="$HOME/Dropbox/bin/ImageMagick"
+# export PATH="$MAGICK_HOME/bin:$PATH"
+# export DYLD_LIBRARY_PATH="$MAGICK_HOME/lib/"
 
