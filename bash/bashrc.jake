@@ -35,6 +35,8 @@ showa () { /usr/bin/grep -i -a1 $@ ~/.bashrc.user | grep -v '^\s*$' ; }
 # sourcea: to source this file (to make changes active after editing)
 alias sourcea='source ~/.bashrc.user'
 
+# TrueCrypt
+alias truecrypt='/Applications/TrueCrypt.app/Contents/MacOS/Truecrypt --text'
 
 #-----------------------
 # Correct common typos:
