@@ -216,6 +216,7 @@
                (load "~/.emacs.d/elisp/php-mode.el")
 )
 (load "~/.emacs.d/elisp/uniquify.el")
+(load "~/.emacs.d/elisp/camel-case-toggle.el")
 
 (setq-default css-indent-offset 2)
 
