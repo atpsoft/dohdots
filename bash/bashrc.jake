@@ -144,7 +144,7 @@ function gpl() {
 }
 
 # git commands to lsfs_main & bootstrap repos
-function git_ai {
+function gitai {
   if [ "$PWD" == "/Users/$USER/src/lsfs_main" ]
   then
      git "$@"
@@ -155,7 +155,7 @@ function git_ai {
     echo "You must be in /Users/$USER/src/lsfs_main"
   fi
 }
-function git_mi {
+function gitmi {
   if [ "$PWD" == "/Users/$USER/src/lsfs_main" ]
   then
      git "$@"
