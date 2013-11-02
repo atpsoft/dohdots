@@ -61,25 +61,11 @@ alias irb='echo "use pry instead"; pry'
 alias fixlineendings="perl -pi -e 's/\r/\n/g' "
 alias watchtimemachine="sudo dtrace -n 'syscall::open*:entry /execname == \"backupd\"/ { printf (\"%s\", copyinstr(arg0)); }'"
 #show what will be merged if you merge the given branch to the master (... means changes since the branch branched)
-function gitdiffbranch
-{
-		git diff master...$@
-}
-
-function gitdiffcommit
-{
-		git difftool $1^..$1 $2
-}
 
 function cpsshkey
 {
 		cat ~/.ssh/id_dsa.pub | ssh $1 "cat >> ~/.ssh/authorized_keys"
 }
 
-#show the filenames that changed in a given commit
-function gitchanged
-{
-		git diff --name-status $1^..$1 | cut -f2
-}
 
 . ~/src/dohdots/bash/bash.alias.utilities

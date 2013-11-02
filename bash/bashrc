@@ -35,6 +35,22 @@ function gitmergecommit
   git commit -m "merge of commit $1"
 }
 
+function gitdiffbranch
+{
+		git diff master...$@
+}
+
+function gitdiffcommit
+{
+		git difftool $1^..$1 $2
+}
+
+#show the filenames that changed in a given commit
+function gitchanged
+{
+		git diff --name-status $1^..$1 | cut -f2
+}
+
 # recursive grep, ignoring vcs data, log files, preferences, etc.
 
 function fc {
