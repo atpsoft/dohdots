@@ -54,7 +54,7 @@ function gitchanged
 # recursive grep, ignoring vcs data, log files, preferences, etc.
 
 function fc {
- ack -i --nogroup  "$@" .
+ ack --nogroup  "$@" .
 }
 
 # same as fc, but case insensitive
