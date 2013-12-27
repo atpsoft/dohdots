@@ -41,6 +41,12 @@
   (local-set-key "\C-j\C-k" 'kill-word)
   )
 
+(setq backup-directory-alist `(("." . "~/.saves")))
+(setq delete-old-versions t
+  kept-new-versions 6
+  kept-old-versions 2
+  version-control t)
+
 (setq ns-pop-up-frames nil)
 (setq default-tab-width 2)
 
