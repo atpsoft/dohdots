@@ -1,0 +1,3 @@
+export RACK_ENV=development
+export PATH=.:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/sbin:/usr/bin:/bin:/sbin:~/src/stuff/bin
+[[ -s "$HOME/src/stuff/config/shell/.bashrc" ]] && source "$HOME/src/stuff/config/shell/.bashrc"

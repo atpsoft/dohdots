@@ -1,11 +1,43 @@
 export PAGER=cat
 
-alias ll='ls -la'
-alias grep='grep -i'
+# same as fl, but ruby code only
+function flr {
+ fl --ruby "$@"
+}
+
+# same as fc, but ruby code only
+function fcr {
+ fc --ruby "$@"
+}
+
+alias lls='ls -lA'
+alias rls='ls -lAtr'
+
+alias gs='git status'
+alias gc='git commit -m'
+alias gd='git difftool'
+alias gds='git difftool --staged'
+function gdc {
+  git difftool "$1^..$1" $2
+}
+alias gco='git checkout'
+alias gpl='git pl'
+alias gpp='git pp'
+alias dtd='dohtest -odont_rebuild_db'
+alias dte='dohtest -f1 -e1'
+alias dtf='dohtest -odont_rebuild_db -f1 -e1'
 
 function parse_git_branch {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
   echo "("${ref#refs/heads/}")"
 }
 
-PS1="\H: \w \$(parse_git_branch)\$ "
+# sets prompt style
+case $TERM in
+  xterm*)
+    PS1="\[\033]0;\w\007\]\w: \$(parse_git_branch)\$ "
+    ;;
+  *)
+    PS1="\w: \$(parse_git_branch)\$ "
+    ;;
+esac
