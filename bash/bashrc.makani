@@ -10,8 +10,8 @@ function fcr {
  fc --ruby "$@"
 }
 
-alias lls='ls -lA'
-alias rls='ls -lAtr'
+alias ll='ls -lA'
+alias llr='ls -lAtr'
 
 alias gs='git status'
 alias gc='git commit -m'
