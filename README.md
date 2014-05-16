@@ -1,4 +1,4 @@
 To install dohdots, execute the following
 ``` bash
-ruby < <(curl -B https://raw.github.com/atpsoft/dohdots/master/install.rb)
+ruby < <(curl -B https://raw.githubusercontent.com/atpsoft/dohdots/master/install.rb)
 ```
