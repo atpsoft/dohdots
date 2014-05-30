@@ -80,6 +80,11 @@ function mfn {
   mdfind -onlyin . -name "$@"
 }
 
+function openlast
+{
+  open $1`ls -rt $1 | tail -1`
+}
+
 function stopdots {
   touch .metadata_never_index; rm -rf .Spotlight-*; sudo rm -rf .Trashes; touch .Trashes; rm -rf .fseventsd; mkdir .fseventsd; touch .fseventsd/no_log;
 }
