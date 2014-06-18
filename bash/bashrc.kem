@@ -30,11 +30,12 @@ alias gcm='git checkout master'
 alias gcd='git checkout deploy'
 alias gcdd='git checkout -b deploy'
 alias grmd='git branch -d deploy'
-alias gl='git log -n10 --decorate'
-alias gll='git log -n50 --decorate'
-alias glll='git log -n500 --decorate'
+alias gl='git lg -n10 --decorate'
+alias gll='git lg -n50 --decorate'
+alias glll='git lg -n500 --decorate'
 alias gls='git log -n3'
 alias gb='git blame HEAD'
+alias gdc='gitdiffcommit'
 #alias gsc='git svn dcommit'
 #alias gsl='git svn log -n10'
 #alias gsu='git svn rebase'
@@ -67,5 +68,14 @@ function cpsshkey
 		cat ~/.ssh/id_dsa.pub | ssh $1 "cat >> ~/.ssh/authorized_keys"
 }
 
+function catlast
+{
+    cat $1/`ls -rt $1 | tail -1`
+}
+
+function openlast
+{
+    open $1/`ls -rt $1 | tail -1`
+}
 
 . ~/src/dohdots/bash/bash.alias.utilities

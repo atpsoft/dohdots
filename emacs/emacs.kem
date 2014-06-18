@@ -1,11 +1,19 @@
 (fset 'kem-insert-trace
    "\C-m\C-p\C-iputs(\"foohere\C-[xinsert  ne   \C-m\"\C-n\C-a")
 
+(require 'multi-term)
+(setq multi-term-program "/bin/zsh")
+(define-key term-mode-map (kbd "C-c C-j") 'term-char-mode)
+(define-key term-raw-map (kbd "C-c C-j") 'term-line-mode)
+
+(setq shell-filename "/bin/zsh")
+(setq explicit-shell-filename "/bin/zsh")
 (setq go-fullscreen t)
 (setq enable_ruby_pabbrev -1)
 (setq enable_ruby_abbrev -1)
 (setq current-working-doc "kem-main.txt")
 (defun host-username() "kem")
+(global-set-key "\C-j\C-x\c-l" 'list-buffers)
 (global-set-key "\C-x\C-s" 'delete-trailing-replace-ctrl-m-save-buffer)
 (global-set-key "\M-w" 'copy-region-as-kill)
 (custom-set-faces

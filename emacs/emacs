@@ -30,6 +30,9 @@
 
 ;; create a shell automatically unless a file was passed in to open
 (add-hook 'shell-mode-hook 'my-shell-prefs)
+(global-unset-key "\C-j")
+(global-set-key "\C-j\C-x\C-l" 'list-buffers)
+
 
 (defun my-mode-key-bindings()
   (local-unset-key "\C-j")
@@ -39,6 +42,7 @@
   (local-set-key "\C-j\C-b\C-s" 'set-working-file)
   (local-set-key "\C-j\C-b\C-b" 'goto-working-file)
   (local-set-key "\C-j\C-k" 'kill-word)
+  (local-set-key "\C-j\C-x\C-l" 'list-buffers)
   )
 
 (setq backup-directory-alist `(("." . "~/.saves")))
@@ -144,9 +148,9 @@
   (dirtrack-mode 1)))
 (add-hook 'shell-mode-hook 'my-dirtrack-mode)
 
-(add-to-list 'load-path "~/.emacs.d/elisp/emacs-bash-completion/")
-(require 'bash-completion)
-(bash-completion-setup)
+;;(add-to-list 'load-path "~/.emacs.d/elisp/emacs-bash-completion/")
+;;(require 'bash-completion)
+;;(bash-completion-setup)
 
 ;; separated this out because sometimes it gets messed up
 ;; if you start getting this error: apply: Searching for program: No such file or directory, git
@@ -374,6 +378,7 @@
 (add-hook 'lisp-interaction-mode-hook 'my-mode-key-bindings)
 (add-hook 'help-mode-hook 'my-mode-key-bindings)
 (add-hook 'Man-mode-hook 'my-man-mode-prefs)
+(add-hook 'term-mode-hook 'my-mode-key-bindings)
 (add-hook 'nxml-mode-hook 'my-nxml-prefs)
 (add-hook 'sh-mode-hook 'my-sh-prefs)
 
