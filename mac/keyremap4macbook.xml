@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<root>
+  <item>
+<!-- still need to set up tab -> caps-lock and esc -> tab via kinesis keyboard -->
+    <name>my well established goodness</name>
+    <appendix>swap backslash and underscore</appendix>
+    <identifier>private.swap_backslash_and_underscore</identifier>
+    <autogen>__KeyToKey__ KeyCode::BACKSLASH, ModifierFlag::NONE, KeyCode::MINUS, ModifierFlag::SHIFT_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::MINUS, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT, KeyCode::BACKSLASH</autogen>
+    <autogen>__KeyToKey__ KeyCode::DELETE, KeyCode::CONTROL_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::FORWARD_DELETE, KeyCode::COMMAND_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::DELETE</autogen>
+    <autogen>__KeyToKey__ KeyCode::CURSOR_DOWN, KeyCode::BRACKET_LEFT</autogen>
+    <autogen>__KeyToKey__ KeyCode::BRACKET_LEFT, KeyCode::BRACKET_RIGHT</autogen>
+    <autogen>__KeyToKey__ KeyCode::BRACKET_RIGHT, KeyCode::CURSOR_DOWN</autogen>
+    <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::DELETE</autogen>
+    <autogen>__KeyToKey__ KeyCode::DANISH_DOLLAR, KeyCode::OPTION_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::FORWARD_DELETE</autogen>
+  </item>
+
+  <item>
+    <name>tinkering with shifts and colemak and such</name>
+    <identifier>private.colemak_tinkering</identifier>
+    <autogen>__KeyToKey__ KeyCode::V, KeyCode::SHIFT_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::M, KeyCode::SHIFT_R</autogen>
+
+    <autogen>__KeyToKey__ KeyCode::SHIFT_L, KeyCode::Z</autogen>
+    <autogen>__KeyToKey__ KeyCode::SHIFT_R, KeyCode::Q</autogen>
+
+    <autogen>__KeyToKey__ KeyCode::Q, KeyCode::J</autogen>
+    <autogen>__KeyToKey__ KeyCode::E, KeyCode::F</autogen>
+    <autogen>__KeyToKey__ KeyCode::R, KeyCode::P</autogen>
+    <autogen>__KeyToKey__ KeyCode::T, KeyCode::G</autogen>
+    <autogen>__KeyToKey__ KeyCode::S, KeyCode::R</autogen>
+    <autogen>__KeyToKey__ KeyCode::D, KeyCode::S</autogen>
+    <autogen>__KeyToKey__ KeyCode::F, KeyCode::T</autogen>
+    <autogen>__KeyToKey__ KeyCode::G, KeyCode::D</autogen>
+    <autogen>__KeyToKey__ KeyCode::Z, KeyCode::K</autogen>
+    <autogen>__KeyToKey__ KeyCode::Y, KeyCode::V</autogen>
+    <autogen>__KeyToKey__ KeyCode::U, KeyCode::L</autogen>
+    <autogen>__KeyToKey__ KeyCode::I, KeyCode::U</autogen>
+    <autogen>__KeyToKey__ KeyCode::O, KeyCode::Y</autogen>
+    <autogen>__KeyToKey__ KeyCode::P, KeyCode::SEMICOLON</autogen>
+    <autogen>__KeyToKey__ KeyCode::J, KeyCode::N</autogen>
+    <autogen>__KeyToKey__ KeyCode::K, KeyCode::E</autogen>
+    <autogen>__KeyToKey__ KeyCode::L, KeyCode::I</autogen>
+    <autogen>__KeyToKey__ KeyCode::SEMICOLON, KeyCode::O</autogen>
+    <autogen>__KeyToKey__ KeyCode::N, KeyCode::M</autogen>
+
+  </item>
+</root>

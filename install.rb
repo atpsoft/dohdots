@@ -8,7 +8,7 @@ def link_file(src, dest)
     raise "File already exists: #{dest} -- aborting installation"
   end
   `rm -f #{dest}`
-  `ln -s #{src} #{dest}`
+  `ln -s #{src} "#{dest}"`
   puts "linked #{src} to #{dest}"
 end
 
@@ -74,6 +74,7 @@ def link_files
     puts "Since we're on a mac, we'll link DefaultKeyBinding.dict"
     ensure_exists('Library/KeyBindings')
     link_file('src/dohdots/mac/DefaultKeyBinding.dict', 'Library/KeyBindings/DefaultKeyBinding.dict')
+    link_file('src/dohdots/mac/keyremap4macbook.xml', 'Library/Application Support/KeyRemap4MacBook/private.xml')
   end
   link_file('src/dohdots/git/gitignore', '.gitignore')
   link_file('src/dohdots/bash/bash_profile', '.bash_profile')
