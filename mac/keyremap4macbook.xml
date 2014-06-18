@@ -6,7 +6,8 @@
     <appendix>swap backslash and underscore</appendix>
     <identifier>private.swap_backslash_and_underscore</identifier>
     <autogen>__KeyToKey__ KeyCode::BACKSLASH, ModifierFlag::NONE, KeyCode::MINUS, ModifierFlag::SHIFT_L</autogen>
-    <autogen>__KeyToKey__ KeyCode::MINUS, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT, KeyCode::BACKSLASH</autogen>
+    <autogen>__KeyToKey__ KeyCode::BACKSLASH, ModifierFlag::CONTROL_L, KeyCode::MINUS, ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::MINUS, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT | ModifierFlag::NONE, KeyCode::BACKSLASH</autogen>
     <autogen>__KeyToKey__ KeyCode::DELETE, KeyCode::CONTROL_L</autogen>
     <autogen>__KeyToKey__ KeyCode::FORWARD_DELETE, KeyCode::COMMAND_L</autogen>
     <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::DELETE</autogen>
