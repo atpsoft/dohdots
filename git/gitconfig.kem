@@ -1,3 +1,12 @@
 [user]
   name = Kem Mason
   email = bulbous@gmail.com
+[Alias]
+	ksreview = "!f() { local SHA=${1:-HEAD}; local BRANCH=${2:-master}; if [ $SHA == $BRANCH ]; then SHA=HEAD; fi; git difftool -y -t Kaleidoscope $BRANCH...$SHA; }; f"
+	lg = log --color --date=local --graph --pretty=tformat:'%Cred%h%Creset -%C(blue)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+[difftool "Kaleidoscope"]
+	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
+[mergetool]
+	prompt = false
+[merge]
+	tool = Kaleidoscope
