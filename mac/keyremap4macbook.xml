@@ -1,13 +1,19 @@
 <?xml version="1.0"?>
 <root>
   <item>
-<!-- still need to set up tab -> caps-lock and esc -> tab via kinesis keyboard -->
-    <name>my well established goodness</name>
-    <appendix>swap backslash and underscore</appendix>
+    <name>swap backslash and underscore</name>
     <identifier>private.swap_backslash_and_underscore</identifier>
+    <!-- backslash key with no shift will now do the minus key plus shift (underscore) -->
     <autogen>__KeyToKey__ KeyCode::BACKSLASH, ModifierFlag::NONE, KeyCode::MINUS, ModifierFlag::SHIFT_L</autogen>
-    <autogen>__KeyToKey__ KeyCode::BACKSLASH, ModifierFlag::CONTROL_L, KeyCode::MINUS, ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L</autogen>
+    <!-- minus key plus either shift will now do backslash (no shift implied) -->
     <autogen>__KeyToKey__ KeyCode::MINUS, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_SHIFT | ModifierFlag::NONE, KeyCode::BACKSLASH</autogen>
+  </item>
+
+  <item>
+    <!-- still need to set up tab -> caps-lock and esc -> tab via kinesis keyboard -->
+    <name>Kinesis full remap</name>
+    <identifier>private.kinesis_full_remap</identifier>
+    <autogen>__KeyToKey__ KeyCode::BACKSLASH, ModifierFlag::CONTROL_L, KeyCode::MINUS, ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L</autogen>
     <autogen>__KeyToKey__ KeyCode::DELETE, KeyCode::CONTROL_L</autogen>
     <autogen>__KeyToKey__ KeyCode::FORWARD_DELETE, KeyCode::COMMAND_L</autogen>
     <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::DELETE</autogen>
