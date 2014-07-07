@@ -10,6 +10,13 @@
   </item>
 
   <item>
+    <name>make Ctrl-H backspace</name>
+    <identifier>private.ctrl_h_is_backspace</identifier>
+    <!-- H + either control key will send delete (backspace) -->
+    <autogen>__KeyToKey__ KeyCode::H, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL | ModifierFlag::NONE, KeyCode::DELETE</autogen>
+  </item>
+
+  <item>
     <!-- still need to set up tab -> caps-lock and esc -> tab via kinesis keyboard -->
     <name>Kinesis full remap</name>
     <identifier>private.kinesis_full_remap</identifier>
