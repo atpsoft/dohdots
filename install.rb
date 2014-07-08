@@ -75,6 +75,7 @@ def link_files
     ensure_exists('Library/KeyBindings')
     link_file('src/dohdots/mac/DefaultKeyBinding.dict', 'Library/KeyBindings/DefaultKeyBinding.dict')
     link_file('src/dohdots/mac/keyremap4macbook.xml', 'Library/Application Support/KeyRemap4MacBook/private.xml')
+    link_file("src/dohdots/mac/moom_preferences.#{user}.plist", 'Library/Preferences/com.manytricks.Moom.plist')
   end
   link_file('src/dohdots/git/gitignore', '.gitignore')
   link_file('src/dohdots/bash/bash_profile', '.bash_profile')
