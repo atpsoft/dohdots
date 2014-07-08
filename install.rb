@@ -1,15 +1,27 @@
 #!/usr/bin/env ruby
 require 'date'
 
-def link_file(src, dest)
+def link_file(src, dest, hard_link = false)
   src = get_path(src)
   dest = get_path(dest)
   if is_non_linked_file(dest)
     raise "File already exists: #{dest} -- aborting installation"
   end
   `rm -f #{dest}`
-  `ln -s #{src} "#{dest}"`
+  if hard_link
+    opts = ''
+  else
+    opts = ' -s'
+  end
+  `ln#{opts} #{src} "#{dest}"`
   puts "linked #{src} to #{dest}"
+end
+
+def copy_file(src, dest, hard_link = false)
+  src = get_path(src)
+  dest = get_path(dest)
+  `cp -n #{src} "#{dest}"`
+  puts "copied #{src} to #{dest}"
 end
 
 def merge_files(user, src, dest)
@@ -38,7 +50,7 @@ end
 
 def ensure_exists(file)
   path = get_path(file)
-  `mkdir -p #{path}`
+  `mkdir -p "#{path}"`
 end
 
 def is_non_linked_file(file)
@@ -74,8 +86,9 @@ def link_files
     puts "Since we're on a mac, we'll link DefaultKeyBinding.dict"
     ensure_exists('Library/KeyBindings')
     link_file('src/dohdots/mac/DefaultKeyBinding.dict', 'Library/KeyBindings/DefaultKeyBinding.dict')
+    ensure_exists('Library/Application Support/KeyRemap4MacBook')
     link_file('src/dohdots/mac/keyremap4macbook.xml', 'Library/Application Support/KeyRemap4MacBook/private.xml')
-    link_file("src/dohdots/mac/moom_preferences.#{user}.plist", 'Library/Preferences/com.manytricks.Moom.plist')
+    copy_file("src/dohdots/mac/moom_preferences.#{user}.plist", 'Library/Preferences/com.manytricks.Moom.plist', true)
   end
   link_file('src/dohdots/git/gitignore', '.gitignore')
   link_file('src/dohdots/bash/bash_profile', '.bash_profile')
