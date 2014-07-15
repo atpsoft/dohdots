@@ -7,7 +7,7 @@ def link_file(src, dest, hard_link = false)
   if is_non_linked_file(dest)
     raise "File already exists: #{dest} -- aborting installation"
   end
-  `rm -f #{dest}`
+  `rm -f "#{dest}"`
   if hard_link
     opts = ''
   else
@@ -17,8 +17,12 @@ def link_file(src, dest, hard_link = false)
   puts "linked #{src} to #{dest}"
 end
 
-def copy_file(src, dest, hard_link = false)
+def copy_file(src, dest)
   src = get_path(src)
+  if !File.exist?(src)
+    puts "not copying #{src} - file doesn't exist"
+    return
+  end
   dest = get_path(dest)
   `cp -n #{src} "#{dest}"`
   puts "copied #{src} to #{dest}"
@@ -88,7 +92,7 @@ def link_files
     link_file('src/dohdots/mac/DefaultKeyBinding.dict', 'Library/KeyBindings/DefaultKeyBinding.dict')
     ensure_exists('Library/Application Support/Karabiner')
     link_file('src/dohdots/mac/karabiner.xml', 'Library/Application Support/Karabiner/private.xml')
-    copy_file("src/dohdots/mac/moom_preferences.#{user}.plist", 'Library/Preferences/com.manytricks.Moom.plist', true)
+    copy_file("src/dohdots/mac/moom_preferences.#{user}.plist", 'Library/Preferences/com.manytricks.Moom.plist')
   end
   link_file('src/dohdots/git/gitignore', '.gitignore')
   link_file('src/dohdots/bash/bash_profile', '.bash_profile')
