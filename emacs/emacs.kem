@@ -1,10 +1,10 @@
 (fset 'kem-insert-trace
    "\C-m\C-p\C-iputs(\"foohere\C-[xinsert  ne   \C-m\"\C-n\C-a")
 
-(require 'multi-term)
-(setq multi-term-program "/bin/zsh")
-(define-key term-mode-map (kbd "C-c C-j") 'term-char-mode)
-(define-key term-raw-map (kbd "C-c C-j") 'term-line-mode)
+;;(require 'multi-term)
+;;(setq multi-term-program "/bin/zsh")
+;;(define-key term-mode-map (kbd "C-c C-j") 'term-char-mode)
+;;(define-key term-raw-map (kbd "C-c C-j") 'term-line-mode)
 
 (setq shell-filename "/bin/zsh")
 (setq explicit-shell-filename "/bin/zsh")
