@@ -19,7 +19,7 @@
       "cells": [[0, 0, 1, 1]]
     }
   },
-  { "keys": ["ctrl+x", "o"], "command": "onn_cycle_focus_group"},
+  { "keys": ["ctrl+x", "o"], "command": "doh_cycle_focus_group"},
 
   { "keys": ["super+enter"], "command": "replace_all", "args": {"close_panel": true},
      "context": [{"key": "panel", "operand": "replace"}, {"key": "panel_has_focus"}]
