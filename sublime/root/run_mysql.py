@@ -3,6 +3,16 @@ import subprocess
 import time
 import threading
 
+class AppendText(sublime_plugin.TextCommand):
+    def run(self, edit, timestamp, text):
+        if timestamp:
+            timestr = time.strftime("%Y-%m-%d %H:%M:%S ==> ", time.localtime())
+        else:
+            timestr = ""
+        self.view.insert(edit, self.view.size(), timestr + text + "\n")
+        self.view.show(self.view.size())
+
+
 class AsciiTableBuilder:
     def determine_field_widths(self, rows, headers):
         widths = []
@@ -100,24 +110,24 @@ class QueryRunnerThread(threading.Thread):
     def run(self):
         dbconn = self.query_core.get_connection(False)
         if dbconn == None:
-            sublime.set_timeout(lambda: self.on_complete(None, "unable to connect to database"), 1)
+            self.query_core.output_text(False, "unable to connect to database")
             return
 
         error_code = 0
         error, output = self.run_query_once(dbconn)
         if error != None:
             error_code = error.args[0]
-        sublime.set_timeout(lambda: self.query_core.output_text(False, output), 1)
+        self.query_core.output_text(False, output)
 
         if not (error_code in self.RECONNECT_MYSQL_ERRORS):
             return
 
         dbconn = self.query_core.get_connection(True)
         error, output = self.run_query_once(dbconn)
-        sublime.set_timeout(lambda: self.query_core.output_text(False, output), 1)
+        self.query_core.output_text(False, output)
 
     def run_query_once(self, dbconn):
-        sublime.set_timeout(lambda: self.query_core.output_text(True, self.stmt), 1)
+        self.query_core.output_text(True, self.stmt)
 
         cursor = dbconn.cursor()
         output = ""
@@ -168,14 +178,7 @@ class QueryCore:
         self.output_view.set_name(name)
 
     def output_text(self, include_timestamp, text):
-        edit = self.output_view.begin_edit()
-        if include_timestamp:
-            timestr = time.strftime("%Y-%m-%d %H:%M:%S ==> ", time.localtime())
-        else:
-            timestr = ""
-        self.output_view.insert(edit, self.output_view.size(), timestr + text + "\n")
-        self.output_view.end_edit(edit)
-        self.output_view.show(self.output_view.size())
+        self.output_view.run_command("append_text", {'timestamp': include_timestamp, 'text': text})
 
     def pick_database(self):
         self.ui_connection_list = []
@@ -204,12 +207,12 @@ class QueryCore:
         self.dbconn = None
         vals = self.connection_params
         msg = "connecting to %s on %s:%s as %s" % (vals.get('db'), vals.get('host'), vals.get('port'), vals.get('user'))
-        sublime.set_timeout(lambda: self.output_text(True, msg), 1)
+        self.output_text(True, msg)
         try:
             self.dbconn = connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
             self.dbconn.cursor().execute('SET autocommit=1,sql_safe_updates=1,sql_select_limit=500,max_join_size=1000000')
         except Exception as excpt:
-            sublime.set_timeout(lambda: self.output_text(True, str(excpt) + "\n"), 1)
+            self.output_text(True, str(excpt) + "\n")
         return self.dbconn
 
     def start_query(self):
@@ -237,7 +240,7 @@ class QueryCore:
         self.output_view.settings().set('connection_params', connection_params)
         self.connection_params = connection_params
         self.dbconn = None
-        sublime.set_timeout(self.update_output_view_name, 1)
+        self.update_output_view_name()
 
     def clear_selected_database(self):
         self.output_view.settings().erase('selected_database')
