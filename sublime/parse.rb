@@ -14,7 +14,7 @@ class SublimeFiles
     @default_path = @full_path + '/root'
     @default_file = @default_path + '/Default (OSX).sublime-keymap'
     @user_path = @full_path + '/' + ENV['USER']
-    @user_link_path = '/Users/' + ENV['USER'] + '/Library/Application Support/Sublime Text 2/Packages/User'
+    @user_link_path = @sublime_path + '/User'
     @user_file = @user_path + '/' + ENV['USER'] + '.sublime-keymap'
     @output_file = @user_path + '/Default (OSX).sublime-keymap'
     @auto_msg = "\n\n/*\n  -=- #{@user_file} -=-\n*/\n\n"
