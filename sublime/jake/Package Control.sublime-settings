@@ -1,0 +1,29 @@
+{
+	"auto_upgrade_last_run": null,
+	"installed_packages":
+	[
+		"AdvancedNewFile",
+		"Emmet",
+		"Git",
+		"Hex to HSL Color Converter",
+		"jQuery",
+		"LESS",
+		"Markdown Preview",
+		"Missing Palette Commands",
+		"Nettuts+ Fetch",
+		"Origami",
+		"Package Control",
+		"QuickRef",
+		"ReadmePlease",
+		"SideBarEnhancements",
+		"SideBarGit",
+		"SublimeLinter",
+		"SyncedSideBar",
+		"Tag",
+		"Theme - Phoenix",
+		"Theme - Soda",
+		"Twitter Bootstrap Snippets",
+		"Twitter Recess",
+		"WordHighlight"
+	]
+}

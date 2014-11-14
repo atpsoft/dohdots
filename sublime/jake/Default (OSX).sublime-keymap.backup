@@ -1,0 +1,61 @@
+[
+  // fix ctrl+p to work with mak's kill/yank
+  { "keys": ["ctrl+p"], "command": "move", "args": {"by": "lines", "extend": false, "forward": false} },
+  // { "keys": ["ctrl+p"], "command": "move", "args": {"by": "lines", "forward": false, "extend": true}, "context":
+  //   [
+  //       { "key": "sbp_emacs_has_mark", "operator": "equal", "operand": true }
+  //   ]
+  // },
+
+  // permute lines (unique & reverse)
+  // { "keys": ["ctrl+p","ctrl+l","ctrl+u"], "command": "permute_lines", "args": {"operation": "unique"}},
+  // { "keys": ["ctrl+p","ctrl+l","ctrl+r"], "command": "permute_lines", "args": {"operation": "reverse"}},
+
+  { "keys": ["ctrl+z"], "command": "undo"},
+
+  // replace
+  { "keys": ["ctrl+j","ctrl+r"], "command": "show_panel", "args": {"panel": "replace"} },
+
+  // move forward and backword by words -- set in sublemeacs
+  { "keys": ["ctrl+u"], "command": "move", "args": {"by": "words", "forward": false}},
+  { "keys": ["ctrl+o"], "command": "move", "args": {"by": "word_ends", "forward": true}},
+
+  // sublemacs changes this to ctrl+alt+g
+  { "keys": ["super+r"], "command": "show_overlay", "args": {"overlay":"goto", "show_files" : false, "text": "@"}},
+
+  // Setup macro recording and playback like emacs
+  { "keys": ["ctrl+x","("], "command": "toggle_record_macro" },
+  { "keys": ["ctrl+x",")"], "command": "toggle_record_macro" },
+  { "keys": ["ctrl+x","e"], "command": "run_macro" },
+
+  { "keys": ["ctrl+x","ctrl+w"], "command": "prompt_save_as" },
+
+  { "keys": ["ctrl+shift+super+f"],
+    "command": "run_multiple_commands",
+    "args": {
+      "commands": [
+        {"command": "find_under_expand", "context": "window"},
+        {"command": "slurp_find_string", "context": "window"},
+        {"command": "show_panel", "args": {"panel": "find"}, "context": "window"}
+      ]}},
+
+  { "keys": ["ctrl+x","ctrl+y","ctrl+q"],
+    "command": "run_multiple_commands",
+    "args": {
+      "commands": [
+        {"command": "close_all", "context": "window"},
+        {"command": "hot_exit", "context": "app"}
+        ]}},
+
+  { "keys": ["ctrl+v"], "command": "noop"}
+
+  ///////////////////////////////
+  // Copied from onn/keybindings:
+  //-----------------------------
+
+  // sed '/Copied/{h;d};H;$!d;x'
+  //sed -e 's/\(.*\)sed/\1test_sed/g'
+
+  /* FILE:DEFAULT */
+
+]

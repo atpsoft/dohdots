@@ -1,0 +1,9 @@
+[
+    {   "caption": "MySQL: run",
+        "command": "run_mysql"
+    }
+    ,{
+        "caption": "MySQL: switch database",
+        "command": "switch_mysql"
+    }
+]
