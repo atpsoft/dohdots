@@ -9,7 +9,7 @@ class SublimeFiles
   def initialize
     # DEFAULT = repo, USER = account name, OUTPUT =  sublime user default
     @full_path = File.expand_path("../", __FILE__)
-    @sublime_path = '/Users/' + ENV['USER'] + '/Library/Application Support/Sublime Text 2/Packages'
+    determine_sublime_path
     @doh_link_path = @sublime_path + '/doh'
     @default_path = @full_path + '/root'
     @default_file = @default_path + '/Default (OSX).sublime-keymap'
@@ -21,6 +21,16 @@ class SublimeFiles
     @output_contents = nil
     @user_contents = nil
     @default_contents = nil
+  end
+
+  def determine_sublime_path
+    @sublime_path = '/Users/' + ENV['USER'] + '/Library/Application Support/Sublime Text 3/Packages'
+    if !File.exist?(@sublime_path)
+      @sublime_path = '/Users/' + ENV['USER'] + '/Library/Application Support/Sublime Text 2/Packages'
+    end
+    if !File.exist?(@sublime_path)
+      raise "unable to find Sublime Text 2 or 3 packages directory"
+    end
   end
 
   def generated?
