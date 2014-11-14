@@ -10,7 +10,7 @@ class SublimeFiles
     # DEFAULT = repo, USER = account name, OUTPUT =  sublime user default
     @full_path = File.expand_path("../", __FILE__)
     @sublime_path = '/Users/' + ENV['USER'] + '/Library/Application Support/Sublime Text 2/Packages'
-    @onn_link_path = @sublime_path + '/onn'
+    @doh_link_path = @sublime_path + '/doh'
     @default_path = @full_path + '/root'
     @default_file = @default_path + '/Default (OSX).sublime-keymap'
     @user_path = @full_path + '/' + ENV['USER']
@@ -137,10 +137,10 @@ class SublimeFiles
 
 
   def do_that_voodoo
-    if !File.exist?(@onn_link_path)
+    if !File.exist?(@doh_link_path)
       # link basic path
-      puts "Creating link #{@onn_link_path}"
-      FileUtils.ln_s( @default_path, @onn_link_path, :verbose => true)
+      puts "Creating link #{@doh_link_path}"
+      FileUtils.ln_s( @default_path, @doh_link_path, :verbose => true)
     end
 
     if !File.exist?(@user_path)

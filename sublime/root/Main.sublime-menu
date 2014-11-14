@@ -12,30 +12,30 @@
                 "children":
                 [
                     {
-                        "caption": "onn",
+                        "caption": "doh",
                         "children":
                         [
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/onn/README.md"},
+                                "args": {"file": "${packages}/doh/README.md"},
                                 "caption": "Help"
                             },
                             { "caption": "-" },
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/onn/onn.sublime-settings"},
+                                "args": {"file": "${packages}/doh/doh.sublime-settings"},
                                 "caption": "Settings – Default"
                             },
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/User/onn.sublime-settings"},
+                                "args": {"file": "${packages}/User/doh.sublime-settings"},
                                 "caption": "Settings – User"
                             },
                             { "caption": "-" },
                             {
                                 "command": "open_file",
                                 "args": {
-                                    "file": "${packages}/onn/Default (OSX).sublime-keymap",
+                                    "file": "${packages}/doh/Default (OSX).sublime-keymap",
                                     "platform": "OSX"
                                 },
                                 "caption": "Key Bindings – Default"
@@ -43,7 +43,7 @@
                             {
                                 "command": "open_file",
                                 "args": {
-                                    "file": "${packages}/onn/Default (Linux).sublime-keymap",
+                                    "file": "${packages}/doh/Default (Linux).sublime-keymap",
                                     "platform": "Linux"
                                 },
                                 "caption": "Key Bindings – Default"
@@ -51,7 +51,7 @@
                             {
                                 "command": "open_file",
                                 "args": {
-                                    "file": "${packages}/onn/Default (Windows).sublime-keymap",
+                                    "file": "${packages}/doh/Default (Windows).sublime-keymap",
                                     "platform": "Windows"
                                 },
                                 "caption": "Key Bindings – Default"

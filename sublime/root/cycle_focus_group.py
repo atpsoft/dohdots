@@ -2,7 +2,7 @@ import sublime
 import sublime_plugin
 
 
-class OnnCycleFocusGroup(sublime_plugin.WindowCommand):
+class DohCycleFocusGroup(sublime_plugin.WindowCommand):
     def run(self):
         window = sublime.active_window()
         num = window.num_groups()

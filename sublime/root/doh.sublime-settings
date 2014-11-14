@@ -1,0 +1,13 @@
+{
+    "connections":
+    [
+        {
+            "name": "Schema Name",
+            "host": "localhost",
+            "user": "username",
+            "pass": "password",
+            "db"  : "database",
+            "port": 3306
+        }
+    ]
+}
