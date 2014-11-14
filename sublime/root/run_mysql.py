@@ -179,7 +179,7 @@ class QueryCore:
 
     def pick_database(self):
         self.ui_connection_list = []
-        for connection in sublime.load_settings('onn.sublime-settings').get('connections'):
+        for connection in sublime.load_settings('doh.sublime-settings').get('connections'):
             self.ui_connection_list.append([connection.get('name'), 'Host: ' + connection.get('host')])
         window = sublime.active_window()
         window.show_quick_panel(self.ui_connection_list, self.database_was_picked)
@@ -189,8 +189,8 @@ class QueryCore:
             self.clear_selected_database()
             return
 
-        onn_settings = sublime.load_settings('onn.sublime-settings')
-        connections_list = onn_settings.get('connections')
+        doh_settings = sublime.load_settings('doh.sublime-settings')
+        connections_list = doh_settings.get('connections')
 
         database = self.ui_connection_list[picked][0]
         found_connection = None
