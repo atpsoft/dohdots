@@ -3,14 +3,6 @@ import subprocess
 import time
 import threading
 
-# weird stuff needed to get MySQLdb working
-directory = os.path.dirname(os.path.realpath(__file__)) + "\\"
-sys.path.append(directory+"\\MySQLdb")
-sys.path.append(directory+"\\MySQLdb\\constants")
-
-from MySQLdb import *
-from MySQLdb.constants import *
-
 class AsciiTableBuilder:
     def determine_field_widths(self, rows, headers):
         widths = []
