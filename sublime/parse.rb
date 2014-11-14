@@ -135,7 +135,6 @@ class SublimeFiles
     return true
   end
 
-
   def do_that_voodoo
     if !File.exist?(@doh_link_path)
       # link basic path
@@ -145,10 +144,15 @@ class SublimeFiles
 
     if !File.exist?(@user_path)
       # move default sublime user directory as baseline
-      puts "Moving Sublime user directory to repository and linking."
+      puts "Moving Sublime user directory to repository."
       FileUtils.mv(@user_link_path,@user_path, :verbose => true)
+    end
+
+    if !File.exist?(@user_link_path)
+      puts "Linking Sublime user directory."
       FileUtils.ln_s(@user_path, @user_link_path, :verbose => true)
     end
+
     if !File.exist?(@user_file) # check again now that we have moved files
       # copy default file as baseline
       puts "Creating #{@user_file}"
@@ -176,7 +180,6 @@ class SublimeFiles
       self.create_output_file
     end
 
-
     if self.changed?
       # Need to check the dates on the files (mtime) to determine if there are changes to write to output or the other way
       self.split_output_file
@@ -197,6 +200,4 @@ when "links"
 else
   sfiles = SublimeFiles.new()
   sfiles.do_that_voodoo
-
 end
-
