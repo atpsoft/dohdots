@@ -155,7 +155,7 @@ class QueryRunnerThread(threading.Thread):
             else:
                 output = self.table_builder.build_line_per_row(data, headers)
             output += str(row_count) + " rows (" + elapsed_str + ")\n"
-        except Exception, excpt:
+        except Exception as excpt:
             error = excpt
             output = str(excpt) + "\n"
         return (error, output)
@@ -216,7 +216,7 @@ class QueryCore:
         try:
             self.dbconn = connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
             self.dbconn.cursor().execute('SET autocommit=1,sql_safe_updates=1,sql_select_limit=500,max_join_size=1000000')
-        except Exception, excpt:
+        except Exception as excpt:
             sublime.set_timeout(lambda: self.output_text(True, str(excpt) + "\n"), 1)
         return self.dbconn
 
