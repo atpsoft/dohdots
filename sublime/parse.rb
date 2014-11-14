@@ -158,6 +158,10 @@ class SublimeFiles
       FileUtils.mv(@user_link_path,@user_path, :verbose => true)
     end
 
+    if File.exist?(@user_link_path)
+      FileUtils.rmdir(@user_link_path)
+    end
+
     if !File.exist?(@user_link_path)
       puts "Linking Sublime user directory."
       FileUtils.ln_s(@user_path, @user_link_path, :verbose => true)
