@@ -2,6 +2,8 @@ import sublime, sublime_plugin, sys, os
 import subprocess
 import time
 import threading
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+import pymysql
 
 class AppendText(sublime_plugin.TextCommand):
     def run(self, edit, timestamp, text):
@@ -209,7 +211,7 @@ class QueryCore:
         msg = "connecting to %s on %s:%s as %s" % (vals.get('db'), vals.get('host'), vals.get('port'), vals.get('user'))
         self.output_text(True, msg)
         try:
-            self.dbconn = connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
+            self.dbconn = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
             self.dbconn.cursor().execute('SET autocommit=1,sql_safe_updates=1,sql_select_limit=500,max_join_size=1000000')
         except Exception as excpt:
             self.output_text(True, str(excpt) + "\n")
