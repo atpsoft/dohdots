@@ -1,0 +1,169 @@
+;;-*-coding: utf-8;-*-
+(define-abbrev-table 'Buffer-menu-mode-abbrev-table '())
+
+(define-abbrev-table 'Custom-mode-abbrev-table '())
+
+(define-abbrev-table 'awk-mode-abbrev-table
+  '(
+   ))
+
+(define-abbrev-table 'c++-mode-abbrev-table
+  '(
+   ))
+
+(define-abbrev-table 'c-mode-abbrev-table
+  '(
+   ))
+
+(define-abbrev-table 'comint-mode-abbrev-table '())
+
+(define-abbrev-table 'completion-list-mode-abbrev-table '())
+
+(define-abbrev-table 'conf-colon-mode-abbrev-table '())
+
+(define-abbrev-table 'conf-javaprop-mode-abbrev-table '())
+
+(define-abbrev-table 'conf-ppd-mode-abbrev-table '())
+
+(define-abbrev-table 'conf-space-mode-abbrev-table '())
+
+(define-abbrev-table 'conf-unix-mode-abbrev-table '())
+
+(define-abbrev-table 'conf-windows-mode-abbrev-table '())
+
+(define-abbrev-table 'conf-xdefaults-mode-abbrev-table '())
+
+(define-abbrev-table 'display-time-world-mode-abbrev-table '())
+
+(define-abbrev-table 'emacs-lisp-mode-abbrev-table '())
+
+(define-abbrev-table 'fundamental-mode-abbrev-table '())
+
+(define-abbrev-table 'global-abbrev-table '())
+
+(define-abbrev-table 'help-mode-abbrev-table '())
+
+(define-abbrev-table 'html-mode-abbrev-table '())
+
+(define-abbrev-table 'idl-mode-abbrev-table '())
+
+(define-abbrev-table 'java-mode-abbrev-table
+  '(
+   ))
+
+(define-abbrev-table 'lisp-mode-abbrev-table '())
+
+(define-abbrev-table 'nxml-mode-abbrev-table '())
+
+(define-abbrev-table 'objc-mode-abbrev-table
+  '(
+   ))
+
+(define-abbrev-table 'occur-edit-mode-abbrev-table '())
+
+(define-abbrev-table 'occur-mode-abbrev-table '())
+
+(define-abbrev-table 'perl-mode-abbrev-table '())
+
+(define-abbrev-table 'php-mode-abbrev-table '())
+
+(define-abbrev-table 'pike-mode-abbrev-table
+  '(
+   ))
+
+(define-abbrev-table 'process-menu-mode-abbrev-table '())
+
+(define-abbrev-table 'prog-mode-abbrev-table '())
+
+(define-abbrev-table 'rhtml-mode-abbrev-table
+  '(
+    ("%" "" snippet-abbrev-rhtml-mode-% 0)
+    ("%%" "" snippet-abbrev-rhtml-mode-%% 0)
+    ("%ft" "" snippet-abbrev-rhtml-mode-%ft 0)
+    ("%h" "" snippet-abbrev-rhtml-mode-%h 0)
+    ("%if" "" snippet-abbrev-rhtml-mode-%if 0)
+    ("%ifel" "" snippet-abbrev-rhtml-mode-%ifel 0)
+    ("%lia" "" snippet-abbrev-rhtml-mode-%lia 0)
+    ("%liai" "" snippet-abbrev-rhtml-mode-%liai 0)
+    ("%lic" "" snippet-abbrev-rhtml-mode-%lic 0)
+    ("%lica" "" snippet-abbrev-rhtml-mode-%lica 0)
+    ("%licai" "" snippet-abbrev-rhtml-mode-%licai 0)
+    ("%unless" "" snippet-abbrev-rhtml-mode-%unless 0)
+   ))
+
+(define-abbrev-table 'ruby-mode-abbrev-table
+  '(
+    ("ae" "" snippet-abbrev-ruby-mode-ae 0)
+    ("ako" "" snippet-abbrev-ruby-mode-ako 0)
+    ("ann" "" snippet-abbrev-ruby-mode-ann 0)
+    ("ar" "" snippet-abbrev-ruby-mode-ar 0)
+    ("ars" "" snippet-abbrev-ruby-mode-ars 0)
+    ("art" "" snippet-abbrev-ruby-mode-art 0)
+    ("bt" "" snippet-abbrev-ruby-mode-bt 0)
+    ("deft" "" snippet-abbrev-ruby-mode-deft 0)
+    ("flsh" "" snippet-abbrev-ruby-mode-flsh 0)
+    ("fr" "FROM" nil 0)
+    ("ha" "HAVING" nil 0)
+    ("hm" "" snippet-abbrev-ruby-mode-hm 0)
+    ("ho" "" snippet-abbrev-ruby-mode-ho 0)
+    ("jo" "JOIN" nil 0)
+    ("li" "LIMIT" nil 0)
+    ("logi" "" snippet-abbrev-ruby-mode-logi 0)
+    ("par" "" snippet-abbrev-ruby-mode-par 0)
+    ("ra" "" snippet-abbrev-ruby-mode-ra 0)
+    ("ral" "" snippet-abbrev-ruby-mode-ral 0)
+    ("rcea" "" snippet-abbrev-ruby-mode-rcea 0)
+    ("rcec" "" snippet-abbrev-ruby-mode-rcec 0)
+    ("rceca" "" snippet-abbrev-ruby-mode-rceca 0)
+    ("rea" "" snippet-abbrev-ruby-mode-rea 0)
+    ("reai" "" snippet-abbrev-ruby-mode-reai 0)
+    ("rec" "" snippet-abbrev-ruby-mode-rec 0)
+    ("reca" "" snippet-abbrev-ruby-mode-reca 0)
+    ("recai" "" snippet-abbrev-ruby-mode-recai 0)
+    ("rf" "" snippet-abbrev-ruby-mode-rf 0)
+    ("rfu" "" snippet-abbrev-ruby-mode-rfu 0)
+    ("ri" "" snippet-abbrev-ruby-mode-ri 0)
+    ("ril" "" snippet-abbrev-ruby-mode-ril 0)
+    ("rit" "" snippet-abbrev-ruby-mode-rit 0)
+    ("rl" "" snippet-abbrev-ruby-mode-rl 0)
+    ("rn" "" snippet-abbrev-ruby-mode-rn 0)
+    ("rns" "" snippet-abbrev-ruby-mode-rns 0)
+    ("rp" "" snippet-abbrev-ruby-mode-rp 0)
+    ("rpc" "" snippet-abbrev-ruby-mode-rpc 0)
+    ("rpl" "" snippet-abbrev-ruby-mode-rpl 0)
+    ("rpo" "" snippet-abbrev-ruby-mode-rpo 0)
+    ("rps" "" snippet-abbrev-ruby-mode-rps 0)
+    ("rt" "" snippet-abbrev-ruby-mode-rt 0)
+    ("rtl" "" snippet-abbrev-ruby-mode-rtl 0)
+    ("rtlt" "" snippet-abbrev-ruby-mode-rtlt 0)
+    ("rts" "" snippet-abbrev-ruby-mode-rts 0)
+    ("se" "SELECT" nil 0)
+    ("ses" "" snippet-abbrev-ruby-mode-ses 0)
+    ("up" "UPDATE" nil 0)
+    ("va" "" snippet-abbrev-ruby-mode-va 0)
+    ("vc" "" snippet-abbrev-ruby-mode-vc 0)
+    ("ve" "" snippet-abbrev-ruby-mode-ve 0)
+    ("vf" "" snippet-abbrev-ruby-mode-vf 0)
+    ("vn" "" snippet-abbrev-ruby-mode-vn 0)
+    ("vp" "" snippet-abbrev-ruby-mode-vp 0)
+    ("vu" "" snippet-abbrev-ruby-mode-vu 0)
+    ("wh" "WHERE" nil 0)
+   ))
+
+(define-abbrev-table 'select-tags-table-mode-abbrev-table '())
+
+(define-abbrev-table 'sgml-mode-abbrev-table '())
+
+(define-abbrev-table 'sh-mode-abbrev-table '())
+
+(define-abbrev-table 'special-mode-abbrev-table '())
+
+(define-abbrev-table 'speedbar-mode-abbrev-table '())
+
+(define-abbrev-table 'sql-mode-abbrev-table '())
+
+(define-abbrev-table 'text-mode-abbrev-table '())
+
+(define-abbrev-table 'todo-mode-abbrev-table '())
+
+(define-abbrev-table 'vc-git-log-view-mode-abbrev-table '())
