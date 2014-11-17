@@ -245,8 +245,8 @@
   },
 
   { "keys": ["ctrl+j", "ctrl+d"], "command": "noop"},
-  { "keys": ["ctrl+j", "ctrl+g", "ctrl+d"], "command": "git_diff_tool"},
-  { "keys": ["ctrl+j", "ctrl+g", "ctrl+c"], "command": "git_checkout"},
+  { "keys": ["ctrl+j", "ctrl+g", "ctrl+d"], "command": "git_raw", "args": { "command": "git difftool", "append_current_file": true, "may_change_files": false } },
+  { "keys": ["ctrl+j", "ctrl+g", "ctrl+c"], "command": "git_raw", "args": { "command": "git checkout", "append_current_file": true } },
   { "keys": ["ctrl+j", "ctrl+i"], "command": "reindent"},
   { "keys": ["ctrl+j", "ctrl+r"], "command": "show_panel", "args": {"panel": "replace"} },
   { "keys": ["ctrl+j","ctrl+l"], "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
