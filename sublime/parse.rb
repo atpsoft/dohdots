@@ -158,7 +158,7 @@ class SublimeFiles
       FileUtils.mv(@user_link_path,@user_path, :verbose => true)
     end
 
-    if File.exist?(@user_link_path)
+    if File.exist?(@user_link_path) && !File.symlink?(@user_link_path)
       FileUtils.rmdir(@user_link_path)
     end
 
