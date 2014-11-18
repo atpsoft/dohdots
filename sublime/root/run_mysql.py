@@ -166,7 +166,8 @@ class QueryRunnerThread(threading.Thread):
 
 
 class QueryCore:
-    def __init__(self):
+    def __init__(self, source_view):
+        self.source_view = source_view
         self.output_view = None
         self.source_tab_name = None
         self.table_builder = AsciiTableBuilder()
@@ -210,6 +211,10 @@ class QueryCore:
         vals = self.connection_params
         msg = "connecting to %s on %s:%s as %s" % (vals.get('db'), vals.get('host'), vals.get('port'), vals.get('user'))
         self.output_text(True, msg)
+        if vals.get('theme'):
+            self.source_view.settings().set('color_scheme', vals.get('theme'))
+            self.output_view.settings().set('color_scheme', vals.get('theme'))
+
         try:
             self.dbconn = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
             self.dbconn.cursor().execute('SET autocommit=1,sql_safe_updates=1,sql_select_limit=500,max_join_size=1000000')
@@ -267,7 +272,7 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
 
     def run(self, edit):
         if self.query_core == None:
-            self.query_core = QueryCore()
+            self.query_core = QueryCore(self.view)
 
         if self.view.settings().get('run_mysql_source_file') != None:
             edit = self.view.begin_edit()

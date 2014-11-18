@@ -7,7 +7,8 @@
             "user": "username",
             "pass": "password",
             "db"  : "database",
-            "port": 3306
+            "port": 3306,
+            "theme": "Packages/Color Scheme - Default/Amy.tmTheme"
         }
     ]
 }
