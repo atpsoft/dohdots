@@ -54,7 +54,7 @@ function gitchanged
 # recursive grep, ignoring vcs data, log files, preferences, etc.
 
 function fc {
- ack --nogroup  "$@" .
+ ack -g "^(?!.*(fonts/|combined_\d*\.js|\.log|min\.css|swfobject\.js|jquery.*\.js).*).*$" . | ack --nogroup -x "$@"
 }
 
 # same as fc, but case insensitive
