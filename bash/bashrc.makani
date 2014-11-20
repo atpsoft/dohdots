@@ -1,4 +1,5 @@
 export PAGER=cat
+export MCSERVER=/Users/makani/stuff/minecraft/server
 
 # same as fl, but ruby code only
 function flr {
