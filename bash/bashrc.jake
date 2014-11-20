@@ -1,5 +1,5 @@
 
-export PATH=.:~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/bin:/usr/sbin:/sbin:/opt/local/bin:/usr/local/mysql/bin:/usr/bin:/opt/local/sbin:~/.rvm/bin:~/src/lsfs_main/bin:~/Dropbox/bin
+export PATH=.:~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/bin:/usr/sbin:/sbin:/opt/local/bin:/usr/local/mysql/bin:/usr/bin:/opt/local/sbin:~/.rvm/bin:~/src/lsfs_main/bin:~/Dropbox/bin:~/BTSync/main/bin
 
 export EDITOR='subl -w'
 
@@ -18,11 +18,8 @@ alias lsfs="cd ~/src/lsfs_main"
 alias aiview="~/src/lsfs_main/apps/agent_interface/views"
 alias aipublic="~/src/lsfs_main/apps/agent_interface/public"
 
-alias bsdir="cd ~/src/bootstrap"
-alias lessdir="cd ~/src/bootstrap/less"
-
 alias srcdir="cd ~/src"
-alias workdir="cd ~/Dropbox/docs/work"
+alias workdir="cd ~/BTSync/main/docs/work"
 
 # ssh dwcs -L 9306:10.0.4.11:3306 -nN
 
@@ -61,6 +58,10 @@ alias show_options='shopt'
 # name tabs to any custom name
 nametab() { printf "\033]0;"$@"\007\003"; }
 
+# escape codes helper
+if [ -f ~/BTSync/main/bin/iterm_helpers.sh ]; then
+  . ~/BTSync/main/bin/iterm_helpers.sh
+fi
 
 #--------------------------
 # File & folder management:
@@ -134,8 +135,6 @@ function gpl() {
      cd ../bootstrap_ai
      git pl
      cd ../bootstrap_mi
-     git pl
-     cd ../lsfs_devops
      git pl
      cd ~/src/lsfs_main
   else
