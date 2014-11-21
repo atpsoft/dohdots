@@ -1,6 +1,7 @@
 {
 	"installed_packages":
 	[
+		"Fix Mac Path",
 		"Git",
 		"Missing Palette Commands",
 		"Origami",
