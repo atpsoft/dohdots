@@ -1,4 +1,6 @@
-export PAGER=cat
+export VISUAL=subl
+export EDITOR=subl
+export PAGER=more
 export MCSERVER=/Users/makani/stuff/minecraft/server
 
 # same as fl, but ruby code only
