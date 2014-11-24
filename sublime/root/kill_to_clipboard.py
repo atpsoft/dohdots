@@ -11,7 +11,7 @@ class KillLocation:
     def check_for_cursor_change(self, view, save):
         view_id = view.id()
         if view_id != self.kill_id:
-            print("kill_to_clipboard: check_for_cursor_change; view id changed, setting locked to true")
+            # print("kill_to_clipboard: check_for_cursor_change; view id changed, setting locked to true")
             self.locked = True
 
         compare_points = []
@@ -19,12 +19,12 @@ class KillLocation:
             compare_points.append(selreg.begin())
 
         if compare_points != self.kill_points:
-            print("kill_to_clipboard: check_for_cursor_change; points changed, setting locked to true")
+            # print("kill_to_clipboard: check_for_cursor_change; points changed, setting locked to true")
             self.locked = True
 
         if save:
-            print("kill_to_clipboard: setting kill points to " + str(self.kill_points))
-            print("kill_to_clipboard: setting kill_id to " + str(self.kill_id))
+            # print("kill_to_clipboard: setting kill points to " + str(self.kill_points))
+            # print("kill_to_clipboard: setting kill_id to " + str(self.kill_id))
             self.kill_points = compare_points
             self.kill_id = view_id
 
@@ -51,23 +51,23 @@ class KillToClipboardCommand(sublime_plugin.TextCommand):
                 selreg = sublime.Region(selreg.a, selreg.a + 1)
             text_items.append(self.view.substr(selreg))
         text = "\n".join(text_items)
-        print("kill_to_clipboard: selected text " + str(text))
+        # print("kill_to_clipboard: selected text " + str(text))
 
         if kill_location.is_locked():
-            print("kill_to_clipboard: is locked; replacing clipboard contents")
+            # print("kill_to_clipboard: is locked; replacing clipboard contents")
             sublime.set_clipboard(text)
         else:
-            print("kill_to_clipboard: is NOT locked; appending to clipboard")
+            # print("kill_to_clipboard: is NOT locked; appending to clipboard")
             sublime.set_clipboard(sublime.get_clipboard() + text)
 
         kill_location.unlock()
-        print("kill_to_clipboard: done with clipboard; set to unlock")
+        # print("kill_to_clipboard: done with clipboard; set to unlock")
         self.view.run_command("right_delete")
 
 
 class YankFromClipboardCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        print("kill_to_clipboard: locking inside yank")
+        # print("kill_to_clipboard: locking inside yank")
         kill_location.lock()
         self.view.run_command("paste")
 
