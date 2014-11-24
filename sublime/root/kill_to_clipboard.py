@@ -54,10 +54,10 @@ class KillToClipboardCommand(sublime_plugin.TextCommand):
         print("kill_to_clipboard: selected text " + str(text))
 
         if kill_location.is_locked():
-            print("kill_to_clipbard: is locked; replacing clipboard contents")
+            print("kill_to_clipboard: is locked; replacing clipboard contents")
             sublime.set_clipboard(text)
         else:
-            print("kill_to_clipbard: is NOT locked; appending to clipboard")
+            print("kill_to_clipboard: is NOT locked; appending to clipboard")
             sublime.set_clipboard(sublime.get_clipboard() + text)
 
         kill_location.unlock()
