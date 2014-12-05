@@ -97,8 +97,3 @@ export CYGWIN="binmode ntsec tty"
 
 # hook for platform,whatever additions
 [[ -s "$HOME/.bashrc.local" ]] && source "$HOME/.bashrc.local"
-
-# this loads RVM
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
