@@ -225,8 +225,6 @@
   { "keys": ["super+u"], "command": "upper_case" },
   { "keys": ["super+l"], "command": "lower_case" },
   { "keys": ["super+shift+g"], "command": "find_all_under" },
-  { "keys": ["ctrl+x", "2"], "command": "create_pane_with_file", "args": {"direction": "right"} },
-  { "keys": ["ctrl+x", "3"], "command": "create_pane_with_file", "args": {"direction": "down"} },
 
   {
     "keys": ["ctrl+x","1"],

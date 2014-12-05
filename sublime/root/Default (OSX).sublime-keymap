@@ -210,9 +210,5 @@
 
   ////////////// basic editing keybinds from Emacs
   { "keys": ["ctrl+h"], "command": "left_delete"},
-  { "keys": ["ctrl+d"], "command": "right_delete"},
-
-  ////////////// split windows
-  { "keys": ["ctrl+x", "2"], "command": "create_pane_with_file", "args": {"direction": "down"} },
-  { "keys": ["ctrl+x", "3"], "command": "create_pane_with_file", "args": {"direction": "right"} }
+  { "keys": ["ctrl+d"], "command": "right_delete"}
 ]
