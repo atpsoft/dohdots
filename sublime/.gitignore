@@ -1,6 +1,5 @@
 makani/SublimeREPLHistory
 Package Control.cache
 Package Control.system-ca-bundle
-makani/doh.sublime-settings
-jake/doh.sublime-settings
+doh.sublime-settings
 *.backup
