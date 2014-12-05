@@ -212,6 +212,9 @@
   { "keys": ["ctrl+h"], "command": "left_delete"},
   { "keys": ["ctrl+d"], "command": "right_delete"},
 
+  ////////////// split windows
+  { "keys": ["ctrl+x", "2"], "command": "create_pane_with_file", "args": {"direction": "down"} },
+  { "keys": ["ctrl+x", "3"], "command": "create_pane_with_file", "args": {"direction": "right"} },
 
 /*
   -=- /Users/kem/src/dohdots/sublime/kem/kem.sublime-keymap -=-
@@ -225,8 +228,6 @@
   { "keys": ["super+u"], "command": "upper_case" },
   { "keys": ["super+l"], "command": "lower_case" },
   { "keys": ["super+shift+g"], "command": "find_all_under" },
-  { "keys": ["ctrl+x", "2"], "command": "create_pane_with_file", "args": {"direction": "right"} },
-  { "keys": ["ctrl+x", "3"], "command": "create_pane_with_file", "args": {"direction": "down"} },
 
   {
     "keys": ["ctrl+x","1"],
