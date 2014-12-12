@@ -304,6 +304,7 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
             stmt = self.view.substr(region).strip()
 
         self.ensure_output_view()
+        self.tweak_view_settings(self.view)
 
         if len(stmt) == 0:
             self.query_core.output_text(True, stmt + "\nunable to find statement")
@@ -314,6 +315,9 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
             self.query_core.start_query()
         else:
             self.query_core.pick_database()
+
+    def tweak_view_settings(self, target_view):
+        target_view.settings().set("rulers", [])
 
     def has_sqlstmt_start(self, line):
         if len(line) == 0:
@@ -370,9 +374,10 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
 
     def build_output_view(self):
         window = sublime.active_window()
-        view = window.new_file()
-        view.settings().set('run_mysql_source_file', self.current_file)
-        view.settings().set('word_wrap', False)
-        view.settings().set("RunInScratch", True)
-        view.set_scratch(True)
-        return view
+        new_view = window.new_file()
+        new_view.settings().set('run_mysql_source_file', self.current_file)
+        new_view.settings().set('word_wrap', False)
+        new_view.settings().set("RunInScratch", True)
+        self.tweak_view_settings(new_view)
+        new_view.set_scratch(True)
+        return new_view
