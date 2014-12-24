@@ -268,5 +268,7 @@
         {"command": "hot_exit", "context": "app"}
         ]}},
 
+  { "keys": ["ctrl+x", "o"], "command": "doh_cycle_focus_group"},
+
   { "keys": ["ctrl+v"], "command": "noop"}
 ]
