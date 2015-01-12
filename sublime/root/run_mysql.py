@@ -202,14 +202,14 @@ class QueryCore:
             return
 
         doh_settings = sublime.load_settings('doh.sublime-settings')
-        connections_list = doh_settings.get('connections')
+        profiles_list = doh_settings.get('profiles')
 
-        database = self.ui_connection_list[picked][0]
-        found_connection = None
-        for connection in connections_list:
-            if connection.get('name') == database:
-                found_connection = connection
-        self.set_selected_profile(database, found_connection)
+        profile_name = self.ui_connection_list[picked][0]
+        found_profile = None
+        for profile in profiles_list:
+            if profile.get('name') == profile_name:
+                found_profile = profile
+        self.set_selected_profile(profile_name, found_profile)
         self.start_query()
 
     def connect_to_database(self):
