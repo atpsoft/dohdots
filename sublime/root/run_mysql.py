@@ -386,15 +386,15 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
 
 class ActivateViews(sublime_plugin.EventListener):
     def __init__(self):
-        print("in init")
         self.activating = False
 
-    def bring_to_front(self, view):
-        group, index = view.window().get_view_index(view)
-        print("group = " + str(group) + " index = " + str(index))
-        view.window().set_view_index(view, group, index)
+    def bring_to_front(self, view, orig):
+        if view == None:
+            return
+        view.window().focus_view(view)
+        view.window().focus_view(orig)
 
-    def bring_to_front_mirror_view(self, view):
+    def get_mirror_view(self, view):
         look_at_filename = False
         if view.settings().get('run_mysql_source_file') != None:
             look_for_file = view.settings().get('run_mysql_source_file')
@@ -405,15 +405,17 @@ class ActivateViews(sublime_plugin.EventListener):
             for check_view in window.views():
                 if look_at_filename:
                     if check_view.file_name() == look_for_file:
-                        self.bring_to_front(check_view)
+                        return check_view
                 else:
                     if check_view.settings().get('run_mysql_source_file') == look_for_file:
-                        self.bring_to_front(check_view)
+                        return check_view
 
     def on_activated(self, view):
+        if self.activating:
+            return
+        self.activating = True
         if view.settings().get('run_mysql_source_file') != None:
-            print("activating output window")
-            self.bring_to_front_mirror_view(view)
+            self.bring_to_front(self.get_mirror_view(view), view)
         elif view.settings().get('parent_view') == True:
-            print("activating query window")
-            self.bring_to_front_mirror_view(view)
+            self.bring_to_front(self.get_mirror_view(view), view)
+        self.activating = False
