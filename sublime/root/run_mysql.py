@@ -175,6 +175,8 @@ class QueryCore:
         self.connection_params = None
         self.dbconn = None
         self.stmt = None
+        self.allow_read_stmts = False
+        self.allow_write_stmts = False
 
     def update_output_view_name(self):
         name = 'mysql (%s): %s' % (self.selected_database, self.source_tab_name)
@@ -259,8 +261,10 @@ class QueryCore:
     def has_selected_database(self):
         return (self.selected_database != None)
 
-    def save_stmt(self, stmt):
+    def save_stmt(self, stmt, allow_read, allow_write):
         self.stmt = stmt
+        self.allow_read_stmts = allow_read
+        self.allow_write_stmts = allow_write
 
 
 class RunMysqlCommand(sublime_plugin.TextCommand):
@@ -311,7 +315,7 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
             self.query_core.output_text(True, stmt + "\nunable to find statement")
             return
 
-        self.query_core.save_stmt(stmt)
+        self.query_core.save_stmt(stmt, args["allow_read"], args["allow_write"])
         if self.query_core.has_selected_database():
             self.query_core.start_query()
         else:
