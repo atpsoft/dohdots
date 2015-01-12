@@ -176,7 +176,7 @@ class QueryCore:
         self.source_tab_name = None
         self.table_builder = AsciiTableBuilder()
         self.selected_profile = None
-        self.connection_params = None
+        self.profile_config = None
         self.dbconn = None
         self.stmt = None
         self.allow_read_stmts = False
@@ -214,7 +214,7 @@ class QueryCore:
 
     def connect_to_database(self):
         self.dbconn = None
-        vals = self.connection_params
+        vals = self.profile_config
         msg = "connecting to %s on %s:%s as %s" % (vals.get('db'), vals.get('host'), vals.get('port'), vals.get('user'))
         self.output_text(True, msg)
         if vals.get('theme'):
@@ -250,7 +250,7 @@ class QueryCore:
         self.output_view = view
         self.source_tab_name = source_tab_name
         self.selected_profile = self.output_view.settings().get('selected_profile')
-        self.connection_params = self.output_view.settings().get('connection_params')
+        self.profile_config = self.output_view.settings().get('profile_config')
         self.dbconn = None
 
     def has_output_view(self):
@@ -261,19 +261,19 @@ class QueryCore:
             self.connect_to_database()
         return self.dbconn
 
-    def set_selected_profile(self, database, connection_params):
-        self.output_view.settings().set('selected_profile', database)
-        self.selected_profile = database
-        self.output_view.settings().set('connection_params', connection_params)
-        self.connection_params = connection_params
+    def set_selected_profile(self, profile_name, profile_config):
+        self.output_view.settings().set('selected_profile', profile_name)
+        self.selected_profile = profile_name
+        self.output_view.settings().set('profile_config', profile_config)
+        self.profile_config = profile_config
         self.dbconn = None
         self.update_output_view_name()
 
     def clear_selected_profile(self):
         self.output_view.settings().erase('selected_profile')
         self.selected_profile = None
-        self.output_view.settings().erase('connection_params')
-        self.connection_params = None
+        self.output_view.settings().erase('profile_config')
+        self.profile_config = None
         self.dbconn = None
 
     def has_selected_profile(self):
