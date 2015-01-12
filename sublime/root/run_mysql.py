@@ -103,14 +103,15 @@ class AsciiTableBuilder:
 class QueryRunnerThread(threading.Thread):
     RECONNECT_MYSQL_ERRORS = frozenset([2006, 2013])
 
-    def __init__(self, query_core, stmt, table_builder):
+    def __init__(self, query_core, connection_name, stmt, table_builder):
         self.query_core = query_core
+        self.connection_name = connection_name
         self.stmt = stmt
         self.table_builder = table_builder
         threading.Thread.__init__(self)
 
     def run(self):
-        dbconn = self.query_core.get_connection(False)
+        dbconn = self.query_core.get_connection(self.connection_name, False)
         if dbconn == None:
             self.query_core.output_text(False, "unable to connect to database")
             return
@@ -124,7 +125,7 @@ class QueryRunnerThread(threading.Thread):
         if not (error_code in self.RECONNECT_MYSQL_ERRORS):
             return
 
-        dbconn = self.query_core.get_connection(True)
+        dbconn = self.query_core.get_connection(self.connection_name, True)
         error, output = self.run_query_once(dbconn)
         self.query_core.output_text(False, output)
 
@@ -177,7 +178,7 @@ class QueryCore:
         self.table_builder = AsciiTableBuilder()
         self.selected_profile = None
         self.profile_config = None
-        self.dbconn = None
+        self.connections = {}
         self.stmt = None
         self.allow_read_stmts = False
         self.allow_write_stmts = False
@@ -222,10 +223,10 @@ class QueryCore:
                 found_connection = connection_config
         return found_connection
 
-    def connect_to_database(self):
-        self.dbconn = None
+    def connect_to_database(self, connection_name):
+        self.connections[connection_name] = None
+        retval = None
 
-        connection_name = self.profile_config.get('connection')
         vals = self.lookup_connection_params(connection_name)
         if not vals:
             self.output_text(True, "unable to find settings for connection " + connection_name + "\n")
@@ -242,11 +243,13 @@ class QueryCore:
             self.source_view.settings().erase('color_scheme')
 
         try:
-            self.dbconn = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
-            self.dbconn.cursor().execute('SET autocommit=1,sql_safe_updates=1,sql_select_limit=500,max_join_size=1000000')
+            retval = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
+            retval.cursor().execute('SET autocommit=1,sql_safe_updates=1,sql_select_limit=500,max_join_size=1000000')
         except Exception as excpt:
             self.output_text(True, str(excpt) + "\n")
-        return self.dbconn
+
+        self.connections[connection_name] = retval
+        return retval
 
     def is_query_allowed(self):
         first_word = self.stmt.partition(' ')[0].lower()
@@ -265,7 +268,9 @@ class QueryCore:
     def start_query(self):
         if not self.is_query_allowed():
             return
-        thread = QueryRunnerThread(self, self.stmt, self.table_builder)
+
+        connection_name = self.profile_config.get('connection')
+        thread = QueryRunnerThread(self, connection_name, self.stmt, self.table_builder)
         thread.start()
 
     def save_view(self, view, source_tab_name):
@@ -273,22 +278,23 @@ class QueryCore:
         self.source_tab_name = source_tab_name
         self.selected_profile = self.output_view.settings().get('selected_profile')
         self.profile_config = self.output_view.settings().get('profile_config')
-        self.dbconn = None
+        self.connections = {}
 
     def has_output_view(self):
         return (self.output_view != None) and (self.output_view.window() != None)
 
-    def get_connection(self, force_new):
-        if (self.dbconn == None) or force_new:
-            self.connect_to_database()
-        return self.dbconn
+    def get_connection(self, connection_name, force_new):
+        retval = self.connections.get(connection_name)
+        if force_new or (not retval):
+            retval = self.connect_to_database(connection_name)
+        return retval
 
     def set_selected_profile(self, profile_name, profile_config):
         self.output_view.settings().set('selected_profile', profile_name)
         self.selected_profile = profile_name
         self.output_view.settings().set('profile_config', profile_config)
         self.profile_config = profile_config
-        self.dbconn = None
+        self.connections = {}
         self.update_output_view_name()
 
     def clear_selected_profile(self):
@@ -296,7 +302,7 @@ class QueryCore:
         self.selected_profile = None
         self.output_view.settings().erase('profile_config')
         self.profile_config = None
-        self.dbconn = None
+        self.connections = {}
 
     def has_selected_profile(self):
         return (self.selected_profile != None)
