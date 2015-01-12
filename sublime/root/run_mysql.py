@@ -175,7 +175,7 @@ class QueryCore:
         self.output_view = None
         self.source_tab_name = None
         self.table_builder = AsciiTableBuilder()
-        self.selected_database = None
+        self.selected_profile = None
         self.connection_params = None
         self.dbconn = None
         self.stmt = None
@@ -183,7 +183,7 @@ class QueryCore:
         self.allow_write_stmts = False
 
     def update_output_view_name(self):
-        name = 'mysql (%s): %s' % (self.selected_database, self.source_tab_name)
+        name = 'mysql (%s): %s' % (self.selected_profile, self.source_tab_name)
         self.output_view.set_name(name)
 
     def output_text(self, include_timestamp, text):
@@ -198,7 +198,7 @@ class QueryCore:
 
     def database_was_picked(self, picked):
         if picked < 0:
-            self.clear_selected_database()
+            self.clear_selected_profile()
             return
 
         doh_settings = sublime.load_settings('doh.sublime-settings')
@@ -209,7 +209,7 @@ class QueryCore:
         for connection in connections_list:
             if connection.get('name') == database:
                 found_connection = connection
-        self.set_selected_database(database, found_connection)
+        self.set_selected_profile(database, found_connection)
         self.start_query()
 
     def connect_to_database(self):
@@ -249,7 +249,7 @@ class QueryCore:
     def save_view(self, view, source_tab_name):
         self.output_view = view
         self.source_tab_name = source_tab_name
-        self.selected_database = self.output_view.settings().get('selected_database')
+        self.selected_profile = self.output_view.settings().get('selected_profile')
         self.connection_params = self.output_view.settings().get('connection_params')
         self.dbconn = None
 
@@ -261,23 +261,23 @@ class QueryCore:
             self.connect_to_database()
         return self.dbconn
 
-    def set_selected_database(self, database, connection_params):
-        self.output_view.settings().set('selected_database', database)
-        self.selected_database = database
+    def set_selected_profile(self, database, connection_params):
+        self.output_view.settings().set('selected_profile', database)
+        self.selected_profile = database
         self.output_view.settings().set('connection_params', connection_params)
         self.connection_params = connection_params
         self.dbconn = None
         self.update_output_view_name()
 
-    def clear_selected_database(self):
-        self.output_view.settings().erase('selected_database')
-        self.selected_database = None
+    def clear_selected_profile(self):
+        self.output_view.settings().erase('selected_profile')
+        self.selected_profile = None
         self.output_view.settings().erase('connection_params')
         self.connection_params = None
         self.dbconn = None
 
-    def has_selected_database(self):
-        return (self.selected_database != None)
+    def has_selected_profile(self):
+        return (self.selected_profile != None)
 
     def save_stmt(self, stmt, allow_read, allow_write):
         self.stmt = stmt
@@ -334,7 +334,7 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
             return
 
         self.query_core.save_stmt(stmt, args["allow_read"], args["allow_write"])
-        if self.query_core.has_selected_database():
+        if self.query_core.has_selected_profile():
             self.query_core.start_query()
         else:
             self.query_core.pick_database()
