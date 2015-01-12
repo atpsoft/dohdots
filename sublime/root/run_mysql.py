@@ -167,9 +167,9 @@ class QueryRunnerThread(threading.Thread):
 
 
 class QueryCore:
-    # note: set, use are allowed as both a read or write
-    READ_CMDS = frozenset(['select','use','describe','desc','explain','show','set'])
-    WRITE_CMDS = frozenset(['update','delete','insert','replace','use','load','create','alter','truncate','commit','set','drop','rename'])
+    READ_CMDS = frozenset(['select','describe','desc','explain','show'])
+    WRITE_CMDS = frozenset(['update','delete','insert','replace','load','create','alter','truncate','commit','drop','rename'])
+    NEUTRAL_CMDS = frozenset(['use','set'])
 
     def __init__(self, source_view):
         self.source_view = source_view
@@ -253,6 +253,9 @@ class QueryCore:
 
     def is_query_allowed(self):
         first_word = self.stmt.partition(' ')[0].lower()
+        if first_word in self.NEUTRAL_CMDS:
+            return True
+
         read_ok = (first_word in self.READ_CMDS) and self.allow_read_stmts
         write_ok = (first_word in self.WRITE_CMDS) and self.allow_write_stmts
         if (read_ok or write_ok):
