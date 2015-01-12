@@ -259,7 +259,7 @@ class QueryCore:
         elif not self.allow_write_stmts:
             self.output_text(True, "unable to execute write statements with that command")
         else:
-            self.output_text(True, "BUG! unable to execute statements with that command")
+            self.output_text(True, "either allow_read and allow_write are both false, or there is a bug in the code")
         return False
 
     def start_query(self):
