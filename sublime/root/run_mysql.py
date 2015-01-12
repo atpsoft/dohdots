@@ -192,7 +192,7 @@ class QueryCore:
     def pick_profile(self):
         self.ui_profile_list = []
         for profile in sublime.load_settings('doh.sublime-settings').get('profiles'):
-            self.ui_profile_list.append([profile.get('name'), 'Host: ' + profile.get('host')])
+            self.ui_profile_list.append([profile.get('name')])
         window = sublime.active_window()
         window.show_quick_panel(self.ui_profile_list, self.profile_was_picked)
 
@@ -212,14 +212,34 @@ class QueryCore:
         self.set_selected_profile(profile_name, found_profile)
         self.start_query()
 
+    def lookup_connection_params(self, connection_name):
+        doh_settings = sublime.load_settings('doh.sublime-settings')
+        connections_list = doh_settings.get('connections')
+
+        found_connection = None
+        for connection_config in connections_list:
+            if connection_config.get('name') == connection_name:
+                found_connection = connection_config
+        return found_connection
+
     def connect_to_database(self):
         self.dbconn = None
-        vals = self.profile_config
+
+        connection_name = self.profile_config.get('connection')
+        vals = self.lookup_connection_params(connection_name)
+        if not vals:
+            self.output_text(True, "unable to find settings for connection " + connection_name + "\n")
+            return None
+
         msg = "connecting to %s on %s:%s as %s" % (vals.get('db'), vals.get('host'), vals.get('port'), vals.get('user'))
         self.output_text(True, msg)
-        if vals.get('theme'):
-            self.source_view.settings().set('color_scheme', vals.get('theme'))
-            self.output_view.settings().set('color_scheme', vals.get('theme'))
+
+        theme = self.profile_config.get('theme')
+        if theme:
+            self.source_view.settings().set('color_scheme', theme)
+            self.output_view.settings().set('color_scheme', theme)
+        else:
+            self.source_view.settings().erase('color_scheme')
 
         try:
             self.dbconn = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
