@@ -189,14 +189,14 @@ class QueryCore:
     def output_text(self, include_timestamp, text):
         self.output_view.run_command("append_text", {'timestamp': include_timestamp, 'text': text})
 
-    def pick_database(self):
-        self.ui_connection_list = []
-        for connection in sublime.load_settings('doh.sublime-settings').get('connections'):
-            self.ui_connection_list.append([connection.get('name'), 'Host: ' + connection.get('host')])
+    def pick_profile(self):
+        self.ui_profile_list = []
+        for profile in sublime.load_settings('doh.sublime-settings').get('profiles'):
+            self.ui_profile_list.append([profile.get('name'), 'Host: ' + profile.get('host')])
         window = sublime.active_window()
-        window.show_quick_panel(self.ui_connection_list, self.database_was_picked)
+        window.show_quick_panel(self.ui_profile_list, self.profile_was_picked)
 
-    def database_was_picked(self, picked):
+    def profile_was_picked(self, picked):
         if picked < 0:
             self.clear_selected_profile()
             return
@@ -204,7 +204,7 @@ class QueryCore:
         doh_settings = sublime.load_settings('doh.sublime-settings')
         profiles_list = doh_settings.get('profiles')
 
-        profile_name = self.ui_connection_list[picked][0]
+        profile_name = self.ui_profile_list[picked][0]
         found_profile = None
         for profile in profiles_list:
             if profile.get('name') == profile_name:
@@ -337,7 +337,7 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
         if self.query_core.has_selected_profile():
             self.query_core.start_query()
         else:
-            self.query_core.pick_database()
+            self.query_core.pick_profile()
 
     def tweak_view_settings(self, target_view):
         target_view.settings().set("rulers", [])
