@@ -269,6 +269,7 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
     def __init__(self, view):
         super(RunMysqlCommand, self).__init__(view)
         self.query_core = None
+        self.view.settings().set('parent_view', True)
 
     def run(self, edit):
         if self.query_core == None:
@@ -374,6 +375,7 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
 
     def build_output_view(self):
         window = sublime.active_window()
+        parent_view = window.active_view()
         new_view = window.new_file()
         new_view.settings().set('run_mysql_source_file', self.current_file)
         new_view.settings().set('word_wrap', False)
@@ -381,3 +383,37 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
         self.tweak_view_settings(new_view)
         new_view.set_scratch(True)
         return new_view
+
+class ActivateViews(sublime_plugin.EventListener):
+    def __init__(self):
+        print("in init")
+        self.activating = False
+
+    def bring_to_front(self, view):
+        group, index = view.window().get_view_index(view)
+        print("group = " + str(group) + " index = " + str(index))
+        view.window().set_view_index(view, group, index)
+
+    def bring_to_front_mirror_view(self, view):
+        look_at_filename = False
+        if view.settings().get('run_mysql_source_file') != None:
+            look_for_file = view.settings().get('run_mysql_source_file')
+            look_at_filename = True
+        else:
+            look_for_file = view.file_name()
+        for window in sublime.windows():
+            for check_view in window.views():
+                if look_at_filename:
+                    if check_view.file_name() == look_for_file:
+                        self.bring_to_front(check_view)
+                else:
+                    if check_view.settings().get('run_mysql_source_file') == look_for_file:
+                        self.bring_to_front(check_view)
+
+    def on_activated(self, view):
+        if view.settings().get('run_mysql_source_file') != None:
+            print("activating output window")
+            self.bring_to_front_mirror_view(view)
+        elif view.settings().get('parent_view') == True:
+            print("activating query window")
+            self.bring_to_front_mirror_view(view)
