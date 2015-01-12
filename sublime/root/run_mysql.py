@@ -271,7 +271,7 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
         self.query_core = None
         self.view.settings().set('parent_view', True)
 
-    def run(self, edit):
+    def run(self, edit, **args):
         if self.query_core == None:
             self.query_core = QueryCore(self.view)
 
