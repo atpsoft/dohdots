@@ -223,7 +223,7 @@
   { "keys": ["super+shift+["], "command": "prev_view_in_stack"},
 
 
-  { "keys": ["ctrl+j", "ctrl+m"], "command": "run_mysql"},
+  { "keys": ["ctrl+j", "ctrl+m"], "command": "run_mysql", "args": {"allow_read": true, "allow_write": true}},
 
 
   { "keys": ["super+k", "super+t"], "command": "title_case"},
