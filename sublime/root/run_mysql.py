@@ -249,15 +249,17 @@ class QueryCore:
         return self.dbconn
 
     def is_query_allowed(self):
-        first_word = self.stmt.partition(' ')[0]
+        first_word = self.stmt.partition(' ')[0].lower()
         read_ok = (first_word in self.READ_CMDS) and self.allow_read_stmts
         write_ok = (first_word in self.WRITE_CMDS) and self.allow_write_stmts
         if (read_ok or write_ok):
             return True
         if not self.allow_read_stmts:
             self.output_text(True, "unable to execute read statements with that command")
-        if not self.allow_write_stmts:
+        elif not self.allow_write_stmts:
             self.output_text(True, "unable to execute write statements with that command")
+        else:
+            self.output_text(True, "BUG! unable to execute statements with that command")
         return False
 
     def start_query(self):
