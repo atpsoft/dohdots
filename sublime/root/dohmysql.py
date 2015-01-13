@@ -310,11 +310,11 @@ class QueryCore:
             return True
 
         if not self.allow_read_stmts:
-            self.output_text(True, "unable to execute read statements with that command")
+            sublime.error_message("unable to execute read statements with that command")
         elif not self.allow_write_stmts:
-            self.output_text(True, "unable to execute write statements with that command")
+            sublime.error_message("unable to execute write statements with that command")
         else:
-            self.output_text(True, "there is a bug in is_query_allowed")
+            sublime.error_message("there is a bug in is_query_allowed")
         return False
 
     def get_connection_name(self):
