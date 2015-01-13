@@ -191,7 +191,7 @@ class QueryCore:
         self.all_settings = sublime.load_settings('doh.sublime-settings')
 
     def update_output_view_name(self):
-        name = 'mysql (%s): %s' % (self.selected_profile, self.source_tab_name)
+        name = '%s: %s' % (self.source_tab_name, self.selected_profile)
         self.output_view.set_name(name)
 
     def output_text(self, include_timestamp, text):
