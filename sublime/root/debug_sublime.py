@@ -1,7 +1,7 @@
 import sublime_plugin
 import sublime
-import dohutils
 import imp
+from . import dohutils
 
 class DebugSublimeCommand(sublime_plugin.TextCommand):
     def run(self, edit):
