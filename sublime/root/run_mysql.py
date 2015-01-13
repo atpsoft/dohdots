@@ -400,6 +400,13 @@ class QueryCore:
         self.allow_write_stmts = False
 
 
+class DohmysqlChangeProfileCommand(sublime_plugin.TextCommand):
+    def run(self, edit, **args):
+        query_core = sourceViewToCoreRegistry[self.view.id()]
+        query_core.reset_stmt()
+        query_core.pick_profile()
+
+
 class RunMysqlCommand(sublime_plugin.TextCommand):
     SQLSTMT_STARTS = frozenset(['select','update','delete','insert','replace','use','load','describe','desc','explain','create','alter','truncate','show','commit','set','drop','rename'])
 
