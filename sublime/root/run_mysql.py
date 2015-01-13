@@ -192,6 +192,10 @@ class QueryCore:
     def output_text(self, include_timestamp, text):
         self.output_view.run_command("append_text", {'timestamp': include_timestamp, 'text': text})
 
+    def alert_error(self, text):
+        self.output_text(False, text)
+        sublime.error_message(text)
+
     def pick_profile(self):
         self.ui_profile_list = []
         for profile in sublime.load_settings('doh.sublime-settings').get('profiles'):
@@ -231,7 +235,7 @@ class QueryCore:
 
         vals = self.lookup_connection_params(connection_name)
         if not vals:
-            self.output_text(True, "unable to find settings for connection " + connection_name)
+            self.alert_error("unable to find settings for connection " + connection_name)
             return None
 
         msg = "connecting to %s" % (connection_name)
