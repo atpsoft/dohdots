@@ -5,6 +5,8 @@ import threading
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 import pymysql
 
+sourceViewToCoreRegistry = {}
+
 class AppendText(sublime_plugin.TextCommand):
     def run(self, edit, timestamp, text):
         if timestamp:
@@ -401,6 +403,7 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
     def run(self, edit, **args):
         if self.query_core == None:
             self.query_core = QueryCore(self.view)
+            sourceViewToCoreRegistry[self.view.id()] = self.query_core
 
         if self.view.settings().get('run_mysql_source_file') != None:
             edit = self.view.begin_edit()
