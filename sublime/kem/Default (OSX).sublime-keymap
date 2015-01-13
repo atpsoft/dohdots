@@ -112,22 +112,16 @@
     ]
   },
 
-  // tweaked pseudo incremental search stuff
-  { "keys": ["ctrl+s"], "command": "doh_show_find"},
-  { "keys": ["ctrl+s"], "command": "doh_find_next", "context":
-    [
-      {"key": "panel", "operand": "find"},
-      {"key": "panel_visible", "operator": "equal", "operand": true }
-    ]
-  },
+    {"keys": ["ctrl+s"], "command": "jove_inc_search", "args": {"forward": true, "regex": false}},
+    {"keys": ["ctrl+r"], "command": "jove_inc_search", "args": {"forward": false, "regex": false}},
+    {"keys": ["ctrl+s"], "command": "jove_inc_search", "args": {"cmd": "next", "keep": false, "forward": true},
+        "context": [ {"key": "i_search_active"} ]
+    },
+    {"keys": ["ctrl+r"], "command": "jove_inc_search", "args": {"cmd": "next", "keep": false, "forward": false},
+        "context": [ {"key": "i_search_active"} ]
+    },
 
-  { "keys": ["ctrl+r"], "command": "doh_show_reverse_find"},
-  { "keys": ["ctrl+r"], "command": "doh_find_next", "context":
-    [
-      {"key": "panel", "operand": "find"},
-      {"key": "panel_visible", "operator": "equal", "operand": true }
-    ]
-  },
+    {"keys": ["ctrl+g"], "command": "jove_quit"},
 
   ////////////// basic movement keybinds from native Emacs
   { "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol", "extend": false}},
