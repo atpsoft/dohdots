@@ -2,6 +2,7 @@ import sublime_plugin
 import sublime
 import imp
 from . import dohutils
+dohDebugging = False
 
 class DebugSublimeCommand(sublime_plugin.TextCommand):
     def run(self, edit):

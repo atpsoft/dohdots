@@ -4,8 +4,6 @@ import sublime
 # dohutils.print_methods(view)
 # note that changes to this file appear to not be immediately reflected, even though it says it is reloading the plugin
 # the only way I could see to reflect the changes was quitting sublime
-if dohDebugging == None:
-    dohDebugging = False
 
 def get_methods(object):
     return [method for method in dir(object) if callable(getattr(object, method))]
