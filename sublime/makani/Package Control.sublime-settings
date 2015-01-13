@@ -9,6 +9,7 @@
 	],
 	"installed_packages":
 	[
+		"All Autocomplete",
 		"BetterFindBuffer",
 		"Git",
 		"Missing Palette Commands",
