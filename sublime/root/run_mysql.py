@@ -325,11 +325,11 @@ class QueryCore:
 
     def get_connection_name(self):
         retval = None
-        if (self.stmt_type == 'neutral') or (self.stmt_type == 'read'):
+        if self.allow_read_stmts and ((self.stmt_type == 'neutral') or (self.stmt_type == 'read')):
             retval = self.profile_config.get('read_connection')
             if retval:
                 return retval
-        elif (self.stmt_type == 'neutral') or (self.stmt_type == 'write'):
+        elif self.allow_write_stmts and ((self.stmt_type == 'neutral') or (self.stmt_type == 'write')):
             retval = self.profile_config.get('write_connection')
             if retval:
                 return retval
