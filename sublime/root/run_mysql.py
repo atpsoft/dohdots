@@ -400,9 +400,18 @@ class QueryCore:
         self.allow_write_stmts = False
 
 
+def get_query_core(view):
+    idkey = view.id()
+    retval = sourceViewToCoreRegistry.get(idkey)
+    if not retval:
+        retval = QueryCore(view)
+        sourceViewToCoreRegistry[idkey] = retval
+    return retval
+
+
 class DohmysqlChangeProfileCommand(sublime_plugin.TextCommand):
     def run(self, edit, **args):
-        query_core = sourceViewToCoreRegistry[self.view.id()]
+        query_core = get_query_core(self.view)
         query_core.reset_stmt()
         query_core.pick_profile()
 
@@ -417,8 +426,7 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, **args):
         if not self.query_core:
-            self.query_core = QueryCore(self.view)
-            sourceViewToCoreRegistry[self.view.id()] = self.query_core
+            self.query_core = get_query_core(self.view)
 
         if self.view.settings().get('run_mysql_source_file') != None:
             edit = self.view.begin_edit()
