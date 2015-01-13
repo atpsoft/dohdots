@@ -393,6 +393,12 @@ class QueryCore:
         self.allow_read_stmts = allow_read
         self.allow_write_stmts = allow_write
 
+    def reset_stmt(self):
+        self.stmt = None
+        self.stmt_type = None
+        self.allow_read_stmts = False
+        self.allow_write_stmts = False
+
 
 class RunMysqlCommand(sublime_plugin.TextCommand):
     SQLSTMT_STARTS = frozenset(['select','update','delete','insert','replace','use','load','describe','desc','explain','create','alter','truncate','show','commit','set','drop','rename'])
