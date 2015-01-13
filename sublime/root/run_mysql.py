@@ -180,6 +180,7 @@ class QueryCore:
         self.profile_config = None
         self.connections = {}
         self.stmt = None
+        self.stmt_type = None
         self.allow_read_stmts = False
         self.allow_write_stmts = False
 
@@ -251,6 +252,17 @@ class QueryCore:
         self.connections[connection_name] = retval
         return retval
 
+    def check_statement_type(self):
+        first_word = self.stmt.partition(' ')[0].lower()
+        if first_word in self.NEUTRAL_CMDS:
+            return 'neutral'
+        elif first_word in self.READ_CMDS:
+            return 'read'
+        elif first_word in self.WRITE_CMDS:
+            return 'write'
+        else:
+            raise Exception("unrecognized statement type")
+
     def is_query_allowed(self):
         first_word = self.stmt.partition(' ')[0].lower()
         if first_word in self.NEUTRAL_CMDS:
@@ -312,6 +324,7 @@ class QueryCore:
 
     def save_stmt(self, stmt, allow_read, allow_write):
         self.stmt = stmt
+        self.stmt_type = self.check_statement_type()
         self.allow_read_stmts = allow_read
         self.allow_write_stmts = allow_write
 
