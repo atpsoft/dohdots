@@ -5,3 +5,4 @@ Package Control.merged-ca-bundle
 Package Control.user-ca-bundle
 doh.sublime-settings
 *.backup
+*.cache

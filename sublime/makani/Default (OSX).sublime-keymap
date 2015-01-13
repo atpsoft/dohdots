@@ -222,6 +222,18 @@
 
   ////////////////////////////////////////// put all my custom ones here so I can overwrite if needed
 
+  {
+    "keys": ["k"],
+    "command": "find_next",
+    "context": [{"key": "selector", "operator": "equal", "operand": "text.find-in-files" }]
+  },
+  {
+    "keys": ["j"],
+    "command": "find_prev",
+    "args": {"forward": false},
+    "context": [{"key": "selector", "operator": "equal", "operand": "text.find-in-files" }]
+  },
+
   { "keys": ["ctrl+z"], "command": "noop"},
   { "keys": ["ctrl+/"], "command": "undo"},
 
