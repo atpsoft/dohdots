@@ -281,11 +281,26 @@ class QueryCore:
             self.output_text(True, "there is a bug in is_query_allowed")
         return False
 
+    def get_connection_name(self):
+        retval = None
+        if (self.stmt_type == 'neutral') or (self.stmt_type == 'read'):
+            retval = self.profile_config.get('read_connection')
+            if retval:
+                return retval
+        elif (self.stmt_type == 'neutral') or (self.stmt_type == 'write'):
+            retval = self.profile_config.get('write_connection')
+            if retval:
+                return retval
+        retval = self.profile_config.get('default_connection')
+        if retval:
+            return retval
+        return self.profile_config.get('connection')
+
     def start_query(self):
         if not self.is_query_allowed():
             return
 
-        connection_name = self.profile_config.get('connection')
+        connection_name = self.get_connection_name()
         thread = QueryRunnerThread(self, connection_name, self.stmt, self.table_builder)
         thread.start()
 
