@@ -233,7 +233,7 @@ class QueryCore:
             self.output_text(True, "unable to find settings for connection " + connection_name + "\n")
             return None
 
-        msg = "connecting to %s on %s:%s as %s" % (vals.get('db'), vals.get('host'), vals.get('port'), vals.get('user'))
+        msg = "connecting to %s" % (connection_name)
         self.output_text(True, msg)
 
         theme = self.profile_config.get('theme')
