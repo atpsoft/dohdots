@@ -383,6 +383,8 @@ class QueryCore:
         self.output_view.settings().erase('profile_config')
         self.profile_config = None
         self.connections = {}
+        name = '%s: <no profile>' % (self.source_tab_name)
+        self.output_view.set_name(name)
 
     def has_selected_profile(self):
         return (self.selected_profile != None)
@@ -413,6 +415,7 @@ class DohmysqlChangeProfileCommand(sublime_plugin.TextCommand):
     def run(self, edit, **args):
         query_core = get_query_core(self.view)
         query_core.reset_stmt()
+        query_core.clear_selected_profile()
         query_core.pick_profile()
 
 
