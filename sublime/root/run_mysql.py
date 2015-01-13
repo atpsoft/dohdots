@@ -130,7 +130,7 @@ class QueryRunnerThread(threading.Thread):
         self.query_core.output_text(False, output)
 
     def run_query_once(self, dbconn):
-        msg = "(%s) %s" %  (self.connection_name, self.stmt)
+        msg = "(%s)\n%s" %  (self.connection_name, self.stmt)
         self.query_core.output_text(True, msg)
 
         cursor = dbconn.cursor()
@@ -184,6 +184,7 @@ class QueryCore:
         self.stmt_type = None
         self.allow_read_stmts = False
         self.allow_write_stmts = False
+        self.all_settings = sublime.load_settings('doh.sublime-settings')
 
     def update_output_view_name(self):
         name = 'mysql (%s): %s' % (self.selected_profile, self.source_tab_name)
@@ -249,15 +250,44 @@ class QueryCore:
         if extra_vars:
             vars_cmd = vars_cmd + ", " + extra_vars
         vars_msg = "(%s) %s" %  (connection_name, vars_cmd)
+        success_msg = "(%s) connection success" % (connection_name)
 
+        retval = self.try_connect_once(vals, success_msg, vars_msg, vars_cmd)
+        self.connections[connection_name] = retval
+
+        if retval:
+            return retval
+
+        retry_script = self.all_settings.get('connection_retry_script')
+        if not retry_script:
+            return retval
+
+        self.output_text(True, "connection failed, will execute connection_retry_script and try again")
+        try:
+            subprocess.check_call(["sh", retry_script], env=os.environ.copy())
+        except Exception as excpt:
+            self.output_text(True, str(excpt))
+            return None
+
+        retry_delay = self.all_settings.get('connection_retry_delay')
+        if retry_delay:
+            time.sleep(retry_delay)
+
+        retval = self.try_connect_once(vals, success_msg, vars_msg, vars_cmd)
+
+        self.connections[connection_name] = retval
+        return retval
+
+    def try_connect_once(self, vals, success_msg, vars_msg, vars_cmd):
+        retval = None
         try:
             retval = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
+            self.output_text(True, success_msg)
             self.output_text(True, vars_msg)
             retval.cursor().execute(vars_cmd)
         except Exception as excpt:
+            retval = None
             self.output_text(True, str(excpt))
-
-        self.connections[connection_name] = retval
         return retval
 
     def check_statement_type(self):
