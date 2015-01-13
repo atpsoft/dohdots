@@ -264,14 +264,15 @@ class QueryCore:
             raise Exception("unrecognized statement type")
 
     def is_query_allowed(self):
-        first_word = self.stmt.partition(' ')[0].lower()
-        if first_word in self.NEUTRAL_CMDS:
+        if self.stmt_type == 'neutral':
             return True
 
-        read_ok = (first_word in self.READ_CMDS) and self.allow_read_stmts
-        write_ok = (first_word in self.WRITE_CMDS) and self.allow_write_stmts
-        if (read_ok or write_ok):
+        if (self.stmt_type == 'read') and self.allow_read_stmts:
             return True
+
+        if (self.stmt_type == 'write') and self.allow_write_stmts:
+            return True
+
         if not self.allow_read_stmts:
             self.output_text(True, "unable to execute read statements with that command")
         elif not self.allow_write_stmts:
