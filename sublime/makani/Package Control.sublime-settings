@@ -17,6 +17,8 @@
 		"Origami",
 		"OrigamiEmacs",
 		"Package Control",
-		"PackageResourceViewer"
+		"PackageResourceViewer",
+		"SublimeLinter",
+		"SublimeLinter-ruby"
 	]
 }
