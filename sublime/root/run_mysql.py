@@ -130,7 +130,8 @@ class QueryRunnerThread(threading.Thread):
         self.query_core.output_text(False, output)
 
     def run_query_once(self, dbconn):
-        self.query_core.output_text(True, "(" + self.connection_name + ") " + self.stmt)
+        msg = "(%s) %s" %  (self.connection_name, self.stmt)
+        self.query_core.output_text(True, msg)
 
         cursor = dbconn.cursor()
         output = ""
