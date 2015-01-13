@@ -244,9 +244,16 @@ class QueryCore:
         else:
             self.source_view.settings().erase('color_scheme')
 
+        vars_cmd = 'SET autocommit=1'
+        extra_vars = vals.get('server_variables')
+        if extra_vars:
+            vars_cmd = vars_cmd + ", " + extra_vars
+        vars_msg = "(%s) %s" %  (connection_name, vars_cmd)
+
         try:
             retval = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
-            retval.cursor().execute('SET autocommit=1,sql_safe_updates=1,sql_select_limit=500,max_join_size=1000000')
+            self.output_text(True, vars_msg)
+            retval.cursor().execute(vars_cmd)
         except Exception as excpt:
             self.output_text(True, str(excpt) + "\n")
 
