@@ -220,7 +220,8 @@ class QueryCore:
             if profile.get('name') == profile_name:
                 found_profile = profile
         self.set_selected_profile(profile_name, found_profile)
-        self.start_query()
+        if self.stmt:
+            self.start_query()
 
     def lookup_connection_params(self, connection_name):
         doh_settings = sublime.load_settings('doh.sublime-settings')
