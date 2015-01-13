@@ -250,6 +250,7 @@ class QueryCore:
             self.output_view.settings().set('color_scheme', theme)
         else:
             self.source_view.settings().erase('color_scheme')
+            self.output_view.settings().erase('color_scheme')
 
         vars_cmd = 'SET autocommit=1'
         extra_vars = vals.get('server_variables')
