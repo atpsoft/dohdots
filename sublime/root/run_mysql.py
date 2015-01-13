@@ -343,6 +343,9 @@ class QueryCore:
             return
 
         connection_name = self.get_connection_name()
+        if not connection_name:
+            sublime.error_message("Unable to determine what connection to use. This may be a problem with the keybind you are using, or the profile setup, or a bug in the plugin code.")
+            return
         thread = QueryRunnerThread(self, connection_name, self.stmt, self.table_builder)
         thread.start()
 
