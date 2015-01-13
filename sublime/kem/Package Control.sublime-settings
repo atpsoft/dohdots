@@ -9,8 +9,11 @@
 	],
 	"installed_packages":
 	[
+		"All Autocomplete",
+		"BetterFindBuffer",
 		"Function Name Display",
 		"Git",
+		"GitGutter",
 		"Missing Palette Commands",
 		"Origami",
 		"OrigamiEmacs",
