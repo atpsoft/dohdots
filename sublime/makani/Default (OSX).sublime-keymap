@@ -231,9 +231,9 @@
     "context": [{"key": "selector", "operator": "equal", "operand": "text.find-in-files" }]
   },
 
-  { "keys": ["ctrl+j", "ctrl+m", "ctrl+m"], "command": "run_mysql", "args": {"allow_read": true, "allow_write": false}},
-  { "keys": ["ctrl+j", "ctrl+m", "ctrl+x"], "command": "run_mysql", "args": {"allow_read": false, "allow_write": true}},
-  { "keys": ["ctrl+j", "ctrl+m", "ctrl+l"], "command": "run_mysql", "args": {"allow_read": true, "allow_write": true, "connection": "local"}},
+  { "keys": ["ctrl+j", "ctrl+m", "ctrl+m"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": false}},
+  { "keys": ["ctrl+j", "ctrl+m", "ctrl+x"], "command": "dohmysql_query", "args": {"allow_read": false, "allow_write": true}},
+  { "keys": ["ctrl+j", "ctrl+m", "ctrl+l"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": true, "connection": "local"}},
   { "keys": ["ctrl+j", "ctrl+m", "ctrl+p"], "command": "dohmysql_change_profile"},
 
   { "keys": ["ctrl+z"], "command": "noop"},

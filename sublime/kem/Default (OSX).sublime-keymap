@@ -200,7 +200,7 @@
   },
 
   ////////////// MySQL
-  { "keys": ["ctrl+j", "ctrl+m"], "command": "run_mysql", "args": {"allow_read": true, "allow_write": true}},
+  { "keys": ["ctrl+j", "ctrl+m"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": true}},
 
   ////////////// basic editing keybinds from Emacs
   { "keys": ["ctrl+h"], "command": "left_delete"},
