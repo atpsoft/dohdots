@@ -402,7 +402,7 @@ class RunMysqlCommand(sublime_plugin.TextCommand):
         self.view.settings().set('parent_view', True)
 
     def run(self, edit, **args):
-        if self.query_core == None:
+        if not self.query_core:
             self.query_core = QueryCore(self.view)
             sourceViewToCoreRegistry[self.view.id()] = self.query_core
 
