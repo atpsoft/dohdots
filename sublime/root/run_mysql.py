@@ -245,14 +245,6 @@ class QueryCore:
         msg = "connecting to %s" % (connection_name)
         self.output_text(True, msg)
 
-        theme = self.profile_config.get('theme')
-        if theme:
-            self.source_view.settings().set('color_scheme', theme)
-            self.output_view.settings().set('color_scheme', theme)
-        else:
-            self.source_view.settings().erase('color_scheme')
-            self.output_view.settings().erase('color_scheme')
-
         vars_cmd = 'SET autocommit=1'
         extra_vars = vals.get('server_variables')
         if extra_vars:
@@ -376,6 +368,13 @@ class QueryCore:
         self.profile_config = profile_config
         self.connections = {}
         self.update_output_view_name()
+        theme = self.profile_config.get('theme')
+        if theme:
+            self.source_view.settings().set('color_scheme', theme)
+            self.output_view.settings().set('color_scheme', theme)
+        else:
+            self.source_view.settings().erase('color_scheme')
+            self.output_view.settings().erase('color_scheme')
 
     def clear_selected_profile(self):
         self.output_view.settings().erase('selected_profile')
@@ -385,6 +384,8 @@ class QueryCore:
         self.connections = {}
         name = '%s: <no profile>' % (self.source_tab_name)
         self.output_view.set_name(name)
+        self.source_view.settings().erase('color_scheme')
+        self.output_view.settings().erase('color_scheme')
 
     def has_selected_profile(self):
         return (self.selected_profile != None)
