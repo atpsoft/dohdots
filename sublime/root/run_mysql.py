@@ -231,7 +231,7 @@ class QueryCore:
 
         vals = self.lookup_connection_params(connection_name)
         if not vals:
-            self.output_text(True, "unable to find settings for connection " + connection_name + "\n")
+            self.output_text(True, "unable to find settings for connection " + connection_name)
             return None
 
         msg = "connecting to %s" % (connection_name)
@@ -255,7 +255,7 @@ class QueryCore:
             self.output_text(True, vars_msg)
             retval.cursor().execute(vars_cmd)
         except Exception as excpt:
-            self.output_text(True, str(excpt) + "\n")
+            self.output_text(True, str(excpt))
 
         self.connections[connection_name] = retval
         return retval
