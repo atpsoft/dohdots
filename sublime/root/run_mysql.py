@@ -126,6 +126,10 @@ class QueryRunnerThread(threading.Thread):
             return
 
         dbconn = self.query_core.get_connection(self.connection_name, True)
+        if not dbconn:
+            self.query_core.output_text(False, "unable to connect to database")
+            return
+
         error, output = self.run_query_once(dbconn)
         self.query_core.output_text(False, output)
 
@@ -262,18 +266,18 @@ class QueryCore:
         if not retry_script:
             return retval
 
-        self.output_text(True, "connection failed, will execute connection_retry_script and try again")
+        self.output_text(True, "connection failed, will execute connection_retry_script once, then try the connection again up to 3 times")
         try:
             subprocess.check_call(["sh", retry_script], env=os.environ.copy())
         except Exception as excpt:
             self.output_text(True, str(excpt))
             return None
 
-        retry_delay = self.all_settings.get('connection_retry_delay')
-        if retry_delay:
-            time.sleep(retry_delay)
-
-        retval = self.try_connect_once(vals, success_msg, vars_msg, vars_cmd)
+        for index in range(0, 3):
+            time.sleep(3)
+            retval = self.try_connect_once(vals, success_msg, vars_msg, vars_cmd)
+            if retval:
+                break
 
         self.connections[connection_name] = retval
         return retval
