@@ -18,6 +18,7 @@ class ActivateViews(sublime_plugin.EventListener):
         if self.handling_event == True:
             return
         self.handling_event = True
-        if view.viewport_extent()[1] > 50:
+        # if the view being activated is > 400 in size, it's not likely a panel, so lets show the console if it isn't already
+        if view.viewport_extent()[1] > 400:
             dohutils.show_console_if_debugging()
         self.handling_event = False
