@@ -250,9 +250,8 @@ class QueryCore:
         if extra_vars:
             vars_cmd = vars_cmd + ", " + extra_vars
         vars_msg = "(%s) %s" %  (connection_name, vars_cmd)
-        success_msg = "(%s) connection success" % (connection_name)
 
-        retval = self.try_connect_once(vals, success_msg, vars_msg, vars_cmd)
+        retval = self.try_connect_once(vals, vars_msg, vars_cmd)
         self.connections[connection_name] = retval
 
         if retval:
@@ -271,18 +270,17 @@ class QueryCore:
 
         for index in range(0, 3):
             time.sleep(3)
-            retval = self.try_connect_once(vals, success_msg, vars_msg, vars_cmd)
+            retval = self.try_connect_once(vals, vars_msg, vars_cmd)
             if retval:
                 break
 
         self.connections[connection_name] = retval
         return retval
 
-    def try_connect_once(self, vals, success_msg, vars_msg, vars_cmd):
+    def try_connect_once(self, vals, vars_msg, vars_cmd):
         retval = None
         try:
             retval = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
-            self.output_text(True, success_msg)
             self.output_text(True, vars_msg)
             retval.cursor().execute(vars_cmd)
         except Exception as excpt:
