@@ -203,12 +203,6 @@
     ]
   },
 
-  { "keys": ["super+x"], "command": "doh_cut", "context":
-    [
-      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
-    ]
-  },
-
     //////////////////////////////
     // Begin I-search //
     //////////////////////////////
