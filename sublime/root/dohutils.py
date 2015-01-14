@@ -13,7 +13,6 @@ def print_methods(object):
 
 def show_console(active=True):
     if not active:
-        print("hiding console")
         hide_console()
     else:
         window = sublime.active_window()

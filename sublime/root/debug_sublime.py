@@ -14,7 +14,6 @@ class ToggleKeepConsoleActiveCommand(sublime_plugin.TextCommand):
         global dohConsoleActive
         dohConsoleActive = not dohConsoleActive
         imp.reload(dohutils)
-        print("dohConsoleActive = " + str(dohConsoleActive))
         dohutils.show_console(dohConsoleActive)
 
 class ToggleLogCommandsCommand(sublime_plugin.TextCommand):
