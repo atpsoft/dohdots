@@ -1,15 +1,7 @@
 [
+  // kill and yank
   { "keys": ["ctrl+y"], "command": "yank_from_clipboard"},
   { "keys": ["ctrl+k"], "command": "kill_to_clipboard"},
-
-  { "keys": ["ctrl+z"], "command": "undo"},
-
-  // quick panel of only currently open files - sort of like emacs switch buffer
-  { "keys": ["ctrl+x", "b"], "command": "goto_open_file"},
-
-  // may not keep this long term, but it's handy for transition if nothing else
-  { "keys": ["ctrl+x", "ctrl+s"], "command": "save"},
-
 
   // block select
   { "keys": ["ctrl+space"], "command": "doh_start_select" },
@@ -209,7 +201,10 @@
     ]
   },
 
-  ////////////// basic editing keybinds from Emacs
+  ////////////// misc emacs like stuff
+  { "keys": ["ctrl+z"], "command": "undo"},
+  { "keys": ["ctrl+x", "b"], "command": "goto_open_file"},
+  { "keys": ["ctrl+x", "ctrl+s"], "command": "save"},
   { "keys": ["ctrl+h"], "command": "left_delete"},
   { "keys": ["ctrl+d"], "command": "right_delete"},
 
