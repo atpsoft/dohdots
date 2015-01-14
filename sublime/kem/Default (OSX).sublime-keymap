@@ -329,7 +329,8 @@
      "context": [{"key": "panel", "operand": "replace"}, {"key": "panel_has_focus"}]
   },
 
-  { "keys": ["ctrl+j", "ctrl+d"], "command": "debug_sublime"},
+  { "keys": ["ctrl+j", "ctrl+d", "ctrl+c"], "command": "toggle_keep_console_active"},
+  { "keys": ["ctrl+j", "ctrl+d", "ctrl+l"], "command": "toggle_log_commands"},
   { "keys": ["ctrl+j", "ctrl+g", "ctrl+d"], "command": "git_raw", "args": { "command": "git difftool", "append_current_file": true, "may_change_files": false } },
   { "keys": ["ctrl+j", "ctrl+g", "ctrl+c"], "command": "git_raw", "args": { "command": "git checkout", "append_current_file": true } },
   { "keys": ["ctrl+j", "ctrl+i"], "command": "reindent"},

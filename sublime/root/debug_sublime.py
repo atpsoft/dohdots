@@ -2,24 +2,41 @@ import sublime_plugin
 import sublime
 import imp
 from . import dohutils
-dohDebugging = False
+global dohConsoleActive
+dohConsoleActive = False
+dohutils.show_console(False)
 
-class DebugSublimeCommand(sublime_plugin.TextCommand):
+class ToggleKeepConsoleActiveCommand(sublime_plugin.TextCommand):
+    def __init__(self, view):
+        super(ToggleKeepConsoleActiveCommand, self).__init__(view)
+
     def run(self, edit):
+        global dohConsoleActive
+        dohConsoleActive = not dohConsoleActive
         imp.reload(dohutils)
-        dohutils.toggle_debug_mode()
+        print("dohConsoleActive = " + str(dohConsoleActive))
+        dohutils.show_console(dohConsoleActive)
 
+class ToggleLogCommandsCommand(sublime_plugin.TextCommand):
+    def __init__(self, view):
+        super(ToggleLogCommandsCommand, self).__init__(view)
+        self.logging_commands = False
 
+    def run(self, edit):
+        self.logging_commands = not self.logging_commands
+        sublime.log_commands(self.logging_commands)
 
 class ActivateViews(sublime_plugin.EventListener):
     def __init__(self):
         self.handling_event = False
 
     def on_activated(self, view):
+        global dohConsoleActive
+
         if self.handling_event == True:
             return
         self.handling_event = True
         # if the view being activated is > 400 in size, it's not likely a panel, so lets show the console if it isn't already
-        if view.viewport_extent()[1] > 400:
-            dohutils.show_console_if_debugging()
+        if view.viewport_extent()[1] > 400 and dohConsoleActive:
+            dohutils.show_console()
         self.handling_event = False
