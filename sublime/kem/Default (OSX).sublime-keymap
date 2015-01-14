@@ -73,7 +73,8 @@
     {"keys": ["super+y"], "command": "jove_yank", "args": {"pop": 1}},
     {"keys": ["super+shift+y"], "command": "jove_yank", "args": {"pop": -1}},
 
-    {"keys": ["super+d"], "command": "jove_move_then_delete", "args": {"move_cmd": "jove_move_word", "direction": 1}},
+
+//    {"keys": ["super+d"], "command": "jove_move_then_delete", "args": {"move_cmd": "jove_move_word", "direction": 1}},
     {"keys": ["super+backspace"], "command": "jove_move_then_delete", "args": {"move_cmd": "jove_move_word", "direction": -1}},
     {"keys": ["alt+d"], "command": "jove_move_then_delete", "args": {"move_cmd": "jove_move_word", "direction": 1}},
     {"keys": ["alt+backspace"], "command": "jove_move_then_delete", "args": {"move_cmd": "jove_move_word", "direction": -1}},
