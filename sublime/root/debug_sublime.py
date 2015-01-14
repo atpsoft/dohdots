@@ -4,7 +4,7 @@ import imp
 from . import dohutils
 global dohConsoleActive
 dohConsoleActive = False
-dohutils.show_console(False)
+dohutils.hide_console()
 
 class ToggleKeepConsoleActiveCommand(sublime_plugin.TextCommand):
     def __init__(self, view):
