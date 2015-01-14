@@ -166,12 +166,13 @@
       { "key": "panel_visible", "operator": "equal", "operand": true }
     ]
   },
-  { "keys": ["enter"], "command": "hide_panel", "args": {"cancel": true},
-    "context":
-    [
-      { "key": "panel_visible", "operator": "equal", "operand": true }
-    ]
-  },
+  // seems like ctrl+g should be good for hide_panel, and maybe use enter for something else
+  // { "keys": ["enter"], "command": "hide_panel", "args": {"cancel": true},
+  //   "context":
+  //   [
+  //     { "key": "panel_visible", "operator": "equal", "operand": true }
+  //   ]
+  // },
 
   ////////////// misc emacs like stuff
   { "keys": ["ctrl+z"], "command": "undo"},
