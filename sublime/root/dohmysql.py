@@ -190,6 +190,7 @@ class QueryCore:
         self.stmt_type = None
         self.allow_read_stmts = False
         self.allow_write_stmts = False
+        self.specific_connection_name = None
         self.all_settings = sublime.load_settings('doh.sublime-settings')
 
     def update_output_view_name(self):
@@ -318,6 +319,9 @@ class QueryCore:
         return False
 
     def get_connection_name(self):
+        if self.specific_connection_name:
+            return self.specific_connection_name
+
         retval = None
         if self.allow_read_stmts and ((self.stmt_type == 'neutral') or (self.stmt_type == 'read')):
             retval = self.profile_config.get('read_connection')
@@ -388,17 +392,19 @@ class QueryCore:
     def has_selected_profile(self):
         return (self.selected_profile != None)
 
-    def save_stmt(self, stmt, allow_read, allow_write):
+    def save_stmt(self, stmt, allow_read, allow_write, specific_connection_name):
         self.stmt = stmt
         self.stmt_type = self.check_statement_type()
         self.allow_read_stmts = allow_read
         self.allow_write_stmts = allow_write
+        self.specific_connection_name = specific_connection_name
 
     def reset_stmt(self):
         self.stmt = None
         self.stmt_type = None
         self.allow_read_stmts = False
         self.allow_write_stmts = False
+        self.specific_connection_name = None
 
 
 def get_query_core(view):
@@ -466,7 +472,7 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
             self.query_core.output_text(True, stmt + "\nunable to find statement")
             return
 
-        self.query_core.save_stmt(stmt, args["allow_read"], args["allow_write"])
+        self.query_core.save_stmt(stmt, args["allow_read"], args["allow_write"], args.get("connection"))
         if self.query_core.has_selected_profile():
             self.query_core.start_query()
         else:
