@@ -112,18 +112,18 @@
     ]
   },
 
-  {"keys": ["ctrl+s"], "command": "jove_inc_search", "args": {"forward": true, "regex": false}},
-  {"keys": ["ctrl+r"], "command": "jove_inc_search", "args": {"forward": false, "regex": false}},
-  {"keys": ["ctrl+s"], "command": "jove_inc_search", "args": {"cmd": "next", "keep": false, "forward": true},
-      "context": [ {"key": "i_search_active"} ]
-  },
-  {"keys": ["ctrl+r"], "command": "jove_inc_search", "args": {"cmd": "next", "keep": false, "forward": false},
-      "context": [ {"key": "i_search_active"} ]
-  },
+  // {"keys": ["ctrl+s"], "command": "jove_inc_search", "args": {"forward": true, "regex": false}},
+  // {"keys": ["ctrl+r"], "command": "jove_inc_search", "args": {"forward": false, "regex": false}},
+  // {"keys": ["ctrl+s"], "command": "jove_inc_search", "args": {"cmd": "next", "keep": false, "forward": true},
+  //     "context": [ {"key": "i_search_active"} ]
+  // },
+  // {"keys": ["ctrl+r"], "command": "jove_inc_search", "args": {"cmd": "next", "keep": false, "forward": false},
+  //     "context": [ {"key": "i_search_active"} ]
+  // },
 
-  {"keys": ["ctrl+g"], "command": "jove_quit",
-      "context": [ {"key": "i_search_active"} ]
-  },
+  // {"keys": ["ctrl+g"], "command": "jove_quit",
+  //     "context": [ {"key": "i_search_active"} ]
+  // },
 
   ////////////// basic movement keybinds from native Emacs
   { "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol", "extend": false}},
