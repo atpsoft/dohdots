@@ -5,7 +5,7 @@ export BASHRCLOADED=true
 export VISUAL=emacs
 export EDITOR=emacs
 export PAGER=cat
-export LANG=en_US.UTF-8
+export LANG=en_US.US-ASCII
 
 ### this section of commands is to make losing command history less likely, especially when having multiple terminals open
 # limits the number of lines in the history file
