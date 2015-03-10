@@ -577,6 +577,6 @@ class ActivateViews(sublime_plugin.EventListener):
         self.activating = True
         if view.settings().get('run_mysql_source_file') != None:
             self.bring_to_front(self.get_mirror_view(view), view)
-        elif view.settings().get('parent_view') == True:
+        elif view.settings().get('parent_view') == True and view.file_name() != None:
             self.bring_to_front(self.get_mirror_view(view), view)
         self.activating = False
