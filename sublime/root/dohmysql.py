@@ -132,7 +132,7 @@ class QueryRunnerThread(threading.Thread):
         self.query_core.output_text(False, output)
 
         if not (mysql_error_code in self.RECONNECT_MYSQL_ERRORS):
-            return False
+            return (error == None)
 
         dbconn = self.query_core.get_connection(self.connection_name, True)
         if not dbconn:
@@ -229,8 +229,8 @@ class QueryCore:
             if profile.get('name') == profile_name:
                 found_profile = profile
         self.set_selected_profile(profile_name, found_profile)
-        if self.stmt:
-            self.start_query()
+        if len(self.stmt_list) > 0:
+            self.start_queries()
 
     def lookup_connection_params(self, connection_name):
         doh_settings = sublime.load_settings('doh.sublime-settings')
@@ -345,7 +345,7 @@ class QueryCore:
             return retval
         return self.profile_config.get('connection')
 
-    def start_query(self):
+    def start_queries(self):
         self.stmt = self.stmt_list[0]
 
         stmt_type = self.check_statement_type()
@@ -357,7 +357,7 @@ class QueryCore:
         if not connection_name:
             sublime.error_message("Unable to determine what connection to use. This may be a problem with the keybind you are using, or the profile setup, or a bug in the plugin code.")
             return
-        thread = QueryRunnerThread(self, connection_name, [self.stmt], self.table_builder)
+        thread = QueryRunnerThread(self, connection_name, self.stmt_list, self.table_builder)
         thread.start()
 
     def save_view(self, view, source_tab_name):
@@ -487,7 +487,7 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
 
         self.query_core.save_stmt_list(stmt_list, args["allow_read"], args["allow_write"], args.get("connection"))
         if self.query_core.has_selected_profile():
-            self.query_core.start_query()
+            self.query_core.start_queries()
         else:
             self.query_core.pick_profile()
 
