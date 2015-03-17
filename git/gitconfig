@@ -16,15 +16,16 @@
   pp = !git pull -v --log --stat && git push
   st = status
   unci = reset --soft HEAD^
+  synctags = !git tag -l | xargs git tag -d && git fetch -t
 [include]
   path = ~/.gitconfig.user
 [push]
 	default = current
 [difftool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
-	path = 
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
 [mergetool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 
 # note this file is linked / shared -- use ~/.gitconfig.user for user specific changes
