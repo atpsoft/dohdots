@@ -16,6 +16,19 @@
     <autogen>__KeyToKey__ KeyCode::H, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL | ModifierFlag::NONE, KeyCode::DELETE</autogen>
   </item>
 
+  <appdef>
+    <appname>hots</appname>
+    <equal>com.blizzard.heroesofthestorm</equal>
+  </appdef>
+
+  <item>
+    <name>hots stuff</name>
+    <identifier>private.app_hots_cmd_is_alt</identifier>
+    <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_L</autogen>
+    <only>hots</only>
+  </item>
+
   <item>
     <!-- still need to set up tab -> caps-lock and esc -> tab via kinesis keyboard -->
     <name>Kinesis full remap</name>
