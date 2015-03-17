@@ -119,7 +119,7 @@ class QueryRunnerThread(threading.Thread):
             return
 
         mysql_error_code = 0
-        error, output = self.run_query_once(dbconn)
+        error, output = self.try_query_once(dbconn)
         if error != None:
             mysql_error_code = error.args[0]
         self.query_core.output_text(False, output)
@@ -132,10 +132,10 @@ class QueryRunnerThread(threading.Thread):
             self.query_core.output_text(False, "unable to connect to database")
             return
 
-        error, output = self.run_query_once(dbconn)
+        error, output = self.try_query_once(dbconn)
         self.query_core.output_text(False, output)
 
-    def run_query_once(self, dbconn):
+    def try_query_once(self, dbconn):
         msg = "(%s)\n%s" %  (self.connection_name, self.stmt)
         self.query_core.output_text(True, msg)
 
