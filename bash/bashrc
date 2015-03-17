@@ -95,5 +95,8 @@ export CYGWIN="binmode ntsec tty"
 # hook for user specific additions
 [[ -s "$HOME/.bashrc.user" ]] && source "$HOME/.bashrc.user"
 
-# hook for platform,whatever additions
+# hook for environment specific additions
+[[ -s "$HOME/.bashrc.env" ]] && source "$HOME/.bashrc.env"
+
+# hook for box specific additions
 [[ -s "$HOME/.bashrc.local" ]] && source "$HOME/.bashrc.local"
