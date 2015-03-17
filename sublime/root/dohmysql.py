@@ -343,14 +343,12 @@ class QueryCore:
         return self.profile_config.get('connection')
 
     def start_queries(self):
-        next_stmt = self.stmt_list[0]
+        for stmt in self.stmt_list:
+            stmt_type = self.check_statement_type(stmt)
+            if not self.is_query_allowed(stmt_type):
+                return
 
-        stmt_type = self.check_statement_type(next_stmt)
-
-        if not self.is_query_allowed(stmt_type):
-            return
-
-        connection_name = self.get_connection_name(stmt_type)
+        connection_name = self.get_connection_name(self.check_statement_type(self.stmt_list[0]))
         if not connection_name:
             sublime.error_message("Unable to determine what connection to use. This may be a problem with the keybind you are using, or the profile setup, or a bug in the plugin code.")
             return
