@@ -462,22 +462,28 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
 
         region = self.view.sel()[0]
         if region.empty():
-            stmt = self.find_statement(region)
+            stmt_list = [self.find_statement(region)]
         else:
-            stmt = self.view.substr(region).strip()
+            stmt_list = self.split_into_statements(self.view.substr(region))
 
         self.ensure_output_view()
         self.tweak_view_settings(self.view)
 
-        if len(stmt) == 0:
-            self.query_core.output_text(True, stmt + "\nunable to find statement")
+        if len(stmt_list) == 0:
+            self.query_core.output_text(True, "unable to find statement")
             return
 
-        self.query_core.save_stmt(stmt, args["allow_read"], args["allow_write"], args.get("connection"))
+        self.query_core.save_stmt(stmt_list[0], args["allow_read"], args["allow_write"], args.get("connection"))
         if self.query_core.has_selected_profile():
             self.query_core.start_query()
         else:
             self.query_core.pick_profile()
+
+    def split_into_statements(self, text):
+        if len(text) == 0:
+            return []
+        not_empty = lambda str: len(str.strip()) > 0
+        return list(filter(not_empty, (text.strip() + "\n").split(";\n")))
 
     def tweak_view_settings(self, target_view):
         target_view.settings().set("rulers", [])
