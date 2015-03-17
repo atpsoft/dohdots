@@ -195,7 +195,6 @@ class QueryCore:
         self.profile_config = None
         self.connections = {}
         self.stmt = None
-        self.stmt_type = None
         self.allow_read_stmts = False
         self.allow_write_stmts = False
         self.specific_connection_name = None
@@ -309,14 +308,14 @@ class QueryCore:
             sublime.error_message("unrecognized statement type")
             raise Exception("unrecognized statement type")
 
-    def is_query_allowed(self):
-        if self.stmt_type == 'neutral':
+    def is_query_allowed(self, stmt_type):
+        if stmt_type == 'neutral':
             return True
 
-        if (self.stmt_type == 'read') and self.allow_read_stmts:
+        if (stmt_type == 'read') and self.allow_read_stmts:
             return True
 
-        if (self.stmt_type == 'write') and self.allow_write_stmts:
+        if (stmt_type == 'write') and self.allow_write_stmts:
             return True
 
         if not self.allow_read_stmts:
@@ -327,16 +326,16 @@ class QueryCore:
             sublime.error_message("there is a bug in is_query_allowed")
         return False
 
-    def get_connection_name(self):
+    def get_connection_name(self, stmt_type):
         if self.specific_connection_name:
             return self.specific_connection_name
 
         retval = None
-        if self.allow_read_stmts and ((self.stmt_type == 'neutral') or (self.stmt_type == 'read')):
+        if self.allow_read_stmts and ((stmt_type == 'neutral') or (stmt_type == 'read')):
             retval = self.profile_config.get('read_connection')
             if retval:
                 return retval
-        elif self.allow_write_stmts and ((self.stmt_type == 'neutral') or (self.stmt_type == 'write')):
+        elif self.allow_write_stmts and ((stmt_type == 'neutral') or (stmt_type == 'write')):
             retval = self.profile_config.get('write_connection')
             if retval:
                 return retval
@@ -346,10 +345,12 @@ class QueryCore:
         return self.profile_config.get('connection')
 
     def start_query(self):
-        if not self.is_query_allowed():
+        stmt_type = self.check_statement_type()
+
+        if not self.is_query_allowed(stmt_type):
             return
 
-        connection_name = self.get_connection_name()
+        connection_name = self.get_connection_name(stmt_type)
         if not connection_name:
             sublime.error_message("Unable to determine what connection to use. This may be a problem with the keybind you are using, or the profile setup, or a bug in the plugin code.")
             return
@@ -403,14 +404,12 @@ class QueryCore:
 
     def save_stmt(self, stmt, allow_read, allow_write, specific_connection_name):
         self.stmt = stmt
-        self.stmt_type = self.check_statement_type()
         self.allow_read_stmts = allow_read
         self.allow_write_stmts = allow_write
         self.specific_connection_name = specific_connection_name
 
     def reset_stmt(self):
         self.stmt = None
-        self.stmt_type = None
         self.allow_read_stmts = False
         self.allow_write_stmts = False
         self.specific_connection_name = None
