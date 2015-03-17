@@ -109,24 +109,22 @@ class QueryRunnerThread(threading.Thread):
         self.query_core = query_core
         self.connection_name = connection_name
         self.stmt_list = stmt_list
-        self.stmt = None
         self.table_builder = table_builder
         threading.Thread.__init__(self)
 
     def run(self):
-        for next_stmt in self.stmt_list:
-            self.stmt = next_stmt
-            if not self.run_one_query():
+        for stmt in self.stmt_list:
+            if not self.run_one_query(stmt):
                 return
 
-    def run_one_query(self):
+    def run_one_query(self, stmt):
         dbconn = self.query_core.get_connection(self.connection_name, False)
         if dbconn == None:
             self.query_core.output_text(False, "unable to connect to database")
             return False
 
         mysql_error_code = 0
-        error, output = self.try_query_once(dbconn)
+        error, output = self.try_query_once(dbconn, stmt)
         if error != None:
             mysql_error_code = error.args[0]
         self.query_core.output_text(False, output)
@@ -139,12 +137,12 @@ class QueryRunnerThread(threading.Thread):
             self.query_core.output_text(False, "unable to connect to database")
             return False
 
-        error, output = self.try_query_once(dbconn)
+        error, output = self.try_query_once(dbconn, stmt)
         self.query_core.output_text(False, output)
         return True
 
-    def try_query_once(self, dbconn):
-        msg = "(%s)\n%s" %  (self.connection_name, self.stmt)
+    def try_query_once(self, dbconn, stmt):
+        msg = "(%s)\n%s" %  (self.connection_name, stmt)
         self.query_core.output_text(True, msg)
 
         cursor = dbconn.cursor()
@@ -152,11 +150,11 @@ class QueryRunnerThread(threading.Thread):
         error = None
         try:
             start_time = time.time()
-            cursor.execute(self.stmt)
+            cursor.execute(stmt)
             elapsed_amt = round(time.time() - start_time, 2)
             elapsed_str = str(elapsed_amt) + ' sec'
             if cursor.description == None:
-                if self.stmt.lower().find("use") == 0:
+                if stmt.lower().find("use") == 0:
                     return (None, 'database changed\n')
                 insert_id = cursor.lastrowid
                 if insert_id > 0:
@@ -170,7 +168,7 @@ class QueryRunnerThread(threading.Thread):
             if row_count == 0:
                 return (None, "no rows (" + elapsed_str + ")\n")
 
-            if self.stmt[-2] == ';':
+            if stmt[-2] == ';':
                 output = self.table_builder.build_line_per_field(data, headers)
             else:
                 output = self.table_builder.build_line_per_row(data, headers)
@@ -195,7 +193,6 @@ class QueryCore:
         self.profile_config = None
         self.connections = {}
         self.stmt_list = []
-        self.stmt = None
         self.allow_read_stmts = False
         self.allow_write_stmts = False
         self.specific_connection_name = None
@@ -297,8 +294,8 @@ class QueryCore:
             self.output_text(True, str(excpt))
         return retval
 
-    def check_statement_type(self):
-        first_word = self.stmt.partition(' ')[0].lower()
+    def check_statement_type(self, stmt):
+        first_word = stmt.partition(' ')[0].lower()
         if first_word in self.NEUTRAL_CMDS:
             return 'neutral'
         elif first_word in self.READ_CMDS:
@@ -346,9 +343,9 @@ class QueryCore:
         return self.profile_config.get('connection')
 
     def start_queries(self):
-        self.stmt = self.stmt_list[0]
+        next_stmt = self.stmt_list[0]
 
-        stmt_type = self.check_statement_type()
+        stmt_type = self.check_statement_type(next_stmt)
 
         if not self.is_query_allowed(stmt_type):
             return
@@ -407,14 +404,12 @@ class QueryCore:
 
     def save_stmt_list(self, stmt_list, allow_read, allow_write, specific_connection_name):
         self.stmt_list = stmt_list
-        self.stmt = None
         self.allow_read_stmts = allow_read
         self.allow_write_stmts = allow_write
         self.specific_connection_name = specific_connection_name
 
     def reset_stmt_list(self):
         self.stmt_list = []
-        self.stmt = None
         self.allow_read_stmts = False
         self.allow_write_stmts = False
         self.specific_connection_name = None
