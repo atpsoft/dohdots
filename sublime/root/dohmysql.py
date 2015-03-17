@@ -105,18 +105,25 @@ class AsciiTableBuilder:
 class QueryRunnerThread(threading.Thread):
     RECONNECT_MYSQL_ERRORS = frozenset([2006, 2013])
 
-    def __init__(self, query_core, connection_name, stmt, table_builder):
+    def __init__(self, query_core, connection_name, stmt_list, table_builder):
         self.query_core = query_core
         self.connection_name = connection_name
-        self.stmt = stmt
+        self.stmt_list = stmt_list
+        self.stmt = None
         self.table_builder = table_builder
         threading.Thread.__init__(self)
 
     def run(self):
+        for next_stmt in self.stmt_list:
+            self.stmt = next_stmt
+            if not self.run_one_query():
+                return
+
+    def run_one_query(self):
         dbconn = self.query_core.get_connection(self.connection_name, False)
         if dbconn == None:
             self.query_core.output_text(False, "unable to connect to database")
-            return
+            return False
 
         mysql_error_code = 0
         error, output = self.try_query_once(dbconn)
@@ -125,15 +132,16 @@ class QueryRunnerThread(threading.Thread):
         self.query_core.output_text(False, output)
 
         if not (mysql_error_code in self.RECONNECT_MYSQL_ERRORS):
-            return
+            return False
 
         dbconn = self.query_core.get_connection(self.connection_name, True)
         if not dbconn:
             self.query_core.output_text(False, "unable to connect to database")
-            return
+            return False
 
         error, output = self.try_query_once(dbconn)
         self.query_core.output_text(False, output)
+        return True
 
     def try_query_once(self, dbconn):
         msg = "(%s)\n%s" %  (self.connection_name, self.stmt)
@@ -345,7 +353,7 @@ class QueryCore:
         if not connection_name:
             sublime.error_message("Unable to determine what connection to use. This may be a problem with the keybind you are using, or the profile setup, or a bug in the plugin code.")
             return
-        thread = QueryRunnerThread(self, connection_name, self.stmt, self.table_builder)
+        thread = QueryRunnerThread(self, connection_name, [self.stmt], self.table_builder)
         thread.start()
 
     def save_view(self, view, source_tab_name):
