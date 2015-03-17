@@ -194,6 +194,7 @@ class QueryCore:
         self.selected_profile = None
         self.profile_config = None
         self.connections = {}
+        self.stmt_list = []
         self.stmt = None
         self.allow_read_stmts = False
         self.allow_write_stmts = False
@@ -345,6 +346,8 @@ class QueryCore:
         return self.profile_config.get('connection')
 
     def start_query(self):
+        self.stmt = self.stmt_list[0]
+
         stmt_type = self.check_statement_type()
 
         if not self.is_query_allowed(stmt_type):
@@ -402,13 +405,15 @@ class QueryCore:
     def has_selected_profile(self):
         return (self.selected_profile != None)
 
-    def save_stmt(self, stmt, allow_read, allow_write, specific_connection_name):
-        self.stmt = stmt
+    def save_stmt_list(self, stmt_list, allow_read, allow_write, specific_connection_name):
+        self.stmt_list = stmt_list
+        self.stmt = None
         self.allow_read_stmts = allow_read
         self.allow_write_stmts = allow_write
         self.specific_connection_name = specific_connection_name
 
-    def reset_stmt(self):
+    def reset_stmt_list(self):
+        self.stmt_list = []
         self.stmt = None
         self.allow_read_stmts = False
         self.allow_write_stmts = False
@@ -427,7 +432,7 @@ def get_query_core(view):
 class DohmysqlChangeProfileCommand(sublime_plugin.TextCommand):
     def run(self, edit, **args):
         query_core = get_query_core(self.view)
-        query_core.reset_stmt()
+        query_core.reset_stmt_list()
         query_core.clear_selected_profile()
         query_core.pick_profile()
 
@@ -480,7 +485,7 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
             self.query_core.output_text(True, "unable to find statement")
             return
 
-        self.query_core.save_stmt(stmt_list[0], args["allow_read"], args["allow_write"], args.get("connection"))
+        self.query_core.save_stmt_list(stmt_list, args["allow_read"], args["allow_write"], args.get("connection"))
         if self.query_core.has_selected_profile():
             self.query_core.start_query()
         else:
