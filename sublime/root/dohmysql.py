@@ -298,6 +298,7 @@ class QueryCore:
         elif first_word in self.WRITE_CMDS:
             return 'write'
         else:
+            sublime.error_message("unrecognized statement type")
             raise Exception("unrecognized statement type")
 
     def is_query_allowed(self):
