@@ -295,7 +295,7 @@ class QueryCore:
         return retval
 
     def check_statement_type(self, stmt):
-        first_word = stmt.partition(' ')[0].lower()
+        first_word = stmt.partition(' ')[0].lower().strip()
         if first_word in self.NEUTRAL_CMDS:
             return 'neutral'
         elif first_word in self.READ_CMDS:
@@ -303,7 +303,7 @@ class QueryCore:
         elif first_word in self.WRITE_CMDS:
             return 'write'
         else:
-            sublime.error_message("unrecognized statement type")
+            sublime.error_message("unrecognized statement type: " + first_word)
             raise Exception("unrecognized statement type")
 
     def is_query_allowed(self, stmt_type):
