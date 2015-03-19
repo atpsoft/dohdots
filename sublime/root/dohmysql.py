@@ -454,21 +454,14 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
             self.view.show(self.view.size())
             return
 
-        current_file = self.view.file_name()
-        self.current_file = current_file
-        window = sublime.active_window()
+        self.current_file = self.view.file_name()
+        if not self.current_file:
+            sublime.error_message("please save this file before trying to run mysql commands from it")
+            return
 
-        if current_file == None:
-            current_file = "None" + self.view.substr(self.view.line(0))
-            file_name = self.view.substr(sublime.Region(0, self.view.size()))
-            tab_name = "untitled"
-        else:
-            file_name = current_file.split("/")[-1]
-            tab_name = file_name
-
-        self.tab_name = tab_name
-        self.file_name = file_name
-        self.window = window
+        self.file_name = self.current_file.split("/")[-1]
+        self.tab_name = self.file_name
+        self.window = sublime.active_window()
 
         region = self.view.sel()[0]
         if region.empty():
