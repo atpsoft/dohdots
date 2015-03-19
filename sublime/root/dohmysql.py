@@ -547,6 +547,7 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
         new_view = window.new_file()
         new_view.settings().set('run_mysql_source_file', self.current_file)
         new_view.settings().set('word_wrap', False)
+        new_view.settings().set('gutter', False)
         new_view.settings().set("RunInScratch", True)
         self.tweak_view_settings(new_view)
         new_view.set_scratch(True)
