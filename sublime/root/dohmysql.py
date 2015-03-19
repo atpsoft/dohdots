@@ -448,10 +448,7 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
             self.query_core = get_query_core(self.view)
 
         if self.view.settings().get('run_mysql_source_file') != None:
-            edit = self.view.begin_edit()
-            self.view.insert(edit, self.view.size(), "unable to run queries from an output view (for now)" + "\n")
-            self.view.end_edit(edit)
-            self.view.show(self.view.size())
+            sublime.error_message("unable to run queries from an output view (for now)")
             return
 
         self.current_file = self.view.file_name()
