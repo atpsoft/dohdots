@@ -487,6 +487,7 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
 
     def tweak_view_settings(self, target_view):
         target_view.settings().set("rulers", [])
+        target_view.settings().set("spell_check", False)
 
     def has_sqlstmt_start(self, line):
         if len(line) == 0:
