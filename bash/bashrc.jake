@@ -1,4 +1,4 @@
-export PATH=.:~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/bin:/usr/sbin:/sbin:/opt/local/bin:/usr/local/mysql/bin:/usr/local/redis/bin:/usr/bin:/opt/local/sbin:~/.rvm/bin:~/src/lsfs_main/bin:~/Dropbox/bin:~/BTSync/main/bin:/usr/local/cmake/bin
+export PATH=.:~/bin:/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/bin:/usr/sbin:/sbin:/opt/local/bin:/usr/local/mysql/bin:/usr/local/redis/bin:/usr/bin:/opt/local/sbin:~/.rvm/bin:~/src/lsfs_main/bin:~/Dropbox/bin:~/BTSync/main/bin:/usr/local/cmake/bin:/usr/local/openssl/bin
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 PATH=$PATH:$HOME/.rvm/bin
