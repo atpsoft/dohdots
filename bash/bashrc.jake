@@ -85,7 +85,9 @@ save () { /usr/bin/sed "/$@/d" ~/.dirs > ~/.dirs1; \mv ~/.dirs1 ~/.dirs; echo "$
 
 # Initialization for the above 'save' facility:
 # source the .sdirs file:
-sdirs
+touch ~/.dirs
+source ~/.dirs
+
 # set the bash option so that no '$' is required when using the above facility
 shopt -s cdable_vars
 
