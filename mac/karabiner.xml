@@ -22,10 +22,48 @@
   </appdef>
 
   <item>
-    <name>hots stuff</name>
+    <name>hots cmd is alt - probably never going to use, have a better approach now</name>
     <identifier>private.app_hots_cmd_is_alt</identifier>
     <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
     <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_L</autogen>
+    <only>hots</only>
+  </item>
+
+  <item>
+    <name>hots self cast</name>
+    <identifier>private.app_hots_self_cast</identifier>
+
+    <!-- talent 1-5 self cast -->
+    <autogen>__KeyToKey__ KeyCode::KEY_1, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::KEY_1, ModifierFlag::OPTION_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::KEY_2, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::KEY_2, ModifierFlag::OPTION_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::KEY_3, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::KEY_3, ModifierFlag::OPTION_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::KEY_4, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::KEY_4, ModifierFlag::OPTION_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::KEY_5, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::KEY_5, ModifierFlag::OPTION_L</autogen>
+
+    <!-- picking of talents 1-5 -->
+    <autogen>__KeyToKey__ KeyCode::KEY_1, KeyCode::COMMAND_L, KeyCode::KEY_1, ModifierFlag::CONTROL_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::KEY_2, KeyCode::COMMAND_L, KeyCode::KEY_2, ModifierFlag::CONTROL_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::KEY_3, KeyCode::COMMAND_L, KeyCode::KEY_3, ModifierFlag::CONTROL_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::KEY_4, KeyCode::COMMAND_L, KeyCode::KEY_4, ModifierFlag::CONTROL_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::KEY_5, KeyCode::COMMAND_L, KeyCode::KEY_5, ModifierFlag::CONTROL_L</autogen>
+
+    <!-- hero ability 1,2,3 + heroic ability self cast -->
+    <autogen>__KeyToKey__ KeyCode::G, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::Q, ModifierFlag::OPTION_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::T, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::W, ModifierFlag::OPTION_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::R, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::E, ModifierFlag::OPTION_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::V, MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_CONTROL, KeyCode::R, ModifierFlag::OPTION_L</autogen>
+
+    <!-- hero ability 1,2,3 + heroic ability regular cast -->
+    <autogen>__KeyToKey__ KeyCode::G, KeyCode::Q</autogen>
+    <autogen>__KeyToKey__ KeyCode::T, KeyCode::W</autogen>
+    <autogen>__KeyToKey__ KeyCode::R, KeyCode::E</autogen>
+    <autogen>__KeyToKey__ KeyCode::V, KeyCode::R</autogen>
+
+    <!-- keys lost because of regular cast rebinds -->
+    <autogen>__KeyToKey__ KeyCode::Q, KeyCode::BACKQUOTE</autogen>
+    <autogen>__KeyToKey__ KeyCode::W, KeyCode::T</autogen>
+    <autogen>__KeyToKey__ KeyCode::E, KeyCode::V</autogen>
+
     <only>hots</only>
   </item>
 
