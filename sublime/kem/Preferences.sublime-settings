@@ -10,7 +10,11 @@
 	{
 		"PATH": "/tmp:/bin"
 	},
-	"font_size": 13.0,
+	"file_exclude_patterns":
+	[
+		"*.log"
+	],
+	"font_size": 11.0,
 	"ignored_packages":
 	[
 		"Vintage"
