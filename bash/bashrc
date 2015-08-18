@@ -85,6 +85,20 @@ function openlast
   open $1`ls -rt $1 | tail -1`
 }
 
+function catlast
+{
+    cat $1/`ls -rt $1 | tail -1`
+}
+
+function ht {
+  history | grep "$@" | tail
+}
+
+function ht50 {
+  history | grep "$@" | tail -n50
+}
+
+
 function stopdots {
   touch .metadata_never_index; rm -rf .Spotlight-*; sudo rm -rf .Trashes; touch .Trashes; rm -rf .fseventsd; mkdir .fseventsd; touch .fseventsd/no_log;
 }
