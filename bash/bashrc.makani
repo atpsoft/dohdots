@@ -29,6 +29,10 @@ alias gpp='git pp'
 alias dtd='dohtest -odont_rebuild_db'
 alias dte='dohtest -f1 -e1'
 alias dtf='dohtest -odont_rebuild_db -f1 -e1'
+function gbb {
+  git checkout $1 .
+  git reset .
+}
 
 function parse_git_branch {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
