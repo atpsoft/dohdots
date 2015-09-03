@@ -96,6 +96,7 @@ def link_files
   end
   link_file('src/dohdots/git/gitignore', '.gitignore')
   link_file('src/dohdots/bash/bash_profile', '.bash_profile')
+  link_file('src/dohdots/bash/screenrc', '.screenrc')
   if (File.exist?(get_path("src/dohdots/bash/bashrc.#{user}")))
     link_file("src/dohdots/bash/bashrc.#{user}", '.bashrc.user')
   end
