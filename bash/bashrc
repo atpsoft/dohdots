@@ -105,7 +105,9 @@ function stopdots {
 
 # note that to disconnect from a screen, allowing you to reattach to it later, you want to hit ctrl-z d (default for screen is ctrl-a d if you don't have a modified .screenrc)
 function ssc {
-  ssh -t $1 "screen -S ${USER}_$2 -rd || screen -S ${USER}_$2"
+# this is the bash way of saying screentype = $2 || 'default'
+  screentype=${2-default}
+  ssh -t $1 "screen -S ${USER}_$screentype -rd || screen -S ${USER}_$screentype"
 }
 
 #for windows, harmless elsewhere
