@@ -48,3 +48,5 @@ case $TERM in
     PS1="\w: \$(parse_git_branch)\$ "
     ;;
 esac
+
+. ~/src/dohdots/bash/bash.alias.utilities
