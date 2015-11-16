@@ -2,7 +2,7 @@
 # Aliases and this file:
 #--------------------------------------------
 # showa: to remind yourself of an alias (given some part of it)
-showa () { /usr/bin/grep -i -a1 $@ ~/.aliases.bash | grep -v '^\s*$' ; }
+showa () { grep -i -a1 $@ ~/.aliases.bash | grep -v '^\s*$' ; }
 
 # sourcea: to source this file (to make changes active after editing)
 alias sourcea='source ~/.aliases.bash'
