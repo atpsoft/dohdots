@@ -21,12 +21,17 @@
     <equal>com.blizzard.heroesofthestorm</equal>
   </appdef>
 
+  <appdef>
+    <appname>wow</appname>
+    <equal>com.blizzard.worldofwarcraft</equal>
+  </appdef>
+
   <item>
     <name>hots cmd is alt - probably never going to use, have a better approach now</name>
-    <identifier>private.app_hots_cmd_is_alt</identifier>
+    <identifier>private.app_blizz_cmd_is_alt</identifier>
     <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
     <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_L</autogen>
-    <only>hots</only>
+    <only>wow</only>
   </item>
 
   <item>
@@ -81,6 +86,25 @@
     <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::DELETE</autogen>
     <autogen>__KeyToKey__ KeyCode::DANISH_DOLLAR, KeyCode::OPTION_L</autogen>
     <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::FORWARD_DELETE</autogen>
+    <not>wow</not>
+  </item>
+
+  <item>
+    <!-- still need to set up tab -> caps-lock and esc -> tab via kinesis keyboard -->
+    <name>Kinesis full remap - wow</name>
+    <identifier>private.kinesis_full_remap_wow</identifier>
+    <autogen>__KeyToKey__ KeyCode::BACKSLASH, ModifierFlag::CONTROL_L, KeyCode::MINUS, ModifierFlag::SHIFT_L | ModifierFlag::CONTROL_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::DELETE, KeyCode::CONTROL_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::FORWARD_DELETE, KeyCode::OPTION_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::DELETE</autogen>
+    <autogen>__KeyToKey__ KeyCode::CURSOR_DOWN, KeyCode::BRACKET_LEFT</autogen>
+    <autogen>__KeyToKey__ KeyCode::BRACKET_LEFT, KeyCode::BRACKET_RIGHT</autogen>
+    <autogen>__KeyToKey__ KeyCode::BRACKET_RIGHT, KeyCode::CURSOR_DOWN</autogen>
+    <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::DELETE</autogen>
+    <autogen>__KeyToKey__ KeyCode::DANISH_DOLLAR, KeyCode::COMMAND_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::FORWARD_DELETE</autogen>
+    <autogen>__KeyToKey__ KeyCode::END, KeyCode::COMMAND_L</autogen>
+    <only>wow</only>
   </item>
 
   <item>
