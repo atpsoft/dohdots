@@ -13,7 +13,7 @@ export LANG=en_US.US-ASCII
 # if you want to archive them above 100k lines -- cron it up weekly or something
 export HISTFILESIZE=100000
 # number of commands to remember in ram
-export HISTSIZE=10000
+export HISTSIZE=30000
 # before the prompt is displayed, any history being buffered is flushed
 export PROMPT_COMMAND="history -a"
 # history is appended to the file, rather than overwriting (for multiple shell instances running at same time)
