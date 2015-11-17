@@ -49,4 +49,4 @@ case $TERM in
     ;;
 esac
 
-. ~/src/dohdots/bash/bash.alias.utilities
+# . ~/src/dohdots/bash/bash.alias.utilities
