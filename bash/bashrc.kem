@@ -23,32 +23,16 @@ function cdd {
 
 alias top='top -o cpu'
 alias gr='git remote -v'
-alias gs='git status'
-alias gc='git commit -m'
 alias gco='git checkout'
 alias gcm='git checkout master'
 alias gcd='git checkout deploy'
 alias gcdd='git checkout -b deploy'
 alias grmd='git branch -d deploy'
-alias gl='git lg -n10 --decorate'
-alias gll='git lg -n50 --decorate'
-alias glll='git lg -n500 --decorate'
-alias gls='git log -n3'
-alias gb='git blame HEAD'
 alias gdc='gitdiffcommit'
 #alias gsc='git svn dcommit'
 #alias gsl='git svn log -n10'
 #alias gsu='git svn rebase'
 #alias gsi='git svn info'
-#git pull, then push
-alias gp='git push'
-alias gpp='git pp'
-#git pull with logging
-alias gpl='git pl'
-alias ll='ls -latrL'
-alias llt='ls -latrL /tmp'
-#use gd -b to ignore whitespace
-alias gd='git diff'
 alias gdd='git difftool'
 alias herokudb='heroku pg:psql'
 alias gitpulltags='git fetch --tags'
@@ -66,11 +50,6 @@ alias watchtimemachine="sudo dtrace -n 'syscall::open*:entry /execname == \"back
 function cpsshkey
 {
 		cat ~/.ssh/id_dsa.pub | ssh $1 "cat >> ~/.ssh/authorized_keys"
-}
-
-function catlast
-{
-    cat $1/`ls -rt $1 | tail -1`
 }
 
 function openlast

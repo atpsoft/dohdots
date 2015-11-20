@@ -85,6 +85,37 @@ function openlast
   open $1`ls -rt $1 | tail -1`
 }
 
+alias gs='git status'
+alias gc='git commit -m'
+alias gl='git lg -n10 --decorate'
+alias gll='git lg -n50 --decorate'
+alias glll='git lg -n500 --decorate'
+alias gls='git log -n3'
+alias gb='git blame HEAD'
+alias gp='git push'
+#git pull, then push
+alias gpp='git pp'
+#git pull with logging
+alias gpl='git pl'
+alias ll='ls -latrL'
+alias llt='ls -latrL /tmp'
+#use gd -b to ignore whitespace
+alias gd='git diff'
+
+# The following aliases (save & show) are for saving frequently used directories
+# You can save a directory using an abbreviation of your choosing. Eg. save ms
+# You can subsequently move to one of the saved directories by using cd with
+# the abbreviation you chose. Eg. cd ms  (Note that no '$' is necessary.)
+# (I got this technique from Michael Boyle in the late 1980's at Visual Edge)
+alias sdirs='source ~/.dirs'
+alias show='cat ~/.dirs'
+save () { sed "/$@/d" ~/.dirs > ~/.dirs1; \mv ~/.dirs1 ~/.dirs; echo "$@"=\"`pwd`\" >> ~/.dirs; source ~/.dirs ; }
+
+# Initialization for the above 'save' facility:
+# source the .dirs file:
+touch ~/.dirs
+source ~/.dirs
+
 function catlast
 {
     cat $1/`ls -rt $1 | tail -1`
