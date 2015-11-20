@@ -36,9 +36,6 @@ lll () { /bin/ls -aOle "$@" | /usr/bin/more ; }
 lt ()  { /bin/ls -lt "$@" | /usr/bin/more ; }
 lsr () { /bin/ls -l "$@"/..namedfork/rsrc ; }
 
-# set the bash option so that no '$' is required when using the above facility
-shopt -s cdable_vars
-
 # cdf: cd's to frontmost window of Finder
 cdf ()
 {
