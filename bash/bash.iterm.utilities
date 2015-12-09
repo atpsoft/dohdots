@@ -43,6 +43,7 @@ then
   title_help2;
 fi
 }
+
 alias title='set_iterm_title'
 
 function titlepwd() {
@@ -176,10 +177,13 @@ function tab_azure { title "$1"; tab_color 240 255 255; }
 function tab_snow { title "$1"; tab_color 255 250 250; }
 function tab_black { title "$1"; tab_color 0 0 0; }
 function tab_dim_gray_dim_grey { title "$1"; tab_color 105 105 105; }
-function tab_gray_grey { title "$1"; tab_color 128 128 128; }
-function tab_dark_gray_dark_grey { title "$1"; tab_color 169 169 169; }
+function tab_gray { title "$1"; tab_color 128 128 128; }
+function tab_grey { title "$1"; tab_color 128 128 128; }
+function tab_dark_gray { title "$1"; tab_color 169 169 169; }
+function tab_dark_grey { title "$1"; tab_color 169 169 169; }
 function tab_silver { title "$1"; tab_color 192 192 192; }
-function tab_light_gray_light_grey { title "$1"; tab_color 211 211 211 ; }
+function tab_light_gray { title "$1"; tab_color 211 211 211 ; }
+function tab_light_grey { title "$1"; tab_color 211 211 211 ; }
 function tab_gainsboro { title "$1"; tab_color 220 220 220; }
 function tab_white_smoke { title "$1"; tab_color 245 245 245; }
 function tab_white { title "$1"; tab_color 255 255 255; }
@@ -202,4 +206,28 @@ function tab_color() {
   echo -n -e "\033]6;1;bg;red;brightness;$1\a"
   echo -n -e "\033]6;1;bg;green;brightness;$2\a"
   echo -n -e "\033]6;1;bg;blue;brightness;$3\a"
+
+}
+
+function set_color() {
+  local HEX_FG=$1
+  local HEX_BG=$2
+  local OPACITY=$3
+
+  local FG_R=`echo $HEX_FG | sed 's/../0x&,/g' | awk -F "," '{printf("%d",$1 * 257)}'`
+  local FG_G=`echo $HEX_FG | sed 's/../0x&,/g' | awk -F "," '{printf("%d",$2 * 257)}'`
+  local FG_B=`echo $HEX_FG | sed 's/../0x&,/g' | awk -F "," '{printf("%d",$3 * 257)}'`
+  local BG_R=`echo $HEX_BG | sed 's/../0x&,/g' | awk -F "," '{printf("%d",$1 * 257)}'`
+  local BG_G=`echo $HEX_BG | sed 's/../0x&,/g' | awk -F "," '{printf("%d",$2 * 257)}'`
+  local BG_B=`echo $HEX_BG | sed 's/../0x&,/g' | awk -F "," '{printf("%d",$3 * 257)}'`
+
+  /usr/bin/osascript <<EOF
+tell application "iTerm"
+   tell current session of current terminal
+      set foreground color to {$FG_R, $FG_G, $FG_B}
+      set background color to {$BG_R, $BG_G, $BG_B}
+      set transparency to "$OPACITY"
+   end tell
+end tell
+EOF
 }
