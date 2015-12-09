@@ -58,3 +58,4 @@ function openlast
 }
 
 . ~/src/dohdots/bash/bash.alias.utilities
+. ~/src/dohdots/bash/bash.iterm.utilities
