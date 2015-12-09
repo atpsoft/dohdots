@@ -1,4 +1,4 @@
-makani/SublimeREPLHistory
+SublimeREPLHistory
 Package Control.cache
 Package Control.system-ca-bundle
 Package Control.user-ca-bundle
@@ -6,3 +6,4 @@ Package Control.merged-ca-bundle
 doh.sublime-settings
 *.backup
 *.cache
+sftp_servers
