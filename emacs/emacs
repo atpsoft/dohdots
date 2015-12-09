@@ -110,6 +110,7 @@
   (interactive)
   (setq major-mode 'nothing-mode))
 
+(set-face-foreground 'minibuffer-prompt "white")
 (defun my-shell-prefs()
   (local-unset-key "\M-s");; 'switch-buffers)
 	(local-set-key "\C-a" 'comint-bol)
@@ -130,6 +131,7 @@
 ;;	(process-send-string "*shell*" ". ~/.bash_profile\n")
 ;;	(process-send-string "*shell*" (concat "path = " exec-path))
 	(sleep-for 1.0)
+  (process-send-string "*shell*" "PS1='\e[0;37m: '")
 ;;	(fix-exec-path)
 ;;   (add-hook 'comint-input-filter-functions 'shell-directory-tracker)
 	)
@@ -146,7 +148,7 @@
 ;;  (set-variable 'dirtrack-list '("^.*[^ ]+:\\(.*\\)>" 1 nil)
   (set-variable 'dirtrack-list '("\\(.*+\\):[ ]" 1 nil)
   (dirtrack-mode 1)))
-(add-hook 'shell-mode-hook 'my-dirtrack-mode)
+;; (add-hook 'shell-mode-hook 'my-dirtrack-mode)
 
 ;;(add-to-list 'load-path "~/.emacs.d/elisp/emacs-bash-completion/")
 ;;(require 'bash-completion)
