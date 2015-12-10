@@ -40,14 +40,16 @@ function parse_git_branch {
 }
 
 # sets prompt style
-case $TERM in
-  xterm*)
-    PS1="\[\033]0;\w\007\]\w: \$(parse_git_branch)\$ "
-    ;;
-  *)
-    PS1="\w: \$(parse_git_branch)\$ "
-    ;;
-esac
+# case $TERM in
+#   xterm*)
+#     PS1="\[\033]0;\w\007\]\w: \$(parse_git_branch)\$ "
+#     ;;
+#   *)
+#     PS1="\w: \$(parse_git_branch)\$ "
+#     ;;
+# esac
+
+PS1="\w: \$(parse_git_branch)\$ "
 
 . ~/src/dohdots/bash/bash.alias.utilities
 . ~/src/dohdots/bash/bash.iterm.utilities
