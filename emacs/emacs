@@ -110,7 +110,14 @@
   (interactive)
   (setq major-mode 'nothing-mode))
 
+(defun osx-p()
+  (interactive)
+  (eq system-type 'darwin))
+
+(if (not (osx-p))
 (set-face-foreground 'minibuffer-prompt "white")
+)
+
 (defun my-shell-prefs()
   (local-unset-key "\M-s");; 'switch-buffers)
 	(local-set-key "\C-a" 'comint-bol)
@@ -148,7 +155,7 @@
 ;;  (set-variable 'dirtrack-list '("^.*[^ ]+:\\(.*\\)>" 1 nil)
   (set-variable 'dirtrack-list '("\\(.*+\\):[ ]" 1 nil)
   (dirtrack-mode 1)))
-;; (add-hook 'shell-mode-hook 'my-dirtrack-mode)
+(add-hook 'shell-mode-hook 'my-dirtrack-mode)
 
 ;;(add-to-list 'load-path "~/.emacs.d/elisp/emacs-bash-completion/")
 ;;(require 'bash-completion)
