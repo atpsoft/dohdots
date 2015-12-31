@@ -16,16 +16,11 @@ function fcr {
 alias ll='ls -lA'
 alias llr='ls -lAtr'
 
-alias gs='git status'
-alias gc='git commit -m'
 alias gd='git difftool'
 alias gds='git difftool --staged'
 function gdc {
   git difftool "$1^..$1" $2
 }
-alias gco='git checkout'
-alias gpl='git pl'
-alias gpp='git pp'
 alias dtd='dohtest -odont_rebuild_db'
 alias dte='dohtest -f1 -e1'
 alias dtf='dohtest -odont_rebuild_db -f1 -e1'

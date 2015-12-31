@@ -86,6 +86,8 @@ function openlast
 }
 
 alias gs='git status'
+alias gco='git checkout'
+alias gcm='git checkout master'
 alias gc='git commit -m'
 alias gl='git log -n10 --decorate'
 alias gll='git log -n50 --decorate'
