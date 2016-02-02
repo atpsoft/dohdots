@@ -127,11 +127,11 @@ function catlast
 }
 
 function ht {
-  history | grep "$@" | tail
+  cat ~/.bash_history | grep "$@" | tail
 }
 
 function ht50 {
-  history | grep "$@" | tail -n50
+  cat ~/.bash_history | grep "$@" | tail -n50
 }
 
 
