@@ -130,11 +130,21 @@ function catlast
     cat $1/`ls -rt $1 | tail -1`
 }
 
+# ht / ht50 use the history command, which gives you line numbers you can then use to repeat a command
+# htf / htf50 cat the file, so you can get recent commands from other shell instances with same user
 function ht {
-  cat ~/.bash_history | grep "$@" | tail
+  history | grep "$@" | tail
 }
 
 function ht50 {
+  history | grep "$@" | tail -n50
+}
+
+function htf {
+  cat ~/.bash_history | grep "$@" | tail
+}
+
+function htf50 {
   cat ~/.bash_history | grep "$@" | tail -n50
 }
 
