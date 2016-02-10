@@ -5,6 +5,7 @@ export BASHRCLOADED=true
 export VISUAL=emacs
 export EDITOR=emacs
 export PAGER=cat
+export LANG=en_US.UTF-8
 
 ### this section of commands is to make losing command history less likely, especially when having multiple terminals open
 # limits the number of lines in the history file
@@ -59,10 +60,6 @@ function fc {
 # same as fc, but case insensitive
 function fl {
  fc -i "$@"
-}
-
-function gnfs {
-  grep --no-filename "$@" | sort
 }
 
 # use fl, then grep for def at the beginning, followed by the argument (find definition of a method)
@@ -129,22 +126,12 @@ function catlast
     cat $1/`ls -rt $1 | tail -1`
 }
 
-# ht / ht50 use the history command, which gives you line numbers you can then use to repeat a command
-# htf / htf50 cat the file, so you can get recent commands from other shell instances with same user
 function ht {
   history | grep "$@" | tail
 }
 
 function ht50 {
   history | grep "$@" | tail -n50
-}
-
-function htf {
-  cat ~/.bash_history | grep "$@" | tail
-}
-
-function htf50 {
-  cat ~/.bash_history | grep "$@" | tail -n50
 }
 
 
