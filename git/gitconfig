@@ -2,6 +2,7 @@
   excludesfile = ~/.gitignore
   quotepath = false
   autocrlf = input
+  editor = subl -w
 [difftool]
   prompt = false
 [branch]
