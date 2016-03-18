@@ -119,7 +119,7 @@
 )
 
 (defun my-shell-prefs()
-  (local-unset-key "\M-s");; 'switch-buffers)
+  (local-unset-key "\M-s")
 	(local-set-key "\C-a" 'comint-bol)
 	(local-set-key "\C-c\C-c" 'kemint-interrupt-subjob)
 	(local-set-key "\C-c\C-z" 'kemint-stop-subjob)
