@@ -181,7 +181,7 @@ class QueryRunnerThread(threading.Thread):
 
 class QueryCore:
     READ_CMDS = frozenset(['select','describe','desc','explain','show'])
-    WRITE_CMDS = frozenset(['update','delete','insert','replace','load','create','alter','truncate','commit','drop','rename','flush','analyze'])
+    WRITE_CMDS = frozenset(['update','delete','insert','replace','load','create','alter','truncate','commit','drop','rename','flush','analyze','kill'])
     NEUTRAL_CMDS = frozenset(['use','set'])
 
     def __init__(self, source_view):
@@ -436,7 +436,7 @@ class DohmysqlChangeProfileCommand(sublime_plugin.TextCommand):
 
 
 class DohmysqlQueryCommand(sublime_plugin.TextCommand):
-    SQLSTMT_STARTS = frozenset(['select','update','delete','insert','replace','use','load','describe','desc','explain','create','alter','truncate','show','commit','set','drop','rename','flush','analyze'])
+    SQLSTMT_STARTS = frozenset(['select','update','delete','insert','replace','use','load','describe','desc','explain','create','alter','truncate','show','commit','set','drop','rename','flush','analyze','kill'])
 
     def __init__(self, view):
         super(DohmysqlQueryCommand, self).__init__(view)
