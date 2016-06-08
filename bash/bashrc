@@ -1,5 +1,4 @@
 # in conjunction with code in .bash_profile, attempts to standardize dot file loading for the different kinds of shell contexts (login, non-interactive, etc.)
-export BASHRCLOADED=true
 
 # emacs focused setup
 export VISUAL=emacs
