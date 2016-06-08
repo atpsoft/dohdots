@@ -222,8 +222,8 @@ function set_color() {
   local BG_B=`echo $HEX_BG | sed 's/../0x&,/g' | awk -F "," '{printf("%d",$3 * 257)}'`
 
   /usr/bin/osascript <<EOF
-tell application "iTerm"
-   tell current session of current terminal
+tell application "iTerm2"
+   tell current session of current window
       set foreground color to {$FG_R, $FG_G, $FG_B}
       set background color to {$BG_R, $BG_G, $BG_B}
       set transparency to "$OPACITY"
