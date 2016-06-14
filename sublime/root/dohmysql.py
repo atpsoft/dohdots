@@ -436,7 +436,7 @@ class DohmysqlChangeProfileCommand(sublime_plugin.TextCommand):
 
 
 class DohmysqlQueryCommand(sublime_plugin.TextCommand):
-    SQLSTMT_STARTS = frozenset(['select','update','delete','insert','replace','use','load','describe','desc','explain','create','alter','truncate','show','commit','set','drop','rename','flush','analyze','kill'])
+    SQLSTMT_STARTS = frozenset(['select','update','delete','insert','replace','use','load','describe','desc','explain','create','alter','truncate','show','commit','set','drop','rename','flush','analyze','kill','optimize'])
 
     def __init__(self, view):
         super(DohmysqlQueryCommand, self).__init__(view)
