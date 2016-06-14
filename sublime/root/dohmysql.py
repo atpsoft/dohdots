@@ -181,7 +181,7 @@ class QueryRunnerThread(threading.Thread):
 
 class QueryCore:
     READ_CMDS = frozenset(['select','describe','desc','explain','show'])
-    WRITE_CMDS = frozenset(['update','delete','insert','replace','load','create','alter','truncate','commit','drop','rename','flush','analyze','kill'])
+    WRITE_CMDS = frozenset(['update','delete','insert','replace','load','create','alter','truncate','commit','drop','rename','flush','analyze','kill','optimize'])
     NEUTRAL_CMDS = frozenset(['use','set'])
 
     def __init__(self, source_view):
