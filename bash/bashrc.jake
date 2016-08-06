@@ -16,9 +16,9 @@ alias ..="cd .."
 alias ...="cd ../../"
 
 
-alias lsfs="cd ~/src/lsfs_main"
-alias aiview="~/src/lsfs_main/apps/agent_interface/views"
-alias aipublic="~/src/lsfs_main/apps/agent_interface/public"
+alias lsfs="cd ~/src/lsfs"
+alias aiview="~/src/lsfs/apps/agent_interface/views"
+alias aipublic="~/src/lsfs/apps/agent_interface/public"
 
 alias srcdir="cd ~/src"
 alias workdir="cd ~/BTSync/main/docs/work"
@@ -133,40 +133,51 @@ finderComment () { mdls "$1" | grep kMDItemFinderComment ; }
 
 # unalias gpl
 function gpl() {
-  if [ "$PWD" == "/Users/$USER/src/lsfs_main" ]
+  if [ "$PWD" == "/Users/$USER/src/lsfs" ]
   then
      git pl
      cd ../bootstrap_ai
      git pl
      cd ../bootstrap_mi
      git pl
-     cd ~/src/lsfs_main
+     cd ~/src/lsfs
   else
      git pl
   fi
 }
 
-# git commands to lsfs_main & bootstrap repos
+# git commands to lsfs & bootstrap repos
 function gitai {
-  if [ "$PWD" == "/Users/$USER/src/lsfs_main" ]
+  if [ "$PWD" == "/Users/$USER/src/lsfs" ]
   then
      git "$@"
      cd ../bootstrap_ai
      git "$@"
-     cd ~/src/lsfs_main
+     cd ~/src/lsfs
   else
-    echo "You must be in /Users/$USER/src/lsfs_main"
+    echo "You must be in /Users/$USER/src/lsfs"
   fi
 }
-function gitmi {
-  if [ "$PWD" == "/Users/$USER/src/lsfs_main" ]
+function gitccy {
+  if [ "$PWD" == "/Users/$USER/src/lsfs" ]
   then
      git "$@"
-     cd ../bootstrap_mi
+     cd ../bootstrap_ccy
      git "$@"
-     cd ~/src/lsfs_main
+     cd ~/src/lsfs
   else
-    echo "You must be in /Users/$USER/src/lsfs_main"
+    echo "You must be in /Users/$USER/src/lsfs"
+  fi
+}
+function gitmls {
+  if [ "$PWD" == "/Users/$USER/src/lsfs" ]
+  then
+     git "$@"
+     cd ../bootstrap_mls
+     git "$@"
+     cd ~/src/lsfs
+  else
+    echo "You must be in /Users/$USER/src/lsfs"
   fi
 }
 
