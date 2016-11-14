@@ -26,7 +26,6 @@
     <equal>com.blizzard.worldofwarcraft</equal>
   </appdef>
 
-  <!-- keeping around for reference for now
   <item>
     <name>hots cmd is alt - probably never going to use, have a better approach now</name>
     <identifier>private.app_blizz_cmd_is_alt</identifier>
@@ -34,6 +33,8 @@
     <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_L</autogen>
     <only>wow</only>
   </item>
+
+  <!-- keeping around for reference for now
 
   <item>
     <name>hots self cast</name>
