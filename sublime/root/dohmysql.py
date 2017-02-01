@@ -188,6 +188,7 @@ class QueryCore:
         self.source_view = source_view
         self.output_view = None
         self.source_tab_name = None
+        self.server_id = None
         self.table_builder = AsciiTableBuilder()
         self.selected_profile = None
         self.profile_config = None
@@ -239,6 +240,17 @@ class QueryCore:
                 found_connection = connection_config
         return found_connection
 
+    def set_server_id(self, uuid):
+        doh_settings = sublime.load_settings('doh.sublime-settings')
+        nicknames = doh_settings.get('server_nicknames')
+        value = nicknames.get(uuid)
+        if value == None:
+            value = uuid[:8]
+
+        msg = "server uuid is %s, using '%s' for log filename" % (uuid, value)
+        self.output_text(True, msg)
+        self.server_id = value
+
     def connect_to_database(self, connection_name):
         self.connections[connection_name] = None
         retval = None
@@ -288,6 +300,11 @@ class QueryCore:
         try:
             retval = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
             cursor = retval.cursor()
+
+            cursor.execute("SHOW VARIABLES LIKE 'server_uuid'")
+            data = cursor.fetchone()
+            self.set_server_id(data[1])
+
             self.output_text(True, vars_msg)
             cursor.execute(vars_cmd)
         except Exception as excpt:
