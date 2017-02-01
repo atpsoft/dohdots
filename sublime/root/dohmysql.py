@@ -50,7 +50,7 @@ class AsciiTableBuilder:
         return str
 
     def value_to_string(self, value):
-        if value == None:
+        if value is None:
             return 'NULL'
         return str(value)
 
@@ -123,20 +123,20 @@ class QueryRunnerThread(threading.Thread):
 
     def run_one_query(self, stmt):
         dbconn = self.query_core.get_connection(self.connection_name, False)
-        if dbconn == None:
+        if dbconn is None:
             self.query_core.output_text(False, "unable to connect to database")
             return False
 
         mysql_error_code = 0
         error, output = self.try_query_once(dbconn, stmt)
-        if error != None:
+        if error is not None:
             mysql_error_code = error.args[0]
         self.query_core.output_text(False, output)
-        if error == None:
+        if error is None:
             self.log_query(stmt, output)
 
         if not (mysql_error_code in self.RECONNECT_MYSQL_ERRORS):
-            return (error == None)
+            return (error is None)
 
         dbconn = self.query_core.get_connection(self.connection_name, True)
         if not dbconn:
@@ -145,7 +145,7 @@ class QueryRunnerThread(threading.Thread):
 
         error, output = self.try_query_once(dbconn, stmt)
         self.query_core.output_text(False, output)
-        if error == None:
+        if error is None:
             self.log_query(stmt, output)
         return True
 
@@ -161,7 +161,7 @@ class QueryRunnerThread(threading.Thread):
             cursor.execute(stmt)
             elapsed_amt = round(time.time() - start_time, 2)
             elapsed_str = str(elapsed_amt) + ' sec'
-            if cursor.description == None:
+            if cursor.description is None:
                 if stmt.lower().find("use") == 0:
                     return (None, 'database changed\n')
                 insert_id = cursor.lastrowid
@@ -217,7 +217,7 @@ class QueryCore:
 
     def open_logfile(self, conn):
         logdir = self.all_settings.get("logfile_dir")
-        if logdir == None:
+        if logdir is None:
             self.output_text(True, "no logfile_dir setting, logging disabled")
             return
 
@@ -228,7 +228,7 @@ class QueryCore:
 
         nicknames = self.all_settings.get('server_nicknames')
         server = nicknames.get(uuid)
-        if server == None:
+        if server is None:
             server = uuid[:8]
 
         logname = "query_%s.log" % (server)
@@ -411,7 +411,7 @@ class QueryCore:
         self.connections = {}
 
     def has_output_view(self):
-        return (self.output_view != None) and (self.output_view.window() != None)
+        return (self.output_view is not None) and (self.output_view.window() is not None)
 
     def get_connection(self, connection_name, force_new):
         retval = self.connections.get(connection_name)
@@ -446,7 +446,7 @@ class QueryCore:
         self.output_view.settings().erase('color_scheme')
 
     def has_selected_profile(self):
-        return (self.selected_profile != None)
+        return (self.selected_profile is not None)
 
     def save_stmt_list(self, stmt_list, allow_read, allow_write, specific_connection_name):
         self.stmt_list = stmt_list
@@ -490,7 +490,7 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
         if not self.query_core:
             self.query_core = get_query_core(self.view)
 
-        if self.view.settings().get('run_mysql_source_file') != None:
+        if self.view.settings().get('run_mysql_source_file') is not None:
             sublime.error_message("unable to run queries from an output view (for now)")
             return
 
@@ -581,7 +581,7 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
             for check_view in window.views():
                 if check_view.settings().get('run_mysql_source_file') == self.current_file:
                     new_view = check_view
-        if new_view == None:
+        if new_view is None:
             new_view = self.build_output_view()
         self.query_core.save_view(new_view, self.tab_name)
 
@@ -602,14 +602,14 @@ class ActivateViews(sublime_plugin.EventListener):
         self.activating = False
 
     def bring_to_front(self, view, orig):
-        if view == None:
+        if view is None:
             return
         view.window().focus_view(view)
         view.window().focus_view(orig)
 
     def get_mirror_view(self, view):
         look_at_filename = False
-        if view.settings().get('run_mysql_source_file') != None:
+        if view.settings().get('run_mysql_source_file') is not None:
             look_for_file = view.settings().get('run_mysql_source_file')
             look_at_filename = True
         else:
@@ -627,8 +627,8 @@ class ActivateViews(sublime_plugin.EventListener):
         if self.activating:
             return
         self.activating = True
-        if view.settings().get('run_mysql_source_file') != None:
+        if view.settings().get('run_mysql_source_file') is not None:
             self.bring_to_front(self.get_mirror_view(view), view)
-        elif view.settings().get('parent_view') == True and view.file_name() != None:
+        elif view.settings().get('parent_view') == True and view.file_name() is not None:
             self.bring_to_front(self.get_mirror_view(view), view)
         self.activating = False
