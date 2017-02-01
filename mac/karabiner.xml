@@ -29,8 +29,8 @@
   <item>
     <name>hots cmd is alt - probably never going to use, have a better approach now</name>
     <identifier>private.app_blizz_cmd_is_alt</identifier>
-    <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::OPTION_L</autogen>
-    <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::COMMAND_R, KeyCode::OPTION_L</autogen>
+    <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_R</autogen>
     <only>wow</only>
   </item>
 
