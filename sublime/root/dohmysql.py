@@ -248,7 +248,7 @@ class QueryCore:
             self.output_text(True, "unable to find settings for connection " + connection_name)
             return None
 
-        msg = "connecting to %s" % (connection_name)
+        msg = "using '%s' connection settings" % (connection_name)
         self.output_text(True, msg)
 
         vars_cmd = 'SET autocommit=1'
