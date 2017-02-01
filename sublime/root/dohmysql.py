@@ -118,8 +118,8 @@ class QueryRunnerThread(threading.Thread):
                 return
 
     def log_query(self, stmt, output):
-        self.query_core.log_text(True, stmt)
-        self.query_core.log_text(False, output)
+        self.query_core.log_text(self.connection_name, True, stmt)
+        self.query_core.log_text(self.connection_name, False, output)
 
     def run_one_query(self, stmt):
         dbconn = self.query_core.get_connection(self.connection_name, False)
@@ -196,12 +196,12 @@ class QueryCore:
         self.source_view = source_view
         self.output_view = None
         self.source_tab_name = None
-        self.server_id = None
-        self.logfile = None
         self.table_builder = AsciiTableBuilder()
         self.selected_profile = None
         self.profile_config = None
+        # connections and logfiles are both keyed off connection_name
         self.connections = {}
+        self.logfiles = {}
         self.stmt_list = []
         self.allow_read_stmts = False
         self.allow_write_stmts = False
@@ -215,23 +215,37 @@ class QueryCore:
     def output_text(self, include_timestamp, text):
         self.output_view.run_command("append_text", {'timestamp': include_timestamp, 'text': text})
 
-    def open_logfile(self):
+    def open_logfile(self, conn):
         logdir = self.all_settings.get("logfile_dir")
         if logdir == None:
             self.output_text(True, "no logfile_dir setting, logging disabled")
             return
-        logname = "query_%s.log" % (self.server_id)
-        logpath = os.path.join(logdir, logname)
-        self.output_text(True, "logging queries to " + logpath)
-        self.logfile = open(logpath, 'a')
 
-    def log_text(self, include_timestamp, text):
-        if self.logfile != None:
-            if include_timestamp:
-                timestr = time.strftime("%Y-%m-%d %H:%M:%S  ", time.localtime())
-                self.logfile.write(timestr)
-            self.logfile.write(text + "\n")
-            self.logfile.flush()
+        cursor = conn.cursor()
+        cursor.execute("SHOW VARIABLES LIKE 'server_uuid'")
+        data = cursor.fetchone()
+        uuid = data[1]
+
+        nicknames = self.all_settings.get('server_nicknames')
+        server = nicknames.get(uuid)
+        if server == None:
+            server = uuid[:8]
+
+        logname = "query_%s.log" % (server)
+        logpath = os.path.join(logdir, logname)
+        self.output_text(True, "server uuid is %s, logging queries to %s" % (uuid, logpath))
+        return open(logpath, 'a')
+
+    def log_text(self, connection_name, include_timestamp, text):
+        logfile = self.logfiles.get(connection_name)
+        if logfile is None:
+            return
+
+        if include_timestamp:
+            timestr = time.strftime("%Y-%m-%d %H:%M:%S  ", time.localtime())
+            logfile.write(timestr)
+        logfile.write(text + "\n")
+        logfile.flush()
 
     def pick_profile(self):
         self.ui_profile_list = []
@@ -267,17 +281,6 @@ class QueryCore:
                 found_connection = connection_config
         return found_connection
 
-    def set_server_id(self, uuid):
-        doh_settings = sublime.load_settings('doh.sublime-settings')
-        nicknames = doh_settings.get('server_nicknames')
-        value = nicknames.get(uuid)
-        if value == None:
-            value = uuid[:8]
-
-        msg = "server uuid is %s, using '%s' for log filename" % (uuid, value)
-        self.output_text(True, msg)
-        self.server_id = value
-
     def connect_to_database(self, connection_name):
         self.connections[connection_name] = None
         retval = None
@@ -298,6 +301,7 @@ class QueryCore:
 
         retval = self.try_connect_once(vals, vars_msg, vars_cmd)
         self.connections[connection_name] = retval
+        self.logfiles[connection_name] = self.open_logfile(retval)
 
         if retval:
             return retval
@@ -320,6 +324,7 @@ class QueryCore:
                 break
 
         self.connections[connection_name] = retval
+        self.logfiles[connection_name] = self.open_logfile(retval)
         return retval
 
     def try_connect_once(self, vals, vars_msg, vars_cmd):
@@ -327,12 +332,6 @@ class QueryCore:
         try:
             retval = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
             cursor = retval.cursor()
-
-            cursor.execute("SHOW VARIABLES LIKE 'server_uuid'")
-            data = cursor.fetchone()
-            self.set_server_id(data[1])
-            self.open_logfile()
-
             self.output_text(True, vars_msg)
             cursor.execute(vars_cmd)
         except Exception as excpt:
