@@ -249,7 +249,7 @@ class QueryCore:
 
     def pick_profile(self):
         self.ui_profile_list = []
-        for profile in sublime.load_settings('doh.sublime-settings').get('profiles'):
+        for profile in self.all_settings.get('profiles'):
             self.ui_profile_list.append([profile.get('name')])
         window = sublime.active_window()
         window.show_quick_panel(self.ui_profile_list, self.profile_was_picked)
@@ -259,8 +259,7 @@ class QueryCore:
             self.clear_selected_profile()
             return
 
-        doh_settings = sublime.load_settings('doh.sublime-settings')
-        profiles_list = doh_settings.get('profiles')
+        profiles_list = self.all_settings.get('profiles')
 
         profile_name = self.ui_profile_list[picked][0]
         found_profile = None
@@ -272,8 +271,7 @@ class QueryCore:
             self.start_queries()
 
     def lookup_connection_params(self, connection_name):
-        doh_settings = sublime.load_settings('doh.sublime-settings')
-        connections_list = doh_settings.get('connections')
+        connections_list = self.all_settings.get('connections')
 
         found_connection = None
         for connection_config in connections_list:
