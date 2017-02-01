@@ -117,6 +117,9 @@ class QueryRunnerThread(threading.Thread):
             if not self.run_one_query(stmt):
                 return
 
+    def log_query(self, stmt, output):
+        self.query_core.log_text(stmt + "\n")
+
     def run_one_query(self, stmt):
         dbconn = self.query_core.get_connection(self.connection_name, False)
         if dbconn == None:
@@ -128,6 +131,8 @@ class QueryRunnerThread(threading.Thread):
         if error != None:
             mysql_error_code = error.args[0]
         self.query_core.output_text(False, output)
+        if error == None:
+            self.log_query(stmt, output)
 
         if not (mysql_error_code in self.RECONNECT_MYSQL_ERRORS):
             return (error == None)
@@ -139,6 +144,8 @@ class QueryRunnerThread(threading.Thread):
 
         error, output = self.try_query_once(dbconn, stmt)
         self.query_core.output_text(False, output)
+        if error == None:
+            self.log_query(stmt, output)
         return True
 
     def try_query_once(self, dbconn, stmt):
@@ -189,6 +196,7 @@ class QueryCore:
         self.output_view = None
         self.source_tab_name = None
         self.server_id = None
+        self.logfile = None
         self.table_builder = AsciiTableBuilder()
         self.selected_profile = None
         self.profile_config = None
@@ -205,6 +213,23 @@ class QueryCore:
 
     def output_text(self, include_timestamp, text):
         self.output_view.run_command("append_text", {'timestamp': include_timestamp, 'text': text})
+
+    def open_logfile(self):
+        logdir = self.all_settings.get("logfile_dir")
+        if logdir == None:
+            self.output_text(True, "no logfile_dir setting, logging disabled")
+            return
+        logname = "query_%s.log" % (self.server_id)
+        logpath = os.path.join(logdir, logname)
+        self.output_text(True, "logging queries to " + logpath)
+        self.logfile = open(logpath, 'a')
+
+    def log_text(self, text):
+        if self.logfile != None:
+            timestr = time.strftime("%Y-%m-%d %H:%M:%S  ", time.localtime())
+            self.logfile.write(timestr)
+            self.logfile.write(text)
+            self.logfile.flush()
 
     def pick_profile(self):
         self.ui_profile_list = []
@@ -304,6 +329,7 @@ class QueryCore:
             cursor.execute("SHOW VARIABLES LIKE 'server_uuid'")
             data = cursor.fetchone()
             self.set_server_id(data[1])
+            self.open_logfile()
 
             self.output_text(True, vars_msg)
             cursor.execute(vars_cmd)
