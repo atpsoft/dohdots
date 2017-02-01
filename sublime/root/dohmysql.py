@@ -287,8 +287,9 @@ class QueryCore:
         retval = None
         try:
             retval = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
+            cursor = retval.cursor()
             self.output_text(True, vars_msg)
-            retval.cursor().execute(vars_cmd)
+            cursor.execute(vars_cmd)
         except Exception as excpt:
             retval = None
             self.output_text(True, str(excpt))
