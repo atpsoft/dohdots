@@ -118,7 +118,8 @@ class QueryRunnerThread(threading.Thread):
                 return
 
     def log_query(self, stmt, output):
-        self.query_core.log_text(stmt + "\n")
+        self.query_core.log_text(True, stmt)
+        self.query_core.log_text(False, output)
 
     def run_one_query(self, stmt):
         dbconn = self.query_core.get_connection(self.connection_name, False)
@@ -224,11 +225,12 @@ class QueryCore:
         self.output_text(True, "logging queries to " + logpath)
         self.logfile = open(logpath, 'a')
 
-    def log_text(self, text):
+    def log_text(self, include_timestamp, text):
         if self.logfile != None:
-            timestr = time.strftime("%Y-%m-%d %H:%M:%S  ", time.localtime())
-            self.logfile.write(timestr)
-            self.logfile.write(text)
+            if include_timestamp:
+                timestr = time.strftime("%Y-%m-%d %H:%M:%S  ", time.localtime())
+                self.logfile.write(timestr)
+            self.logfile.write(text + "\n")
             self.logfile.flush()
 
     def pick_profile(self):
