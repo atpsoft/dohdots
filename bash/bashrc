@@ -123,6 +123,11 @@ source ~/.dirs
 
 function catlast
 {
+    cat $1/`ls -rt $1 | tail -1` | cut -c -500
+}
+
+function catlastnocut
+{
     cat $1/`ls -rt $1 | tail -1`
 }
 
