@@ -132,11 +132,11 @@ function catlastnocut
 }
 
 function ht {
-  history | grep "$@" | tail
+  history -n; history | grep "$@" | tail
 }
 
 function ht50 {
-  history | grep "$@" | tail -n50
+  history -n; history | grep "$@" | tail -n50
 }
 
 
