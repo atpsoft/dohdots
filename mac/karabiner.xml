@@ -27,7 +27,7 @@
   </appdef>
 
   <item>
-    <name>hots cmd is alt - probably never going to use, have a better approach now</name>
+    <name>wow cmd is alt - not sure I use this anymore</name>
     <identifier>private.app_blizz_cmd_is_alt</identifier>
     <autogen>__KeyToKey__ KeyCode::COMMAND_R, KeyCode::OPTION_L</autogen>
     <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::COMMAND_R</autogen>
@@ -76,7 +76,7 @@
   -->
 
   <item>
-    <name>hots tweaks</name>
+    <name>hots pick talents</name>
     <identifier>private.app_hots_tweaks</identifier>
 
     <autogen>__KeyToKey__ KeyCode::KEY_1, VK_COMMAND, KeyCode::KEY_1, ModifierFlag::OPTION_L</autogen>
