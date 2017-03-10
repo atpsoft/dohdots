@@ -1,3 +1,7 @@
 {
-  "spell_check": false,
+	"extensions":
+	[
+		"txt"
+	],
+	"spell_check": false
 }
