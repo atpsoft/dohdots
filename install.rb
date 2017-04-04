@@ -90,9 +90,9 @@ def link_files
     puts "Since we're on a mac, we'll link DefaultKeyBinding.dict"
     ensure_exists('Library/KeyBindings')
     link_file('src/dohdots/mac/DefaultKeyBinding.dict', 'Library/KeyBindings/DefaultKeyBinding.dict')
-    ensure_exists('Library/Application Support/Karabiner')
-    link_file('src/dohdots/mac/karabiner.xml', 'Library/Application Support/Karabiner/private.xml')
-    copy_file("src/dohdots/mac/moom_preferences.#{user}.plist", 'Library/Preferences/com.manytricks.Moom.plist')
+    # ensure_exists('Library/Application Support/Karabiner')
+    # link_file('src/dohdots/mac/karabiner.xml', 'Library/Application Support/Karabiner/private.xml')
+    # copy_file("src/dohdots/mac/moom_preferences.#{user}.plist", 'Library/Preferences/com.manytricks.Moom.plist')
   end
   link_file('src/dohdots/git/gitignore', '.gitignore')
   link_file('src/dohdots/bash/bash_profile', '.bash_profile')
