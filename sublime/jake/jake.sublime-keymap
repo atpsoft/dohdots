@@ -1,9 +1,14 @@
 [
-  // { "keys": ["ctrl+j", "ctrl+m"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": true}},
-  { "keys": ["ctrl+j", "ctrl+m", "ctrl+m"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": false}},
-  { "keys": ["ctrl+j", "ctrl+m", "ctrl+x"], "command": "dohmysql_query", "args": {"allow_read": false, "allow_write": true}},
-  { "keys": ["ctrl+j", "ctrl+m", "ctrl+l"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": true, "connection": "local"}},
-  { "keys": ["ctrl+j", "ctrl+m", "ctrl+p"], "command": "dohmysql_change_profile"},
+  // changing tab navigation
+  { "keys": ["ctrl+tab"], "command": "next_view"},
+  { "keys": ["ctrl+shift+tab"], "command": "prev_view"},
+
+  { "keys": ["super+shift+]"], "command": "next_view_in_stack"},
+  { "keys": ["super+shift+["], "command": "prev_view_in_stack"},
+
+
+  { "keys": ["ctrl+j", "ctrl+m"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": true}},
+
 
   { "keys": ["super+k", "super+t"], "command": "title_case"},
 
@@ -46,6 +51,8 @@
         {"command": "close_all", "context": "window"},
         {"command": "hot_exit", "context": "app"}
         ]}},
+
+  { "keys": ["ctrl+x", "o"], "command": "doh_cycle_focus_group"},
 
   { "keys": ["ctrl+v"], "command": "noop"}
 ]

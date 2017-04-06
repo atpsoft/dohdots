@@ -1,7 +1,83 @@
 [
-  // kill and yank
   { "keys": ["ctrl+y"], "command": "yank_from_clipboard"},
   { "keys": ["ctrl+k"], "command": "kill_to_clipboard"},
+
+  { "keys": ["ctrl+z"], "command": "undo"},
+
+  // quick panel of only currently open files - sort of like emacs switch buffer
+  { "keys": ["ctrl+x", "b"], "command": "goto_open_file"},
+
+  // may not keep this long term, but it's handy for transition if nothing else
+  { "keys": ["ctrl+x", "ctrl+s"], "command": "save"},
+
+  // many of these are copies of the default keybindings for Escape, just mapped to ctrl+g instead, but with some tweaks
+  { "keys": ["ctrl+g"], "command": "doh_cancel_select"},
+  { "keys": ["ctrl+g"], "command": "single_selection", "context":
+    [
+      { "key": "num_selections", "operator": "not_equal", "operand": 1 },
+      { "key": "doh_toggle_select", "operator": "equal", "operand": false }
+    ]
+  },
+  { "keys": ["ctrl+g"], "command": "clear_fields", "context":
+    [
+      { "key": "has_next_field", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+g"], "command": "clear_fields", "context":
+    [
+      { "key": "has_prev_field", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+g"], "command": "hide_overlay", "context":
+    [
+      { "key": "overlay_visible", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+g"], "command": "hide_auto_complete", "context":
+    [
+      { "key": "auto_complete_visible", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+g"], "command": "hide_panel", "args": {"cancel": true},
+    "context":
+    [
+      {"key": "panel", "operand": "find"},
+      { "key": "panel_visible", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+g"], "command": "hide_panel", "args": {"cancel": true},
+    "context":
+    [
+      {"key": "panel", "operand": "incremental_find"},
+      { "key": "panel_visible", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+g"], "command": "hide_panel", "args": {"cancel": true},
+    "context":
+    [
+      {"key": "panel", "operand": "replace"},
+      { "key": "panel_visible", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["enter"], "command": "hide_panel", "args": {"cancel": true},
+    "context":
+    [
+      {"key": "panel", "operand": "find"},
+      { "key": "panel_visible", "operator": "equal", "operand": true }
+    ]
+  },  { "keys": ["enter"], "command": "hide_panel", "args": {"cancel": true},
+    "context":
+    [
+      {"key": "panel", "operand": "incremental_find"},
+      { "key": "panel_visible", "operator": "equal", "operand": true }
+    ]
+  },  { "keys": ["enter"], "command": "hide_panel", "args": {"cancel": true},
+    "context":
+    [
+      {"key": "panel", "operand": "replace"},
+      { "key": "panel_visible", "operator": "equal", "operand": true }
+    ]
+  },
 
   // block select
   { "keys": ["ctrl+space"], "command": "doh_start_select" },
@@ -129,59 +205,7 @@
     ]
   },
 
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //////////// ctrl+g to cancel //////////////////////////////////////////////////////////////////////////////////////////
-  //////////// also has a few uses of enter to cancel, need to review those //////////////////////////////////////////////
-  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  { "keys": ["ctrl+g"], "command": "doh_cancel_select"},
-  { "keys": ["ctrl+g"], "command": "single_selection", "context":
-    [
-      { "key": "num_selections", "operator": "not_equal", "operand": 1 },
-      { "key": "doh_toggle_select", "operator": "equal", "operand": false }
-    ]
-  },
-  { "keys": ["ctrl+g"], "command": "clear_fields", "context":
-    [
-      { "key": "has_next_field", "operator": "equal", "operand": true }
-    ]
-  },
-  { "keys": ["ctrl+g"], "command": "clear_fields", "context":
-    [
-      { "key": "has_prev_field", "operator": "equal", "operand": true }
-    ]
-  },
-  { "keys": ["ctrl+g"], "command": "hide_overlay", "context":
-    [
-      { "key": "overlay_visible", "operator": "equal", "operand": true }
-    ]
-  },
-  { "keys": ["ctrl+g"], "command": "hide_auto_complete", "context":
-    [
-      { "key": "auto_complete_visible", "operator": "equal", "operand": true }
-    ]
-  },
-  { "keys": ["ctrl+g"], "command": "hide_panel", "args": {"cancel": true},
-    "context":
-    [
-      { "key": "panel_visible", "operator": "equal", "operand": true }
-    ]
-  },
-  // seems like ctrl+g should be good for hide_panel, and maybe use enter for something else
-  // { "keys": ["enter"], "command": "hide_panel", "args": {"cancel": true},
-  //   "context":
-  //   [
-  //     { "key": "panel_visible", "operator": "equal", "operand": true }
-  //   ]
-  // },
-
-  ////////////// misc emacs like stuff
-  { "keys": ["ctrl+z"], "command": "undo"},
-  { "keys": ["ctrl+x", "b"], "command": "goto_open_file"},
-  { "keys": ["ctrl+x", "ctrl+s"], "command": "save"},
+  ////////////// basic editing keybinds from Emacs
   { "keys": ["ctrl+h"], "command": "left_delete"},
-  { "keys": ["ctrl+d"], "command": "right_delete"},
-
-  ////////////// split windows
-  { "keys": ["ctrl+x", "2"], "command": "create_pane_with_file", "args": {"direction": "down"} },
-  { "keys": ["ctrl+x", "3"], "command": "create_pane_with_file", "args": {"direction": "right"} }
+  { "keys": ["ctrl+d"], "command": "right_delete"}
 ]
