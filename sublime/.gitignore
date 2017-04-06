@@ -7,3 +7,4 @@ doh.sublime-settings
 *.backup
 *.cache
 sftp_servers
+oscrypto-ca-bundle.crt
