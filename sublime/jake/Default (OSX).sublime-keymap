@@ -198,7 +198,12 @@
   { "keys": ["super+shift+["], "command": "prev_view_in_stack"},
 
 
-  { "keys": ["ctrl+j", "ctrl+m"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": true}},
+  // { "keys": ["ctrl+j", "ctrl+m"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": true}},
+
+  { "keys": ["ctrl+j", "ctrl+m", "ctrl+m"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": false}},
+  { "keys": ["ctrl+j", "ctrl+m", "ctrl+x"], "command": "dohmysql_query", "args": {"allow_read": false, "allow_write": true}},
+  { "keys": ["ctrl+j", "ctrl+m", "ctrl+l"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": true, "connection": "local"}},
+  { "keys": ["ctrl+j", "ctrl+m", "ctrl+p"], "command": "dohmysql_change_profile"},
 
 
   { "keys": ["super+k", "super+t"], "command": "title_case"},
