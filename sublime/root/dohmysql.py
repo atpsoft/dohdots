@@ -398,7 +398,7 @@ class QueryCore:
 
         connection_name = self.get_connection_name(broadest_type_needed)
         if not connection_name:
-            sublime.error_message("Unable to determine what connection to use. This may be a problem with the keybind you are using, or the profile setup, or a bug in the plugin code.")
+            sublime.error_message("There is no " + broadest_type_needed + " connection defined for the " + self.profile_config.get('name') + " profile, please add one or use a different profile.")
             return
         thread = QueryRunnerThread(self, connection_name, self.stmt_list, self.table_builder)
         thread.start()
