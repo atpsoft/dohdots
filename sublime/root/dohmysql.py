@@ -299,9 +299,9 @@ class QueryCore:
 
         retval = self.try_connect_once(vals, vars_msg, vars_cmd)
         self.connections[connection_name] = retval
-        self.logfiles[connection_name] = self.open_logfile(retval)
 
         if retval:
+            self.logfiles[connection_name] = self.open_logfile(retval)
             return retval
 
         retry_script = self.all_settings.get('connection_retry_script')
@@ -322,7 +322,8 @@ class QueryCore:
                 break
 
         self.connections[connection_name] = retval
-        self.logfiles[connection_name] = self.open_logfile(retval)
+        if retval:
+            self.logfiles[connection_name] = self.open_logfile(retval)
         return retval
 
     def try_connect_once(self, vals, vars_msg, vars_cmd):
