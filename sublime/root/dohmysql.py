@@ -316,7 +316,7 @@ class QueryCore:
             return None
 
         for index in range(0, 3):
-            time.sleep(3)
+            time.sleep(6)
             retval = self.try_connect_once(vals, vars_msg, vars_cmd)
             if retval:
                 break
