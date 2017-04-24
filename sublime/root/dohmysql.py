@@ -103,7 +103,7 @@ class AsciiTableBuilder:
 
 
 class QueryRunnerThread(threading.Thread):
-    RECONNECT_MYSQL_ERRORS = frozenset([2006, 2013])
+    RECONNECT_MYSQL_ERRORS = frozenset([2003,2006, 2013])
 
     def __init__(self, query_core, connection_name, stmt_list, table_builder):
         self.query_core = query_core
