@@ -4,6 +4,7 @@ import time
 import threading
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 import pymysql
+import sqlite3
 
 sourceViewToCoreRegistry = {}
 
@@ -346,10 +347,17 @@ class QueryCore:
     def try_connect_once(self, vals, vars_msg, vars_cmd):
         retval = None
         try:
-            retval = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
-            cursor = retval.cursor()
-            self.output_text(True, vars_msg)
-            cursor.execute(vars_cmd)
+            dbtype = self.profile_config.get('dbtype')
+            if dbtype == 'sqlite':
+                retval = sqlite3.connect(vals.get('path'))
+            elif dbtype == 'mysql':
+                retval = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
+                cursor = retval.cursor()
+                self.output_text(True, vars_msg)
+                cursor.execute(vars_cmd)
+            else:
+                self.output_text(True, "unknown dbtype " + dbtype)
+                return None
         except Exception as excpt:
             retval = None
             self.output_text(True, str(excpt))
