@@ -443,6 +443,8 @@ class QueryCore:
             self.output_view.settings().erase('color_scheme')
 
     def clear_selected_profile(self):
+        if not self.has_selected_profile():
+            return
         self.output_view.settings().erase('selected_profile')
         self.selected_profile = None
         self.output_view.settings().erase('profile_config')
