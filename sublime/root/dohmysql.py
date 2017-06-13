@@ -166,7 +166,8 @@ class QueryRunnerThread(threading.Thread):
                 if stmt.lower().find("use") == 0:
                     return (None, 'database changed\n')
                 insert_id = cursor.lastrowid
-                if insert_id > 0:
+                # when lastrowid does not apply (not an insert statement), None is returned from sqlite, but zero from mysql
+                if insert_id and insert_id > 0:
                     return (None, 'last insert id: ' + str(insert_id) + ' (' + elapsed_str + ')\n')
                 return (None, str(cursor.rowcount) + ' rows affected (' + elapsed_str + ')\n')
             data = cursor.fetchall()
