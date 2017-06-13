@@ -159,6 +159,7 @@ class QueryRunnerThread(threading.Thread):
         try:
             start_time = time.time()
             cursor.execute(stmt)
+            dbconn.commit()
             elapsed_amt = round(time.time() - start_time, 2)
             elapsed_str = str(elapsed_amt) + ' sec'
             if cursor.description is None:
