@@ -227,6 +227,7 @@ class QueryCore:
         cursor.execute("SHOW VARIABLES LIKE 'server_uuid'")
         data = cursor.fetchone()
         uuid = data[1]
+        self.output_text(True, "server uuid is %s" % (uuid))
 
         nicknames = self.all_settings.get('server_nicknames')
         server = nicknames.get(uuid)
@@ -235,7 +236,7 @@ class QueryCore:
 
         logname = "query_%s.log" % (server)
         logpath = os.path.join(logdir, logname)
-        self.output_text(True, "server uuid is %s, logging queries to %s" % (uuid, logpath))
+        self.output_text(True, "logging queries to %s" % (logpath))
         return open(logpath, 'a')
 
     def log_text(self, connection_name, include_timestamp, text):
