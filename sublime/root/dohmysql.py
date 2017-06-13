@@ -237,7 +237,17 @@ class QueryCore:
             self.output_text(True, "no logfile_dir setting, logging disabled")
             return
 
-        logname = self.logname_for_mysql(conn)
+        logname = self.profile_config.get('logfile')
+        if logname is None:
+            dbtype = self.profile_config.get('dbtype')
+            if dbtype == 'sqlite':
+                self.output_text(True, "no logfile set for sqlite profile, logging disabled")
+                return
+            elif dbtype == 'mysql':
+                logname = self.logname_for_mysql(conn)
+            else:
+                self.output_text(True, "unknown dbtype %s" % (dbtype))
+                return
 
         logpath = os.path.join(logdir, logname)
         self.output_text(True, "logging queries to %s" % (logpath))
