@@ -217,12 +217,7 @@ class QueryCore:
     def output_text(self, include_timestamp, text):
         self.output_view.run_command("append_text", {'timestamp': include_timestamp, 'text': text})
 
-    def open_logfile(self, conn):
-        logdir = self.all_settings.get("logfile_dir")
-        if logdir is None:
-            self.output_text(True, "no logfile_dir setting, logging disabled")
-            return
-
+    def logname_for_mysql(self, conn):
         cursor = conn.cursor()
         cursor.execute("SHOW VARIABLES LIKE 'server_uuid'")
         data = cursor.fetchone()
@@ -234,7 +229,16 @@ class QueryCore:
         if server is None:
             server = uuid[:8]
 
-        logname = "query_%s.log" % (server)
+        return "query_%s.log" % (server)
+
+    def open_logfile(self, conn):
+        logdir = self.all_settings.get("logfile_dir")
+        if logdir is None:
+            self.output_text(True, "no logfile_dir setting, logging disabled")
+            return
+
+        logname = self.logname_for_mysql(conn)
+
         logpath = os.path.join(logdir, logname)
         self.output_text(True, "logging queries to %s" % (logpath))
         return open(logpath, 'a')
