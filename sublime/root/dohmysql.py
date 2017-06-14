@@ -238,9 +238,9 @@ class QueryCore:
             self.output_text(True, "no logfile_dir setting, logging disabled")
             return
 
+        dbtype = self.profile_config.get('dbtype')
         logname = self.profile_config.get('logfile')
         if logname is None:
-            dbtype = self.profile_config.get('dbtype')
             if dbtype == 'sqlite':
                 self.output_text(True, "no logfile set for sqlite profile, logging disabled")
                 return
@@ -251,7 +251,8 @@ class QueryCore:
                 return
 
         logpath = os.path.join(logdir, logname)
-        self.output_text(True, "logging queries to %s" % (logpath))
+        if dbtype != 'sqlite':
+            self.output_text(True, "logging queries to %s" % (logpath))
         return open(logpath, 'a')
 
     def log_text(self, connection_name, include_timestamp, text):
@@ -306,8 +307,9 @@ class QueryCore:
             self.output_text(True, "unable to find settings for connection " + connection_name)
             return None
 
-        msg = "using '%s' connection settings" % (connection_name)
-        self.output_text(True, msg)
+        if self.profile_config.get('dbtype') == 'mysql':
+            msg = "using '%s' connection settings" % (connection_name)
+            self.output_text(True, msg)
 
         vars_cmd = 'SET autocommit=1'
         extra_vars = vals.get('server_variables')
@@ -441,6 +443,8 @@ class QueryCore:
 
     def get_connection(self, connection_name, force_new):
         retval = self.connections.get(connection_name)
+        if self.profile_config.get('dbtype') == 'sqlite':
+            force_new = True
         if force_new or (not retval):
             retval = self.connect_to_database(connection_name)
         return retval
