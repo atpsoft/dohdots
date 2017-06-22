@@ -355,7 +355,13 @@ class QueryCore:
         try:
             dbtype = self.profile_config.get('dbtype')
             if dbtype == 'sqlite':
-                retval = sqlite3.connect(vals.get('path'))
+                sqlite_path = self.source_view.settings().get('sqlite_path')
+                if sqlite_path is None:
+                    sqlite_path = vals.get('path')
+                if sqlite_path is None:
+                    self.output_text(True, "no sqlite path found in source file or settings")
+                    return None
+                retval = sqlite3.connect(sqlite_path)
             elif dbtype == 'mysql':
                 retval = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
                 cursor = retval.cursor()
@@ -505,6 +511,11 @@ def get_query_core(view):
         sourceViewToCoreRegistry[idkey] = retval
     return retval
 
+def get_sqlite_path(view):
+    cursor = view.sel()[0]
+    lreg = view.line(cursor.a)
+    line = view.substr(lreg)
+    return line[2:].strip()
 
 class DohmysqlChangeProfileCommand(sublime_plugin.TextCommand):
     def run(self, edit, **args):
@@ -512,6 +523,12 @@ class DohmysqlChangeProfileCommand(sublime_plugin.TextCommand):
         query_core.reset_stmt_list()
         query_core.clear_selected_profile()
         query_core.pick_profile()
+
+
+class DohsqlChangePathCommand(sublime_plugin.TextCommand):
+    def run(self, edit, **args):
+        sqlite_path = get_sqlite_path(self.view)
+        self.view.settings().set('sqlite_path', sqlite_path)
 
 
 class DohmysqlQueryCommand(sublime_plugin.TextCommand):
