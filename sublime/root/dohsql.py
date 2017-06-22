@@ -307,7 +307,8 @@ class QueryCore:
             self.output_text(True, "unable to find settings for connection " + connection_name)
             return None
 
-        if self.profile_config.get('dbtype') == 'mysql':
+        dbtype = self.profile_config.get('dbtype')
+        if dbtype == 'mysql':
             msg = "using '%s' connection settings" % (connection_name)
             self.output_text(True, msg)
 
@@ -323,6 +324,9 @@ class QueryCore:
         if retval:
             self.logfiles[connection_name] = self.open_logfile(retval)
             return retval
+
+        if dbtype == 'sqlite':
+            return None
 
         retry_script = self.all_settings.get('connection_retry_script')
         if not retry_script:
