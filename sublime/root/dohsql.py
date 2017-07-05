@@ -465,7 +465,7 @@ class QueryCore:
             if profile.get('name') == profile_name:
                 found_profile = profile
         if found_profile is None:
-            sublime.error_message("Unable to locate profile named " + profile_name)
+            self.output_text(True, "Unable to locate profile named " + profile_name)
             return
 
         self.source_view.settings().set('selected_profile', profile_name)
