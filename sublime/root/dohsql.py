@@ -5,6 +5,7 @@ import threading
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 import pymysql
 import sqlite3
+import traceback
 
 sourceViewToCoreRegistry = {}
 
@@ -371,6 +372,7 @@ class QueryCore:
                 self.output_text(True, "unknown dbtype " + dbtype)
                 return None
         except Exception as excpt:
+            traceback.print_exc()
             retval = None
             self.output_text(True, str(excpt))
         return retval
