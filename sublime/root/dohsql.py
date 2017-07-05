@@ -279,14 +279,8 @@ class QueryCore:
             self.clear_selected_profile()
             return
 
-        profiles_list = self.all_settings.get('profiles')
-
         profile_name = self.ui_profile_list[picked][0]
-        found_profile = None
-        for profile in profiles_list:
-            if profile.get('name') == profile_name:
-                found_profile = profile
-        self.set_selected_profile(profile_name, found_profile)
+        self.set_selected_profile(profile_name)
         if len(self.stmt_list) > 0:
             self.start_queries()
 
@@ -446,12 +440,9 @@ class QueryCore:
         thread = QueryRunnerThread(self, connection_name, self.stmt_list, self.table_builder)
         thread.start()
 
-    def save_view(self, view, source_tab_name):
+    def save_output_view(self, view, source_tab_name):
         self.output_view = view
         self.source_tab_name = source_tab_name
-        self.selected_profile = self.output_view.settings().get('selected_profile')
-        self.profile_config = self.output_view.settings().get('profile_config')
-        self.connections = {}
 
     def has_output_view(self):
         return (self.output_view is not None) and (self.output_view.window() is not None)
@@ -464,11 +455,22 @@ class QueryCore:
             retval = self.connect_to_database(connection_name)
         return retval
 
-    def set_selected_profile(self, profile_name, profile_config):
-        self.output_view.settings().set('selected_profile', profile_name)
+    def set_selected_profile(self, profile_name):
+        if profile_name is None:
+            return
+
+        found_profile = None
+        profiles_list = self.all_settings.get('profiles')
+        for profile in profiles_list:
+            if profile.get('name') == profile_name:
+                found_profile = profile
+        if found_profile is None:
+            sublime.error_message("Unable to locate profile named " + profile_name)
+            return
+
+        self.source_view.settings().set('selected_profile', profile_name)
         self.selected_profile = profile_name
-        self.output_view.settings().set('profile_config', profile_config)
-        self.profile_config = profile_config
+        self.profile_config = found_profile
         self.connections = {}
         self.update_output_view_name()
         theme = self.profile_config.get('theme')
@@ -480,20 +482,20 @@ class QueryCore:
             self.output_view.settings().erase('color_scheme')
 
     def clear_selected_profile(self):
-        if not self.has_selected_profile():
-            return
-        self.output_view.settings().erase('selected_profile')
+        self.source_view.settings().erase('selected_profile')
+        self.source_view.settings().erase('color_scheme')
+
         self.selected_profile = None
-        self.output_view.settings().erase('profile_config')
         self.profile_config = None
         self.connections = {}
-        name = '%s: <no profile>' % (self.source_tab_name)
-        self.output_view.set_name(name)
-        self.source_view.settings().erase('color_scheme')
-        self.output_view.settings().erase('color_scheme')
 
-    def has_selected_profile(self):
-        return (self.selected_profile is not None)
+        if self.output_view is not None:
+            name = '%s: <no profile>' % (self.source_tab_name)
+            self.output_view.set_name(name)
+            self.output_view.settings().erase('color_scheme')
+
+    def has_active_profile(self):
+        return (self.profile_config is not None)
 
     def save_stmt_list(self, stmt_list, allow_read, allow_write, specific_connection_name):
         self.stmt_list = stmt_list
@@ -575,7 +577,14 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
             return
 
         self.query_core.save_stmt_list(stmt_list, args["allow_read"], args["allow_write"], args.get("connection"))
-        if self.query_core.has_selected_profile():
+
+        # first try to set the active profile to a saved one in the view;
+        # will fail silently if none has been selected or if the one selected no longer exists
+        if not self.query_core.has_active_profile():
+            self.query_core.set_selected_profile(self.view.settings().get('selected_profile'))
+
+        # now, if there's an active profile, run the queries, otherwise need to pick a profile
+        if self.query_core.has_active_profile():
             self.query_core.start_queries()
         else:
             self.query_core.pick_profile()
@@ -641,7 +650,7 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
                     new_view = check_view
         if new_view is None:
             new_view = self.build_output_view()
-        self.query_core.save_view(new_view, self.tab_name)
+        self.query_core.save_output_view(new_view, self.tab_name)
 
     def build_output_view(self):
         window = sublime.active_window()
