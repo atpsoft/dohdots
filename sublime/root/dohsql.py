@@ -368,6 +368,9 @@ class QueryCore:
                 cursor = retval.cursor()
                 self.output_text(True, vars_msg)
                 cursor.execute(vars_cmd)
+            elif dbtype is None:
+                self.output_text(True, "no dbtype set in profile")
+                return None
             else:
                 self.output_text(True, "unknown dbtype " + dbtype)
                 return None
