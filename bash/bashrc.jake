@@ -29,8 +29,8 @@ showa () { /usr/bin/grep -i -a1 $@ ~/.bashrc.user | grep -v '^\s*$' ; }
 # sourcea: to source this file (to make changes active after editing)
 alias sourcea='source ~/.bashrc.user'
 
-# TrueCrypt
-alias truecrypt='/Applications/TrueCrypt.app/Contents/MacOS/Truecrypt --text'
+# VeraCrypt
+alias veracrypt='/Applications/VeraCrypt.app/Contents/MacOS/VeraCrypt --text'
 
 #-----------------------
 # Correct common typos:
@@ -121,6 +121,10 @@ finderComment () { mdls "$1" | grep kMDItemFinderComment ; }
 
 # to remove filename extensions in bash: ${file%\.[^.]*}
 
+
+# Show/Hide files in Finder
+alias showFiles='defaults write com.apple.finder AppleShowAllFiles YES; killall Finder /System/Library/CoreServices/Finder.app'
+alias hideFiles='defaults write com.apple.finder AppleShowAllFiles NO; killall Finder /System/Library/CoreServices/Finder.app'
 
 #------------------------
 # Git & repo management:
