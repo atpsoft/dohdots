@@ -4,8 +4,6 @@ import time
 import threading
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 import pymysql
-import sqlite3
-import traceback
 
 sourceViewToCoreRegistry = {}
 
@@ -105,7 +103,7 @@ class AsciiTableBuilder:
 
 
 class QueryRunnerThread(threading.Thread):
-    RECONNECT_MYSQL_ERRORS = frozenset([2003,2006, 2013])
+    RECONNECT_MYSQL_ERRORS = frozenset([2006, 2013])
 
     def __init__(self, query_core, connection_name, stmt_list, table_builder):
         self.query_core = query_core
@@ -161,16 +159,13 @@ class QueryRunnerThread(threading.Thread):
         try:
             start_time = time.time()
             cursor.execute(stmt)
-            if ('sqlite' in self.connection_name):
-                dbconn.commit()
             elapsed_amt = round(time.time() - start_time, 2)
             elapsed_str = str(elapsed_amt) + ' sec'
             if cursor.description is None:
                 if stmt.lower().find("use") == 0:
                     return (None, 'database changed\n')
                 insert_id = cursor.lastrowid
-                # when lastrowid does not apply (not an insert statement), None is returned from sqlite, but zero from mysql
-                if insert_id and insert_id > 0:
+                if insert_id > 0:
                     return (None, 'last insert id: ' + str(insert_id) + ' (' + elapsed_str + ')\n')
                 return (None, str(cursor.rowcount) + ' rows affected (' + elapsed_str + ')\n')
             data = cursor.fetchall()
@@ -194,7 +189,11 @@ class QueryRunnerThread(threading.Thread):
 
 class QueryCore:
     READ_CMDS = frozenset(['select','describe','desc','explain','show'])
+<<<<<<< Updated upstream
+    WRITE_CMDS = frozenset(['update','delete','insert','replace','load','create','alter','truncate','commit','drop','rename','flush','analyze','kill','optimize','start'])
+=======
     WRITE_CMDS = frozenset(['update','delete','insert','replace','load','create','alter','truncate','commit','drop','rename','flush','analyze','kill','optimize','start','commit', 'rollback'])
+>>>>>>> Stashed changes
     NEUTRAL_CMDS = frozenset(['use','set'])
 
     def __init__(self, source_view):
@@ -220,41 +219,25 @@ class QueryCore:
     def output_text(self, include_timestamp, text):
         self.output_view.run_command("append_text", {'timestamp': include_timestamp, 'text': text})
 
-    def logname_for_mysql(self, conn):
-        cursor = conn.cursor()
-        cursor.execute("SHOW VARIABLES LIKE 'server_uuid'")
-        data = cursor.fetchone()
-        uuid = data[1]
-        self.output_text(True, "server uuid is %s" % (uuid))
-
-        nicknames = self.all_settings.get('server_nicknames')
-        server = nicknames.get(uuid)
-        if server is None:
-            server = uuid[:8]
-
-        return "query_%s.log" % (server)
-
     def open_logfile(self, conn):
         logdir = self.all_settings.get("logfile_dir")
         if logdir is None:
             self.output_text(True, "no logfile_dir setting, logging disabled")
             return
 
-        dbtype = self.profile_config.get('dbtype')
-        logname = self.profile_config.get('logfile')
-        if logname is None:
-            if dbtype == 'sqlite':
-                self.output_text(True, "no logfile set for sqlite profile, logging disabled")
-                return
-            elif dbtype == 'mysql':
-                logname = self.logname_for_mysql(conn)
-            else:
-                self.output_text(True, "unknown dbtype %s" % (dbtype))
-                return
+        cursor = conn.cursor()
+        cursor.execute("SHOW VARIABLES LIKE 'server_uuid'")
+        data = cursor.fetchone()
+        uuid = data[1]
 
+        nicknames = self.all_settings.get('server_nicknames')
+        server = nicknames.get(uuid)
+        if server is None:
+            server = uuid[:8]
+
+        logname = "query_%s.log" % (server)
         logpath = os.path.join(logdir, logname)
-        if dbtype != 'sqlite':
-            self.output_text(True, "logging queries to %s" % (logpath))
+        self.output_text(True, "server uuid is %s, logging queries to %s" % (uuid, logpath))
         return open(logpath, 'a')
 
     def log_text(self, connection_name, include_timestamp, text):
@@ -280,8 +263,14 @@ class QueryCore:
             self.clear_selected_profile()
             return
 
+        profiles_list = self.all_settings.get('profiles')
+
         profile_name = self.ui_profile_list[picked][0]
-        self.set_selected_profile(profile_name)
+        found_profile = None
+        for profile in profiles_list:
+            if profile.get('name') == profile_name:
+                found_profile = profile
+        self.set_selected_profile(profile_name, found_profile)
         if len(self.stmt_list) > 0:
             self.start_queries()
 
@@ -303,10 +292,8 @@ class QueryCore:
             self.output_text(True, "unable to find settings for connection " + connection_name)
             return None
 
-        dbtype = self.profile_config.get('dbtype')
-        if dbtype == 'mysql':
-            msg = "using '%s' connection settings" % (connection_name)
-            self.output_text(True, msg)
+        msg = "using '%s' connection settings" % (connection_name)
+        self.output_text(True, msg)
 
         vars_cmd = 'SET autocommit=1'
         extra_vars = vals.get('server_variables')
@@ -316,13 +303,10 @@ class QueryCore:
 
         retval = self.try_connect_once(vals, vars_msg, vars_cmd)
         self.connections[connection_name] = retval
+        self.logfiles[connection_name] = self.open_logfile(retval)
 
         if retval:
-            self.logfiles[connection_name] = self.open_logfile(retval)
             return retval
-
-        if dbtype == 'sqlite':
-            return None
 
         retry_script = self.all_settings.get('connection_retry_script')
         if not retry_script:
@@ -336,41 +320,23 @@ class QueryCore:
             return None
 
         for index in range(0, 3):
-            time.sleep(20)
+            time.sleep(3)
             retval = self.try_connect_once(vals, vars_msg, vars_cmd)
             if retval:
                 break
 
         self.connections[connection_name] = retval
-        if retval:
-            self.logfiles[connection_name] = self.open_logfile(retval)
+        self.logfiles[connection_name] = self.open_logfile(retval)
         return retval
 
     def try_connect_once(self, vals, vars_msg, vars_cmd):
         retval = None
         try:
-            dbtype = self.profile_config.get('dbtype')
-            if dbtype == 'sqlite':
-                sqlite_path = self.source_view.settings().get('sqlite_path')
-                if sqlite_path is None:
-                    sqlite_path = vals.get('path')
-                if sqlite_path is None:
-                    self.output_text(True, "no sqlite path found in source file or settings")
-                    return None
-                retval = sqlite3.connect(sqlite_path)
-            elif dbtype == 'mysql':
-                retval = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
-                cursor = retval.cursor()
-                self.output_text(True, vars_msg)
-                cursor.execute(vars_cmd)
-            elif dbtype is None:
-                self.output_text(True, "no dbtype set in profile")
-                return None
-            else:
-                self.output_text(True, "unknown dbtype " + dbtype)
-                return None
+            retval = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
+            cursor = retval.cursor()
+            self.output_text(True, vars_msg)
+            cursor.execute(vars_cmd)
         except Exception as excpt:
-            traceback.print_exc()
             retval = None
             self.output_text(True, str(excpt))
         return retval
@@ -436,42 +402,32 @@ class QueryCore:
 
         connection_name = self.get_connection_name(broadest_type_needed)
         if not connection_name:
-            sublime.error_message("There is no " + broadest_type_needed + " connection defined for the " + self.profile_config.get('name') + " profile, please add one or use a different profile.")
+            sublime.error_message("Unable to determine what connection to use. This may be a problem with the keybind you are using, or the profile setup, or a bug in the plugin code.")
             return
         thread = QueryRunnerThread(self, connection_name, self.stmt_list, self.table_builder)
         thread.start()
 
-    def save_output_view(self, view, source_tab_name):
+    def save_view(self, view, source_tab_name):
         self.output_view = view
         self.source_tab_name = source_tab_name
+        self.selected_profile = self.output_view.settings().get('selected_profile')
+        self.profile_config = self.output_view.settings().get('profile_config')
+        self.connections = {}
 
     def has_output_view(self):
         return (self.output_view is not None) and (self.output_view.window() is not None)
 
     def get_connection(self, connection_name, force_new):
         retval = self.connections.get(connection_name)
-        if self.profile_config.get('dbtype') == 'sqlite':
-            force_new = True
         if force_new or (not retval):
             retval = self.connect_to_database(connection_name)
         return retval
 
-    def set_selected_profile(self, profile_name):
-        if profile_name is None:
-            return
-
-        found_profile = None
-        profiles_list = self.all_settings.get('profiles')
-        for profile in profiles_list:
-            if profile.get('name') == profile_name:
-                found_profile = profile
-        if found_profile is None:
-            self.output_text(True, "Unable to locate profile named " + profile_name)
-            return
-
-        self.source_view.settings().set('selected_profile', profile_name)
+    def set_selected_profile(self, profile_name, profile_config):
+        self.output_view.settings().set('selected_profile', profile_name)
         self.selected_profile = profile_name
-        self.profile_config = found_profile
+        self.output_view.settings().set('profile_config', profile_config)
+        self.profile_config = profile_config
         self.connections = {}
         self.update_output_view_name()
         theme = self.profile_config.get('theme')
@@ -483,20 +439,18 @@ class QueryCore:
             self.output_view.settings().erase('color_scheme')
 
     def clear_selected_profile(self):
-        self.source_view.settings().erase('selected_profile')
-        self.source_view.settings().erase('color_scheme')
-
+        self.output_view.settings().erase('selected_profile')
         self.selected_profile = None
+        self.output_view.settings().erase('profile_config')
         self.profile_config = None
         self.connections = {}
+        name = '%s: <no profile>' % (self.source_tab_name)
+        self.output_view.set_name(name)
+        self.source_view.settings().erase('color_scheme')
+        self.output_view.settings().erase('color_scheme')
 
-        if self.output_view is not None:
-            name = '%s: <no profile>' % (self.source_tab_name)
-            self.output_view.set_name(name)
-            self.output_view.settings().erase('color_scheme')
-
-    def has_active_profile(self):
-        return (self.profile_config is not None)
+    def has_selected_profile(self):
+        return (self.selected_profile is not None)
 
     def save_stmt_list(self, stmt_list, allow_read, allow_write, specific_connection_name):
         self.stmt_list = stmt_list
@@ -519,11 +473,6 @@ def get_query_core(view):
         sourceViewToCoreRegistry[idkey] = retval
     return retval
 
-def get_sqlite_path(view):
-    cursor = view.sel()[0]
-    lreg = view.line(cursor.a)
-    line = view.substr(lreg)
-    return line[2:].strip()
 
 class DohmysqlChangeProfileCommand(sublime_plugin.TextCommand):
     def run(self, edit, **args):
@@ -533,14 +482,12 @@ class DohmysqlChangeProfileCommand(sublime_plugin.TextCommand):
         query_core.pick_profile()
 
 
-class DohsqlChangePathCommand(sublime_plugin.TextCommand):
-    def run(self, edit, **args):
-        sqlite_path = get_sqlite_path(self.view)
-        self.view.settings().set('sqlite_path', sqlite_path)
-
-
 class DohmysqlQueryCommand(sublime_plugin.TextCommand):
+<<<<<<< Updated upstream
+    SQLSTMT_STARTS = frozenset(['select','update','delete','insert','replace','use','load','describe','desc','explain','create','alter','truncate','show','commit','set','drop','rename','flush','analyze','kill','optimize','start'])
+=======
     SQLSTMT_STARTS = frozenset(['select','update','delete','insert','replace','use','load','describe','desc','explain','create','alter','truncate','show','commit','set','drop','rename','flush','analyze','kill','optimize','start','commit','rollback'])
+>>>>>>> Stashed changes
 
     def __init__(self, view):
         super(DohmysqlQueryCommand, self).__init__(view)
@@ -578,14 +525,7 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
             return
 
         self.query_core.save_stmt_list(stmt_list, args["allow_read"], args["allow_write"], args.get("connection"))
-
-        # first try to set the active profile to a saved one in the view;
-        # will fail silently if none has been selected or if the one selected no longer exists
-        if not self.query_core.has_active_profile():
-            self.query_core.set_selected_profile(self.view.settings().get('selected_profile'))
-
-        # now, if there's an active profile, run the queries, otherwise need to pick a profile
-        if self.query_core.has_active_profile():
+        if self.query_core.has_selected_profile():
             self.query_core.start_queries()
         else:
             self.query_core.pick_profile()
@@ -651,7 +591,7 @@ class DohmysqlQueryCommand(sublime_plugin.TextCommand):
                     new_view = check_view
         if new_view is None:
             new_view = self.build_output_view()
-        self.query_core.save_output_view(new_view, self.tab_name)
+        self.query_core.save_view(new_view, self.tab_name)
 
     def build_output_view(self):
         window = sublime.active_window()
