@@ -13,12 +13,11 @@
 (defun check-open-shell-list()
   (let (new-list)
 	 (dolist (buffer open-shell-list new-list)
-		(if (get-buffer-process buffer)
-			 (setq new-list (cons buffer new-list))
+     (if (get-buffer-process buffer)
+         (setq new-list (cons buffer new-list))
 		  ))
 	 (setq open-shell-list new-list)
 	 ))
-
 
 (defun goto-shell(&optional shell-name)
   (interactive)
@@ -35,6 +34,7 @@
 								 default-shell-name))
 			(previous-buffer-name (buffer-name))
 			)
+   (add-to-list 'display-buffer-alist (cons shell-name display-buffer--same-window-action))
 	 (setq default-shell-name previous-buffer-name)
 	 (if (not (get-buffer shell-name))
 		  (create-new-shell shell-name))
@@ -84,7 +84,7 @@ The argument STRING is ignored."
          )
     (cons filename (if lineno (string-to-number lineno)))))
 
-  
+
 
 (defvar grepped-file-keep-current-window 't)
 (defun open-grepped-file-on-line()
@@ -104,5 +104,3 @@ The argument STRING is ignored."
 			)
 		)
 	)
-
-
