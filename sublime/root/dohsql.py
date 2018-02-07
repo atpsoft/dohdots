@@ -298,8 +298,8 @@ class QueryCore:
         self.connections[connection_name] = None
         retval = None
 
-        vals = self.lookup_connection_params(connection_name)
-        if not vals:
+        conn_config = self.lookup_connection_params(connection_name)
+        if not conn_config:
             self.output_text(True, "unable to find settings for connection " + connection_name)
             return None
 
@@ -309,12 +309,12 @@ class QueryCore:
             self.output_text(True, msg)
 
         vars_cmd = 'SET autocommit=1'
-        extra_vars = vals.get('server_variables')
+        extra_vars = conn_config.get('server_variables')
         if extra_vars:
             vars_cmd = vars_cmd + ", " + extra_vars
         vars_msg = "(%s) %s" %  (connection_name, vars_cmd)
 
-        retval = self.try_connect_once(vals, vars_msg, vars_cmd)
+        retval = self.try_connect_once(conn_config, vars_msg, vars_cmd)
         self.connections[connection_name] = retval
 
         if retval:
@@ -337,7 +337,7 @@ class QueryCore:
 
         for index in range(0, 3):
             time.sleep(20)
-            retval = self.try_connect_once(vals, vars_msg, vars_cmd)
+            retval = self.try_connect_once(conn_config, vars_msg, vars_cmd)
             if retval:
                 break
 
@@ -346,20 +346,20 @@ class QueryCore:
             self.logfiles[connection_name] = self.open_logfile(retval)
         return retval
 
-    def try_connect_once(self, vals, vars_msg, vars_cmd):
+    def try_connect_once(self, conn_config, vars_msg, vars_cmd):
         retval = None
         try:
             dbtype = self.profile_config.get('dbtype')
             if dbtype == 'sqlite':
                 sqlite_path = self.source_view.settings().get('sqlite_path')
                 if sqlite_path is None:
-                    sqlite_path = vals.get('path')
+                    sqlite_path = conn_config.get('path')
                 if sqlite_path is None:
                     self.output_text(True, "no sqlite path found in source file or settings")
                     return None
                 retval = sqlite3.connect(sqlite_path)
             elif dbtype == 'mysql':
-                retval = pymysql.connect(vals.get('host'), vals.get('user'), vals.get('pass'), vals.get('db'), vals.get('port'))
+                retval = pymysql.connect(conn_config.get('host'), conn_config.get('user'), conn_config.get('pass'), conn_config.get('db'), conn_config.get('port'))
                 cursor = retval.cursor()
                 self.output_text(True, vars_msg)
                 cursor.execute(vars_cmd)
