@@ -20,7 +20,7 @@ function cdd {
 				cd $@
 		fi
 }
-
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 alias top='top -o cpu'
 alias gr='git remote -v'
 alias gco='git checkout'
