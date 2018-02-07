@@ -220,41 +220,19 @@ class QueryCore:
     def output_text(self, include_timestamp, text):
         self.output_view.run_command("append_text", {'timestamp': include_timestamp, 'text': text})
 
-    def logname_for_mysql(self, conn):
-        cursor = conn.cursor()
-        cursor.execute("SHOW VARIABLES LIKE 'server_uuid'")
-        data = cursor.fetchone()
-        uuid = data[1]
-        self.output_text(True, "server uuid is %s" % (uuid))
-
-        nicknames = self.all_settings.get('server_nicknames')
-        server = nicknames.get(uuid)
-        if server is None:
-            server = uuid[:8]
-
-        return "query_%s.log" % (server)
-
-    def open_logfile(self, conn):
+    def open_logfile(self, conn_config):
         logdir = self.all_settings.get("logfile_dir")
         if logdir is None:
             self.output_text(True, "no logfile_dir setting, logging disabled")
             return
 
-        dbtype = self.profile_config.get('dbtype')
-        logname = self.profile_config.get('logfile')
+        logname = conn_config.get('logfile')
         if logname is None:
-            if dbtype == 'sqlite':
-                self.output_text(True, "no logfile set for sqlite profile, logging disabled")
-                return
-            elif dbtype == 'mysql':
-                logname = self.logname_for_mysql(conn)
-            else:
-                self.output_text(True, "unknown dbtype %s" % (dbtype))
-                return
+            self.output_text(True, "no logfile set for this connection, logging disabled")
+            return
 
         logpath = os.path.join(logdir, logname)
-        if dbtype != 'sqlite':
-            self.output_text(True, "logging queries to %s" % (logpath))
+        self.output_text(True, "logging queries to %s" % (logpath))
         return open(logpath, 'a')
 
     def log_text(self, connection_name, include_timestamp, text):
@@ -318,7 +296,7 @@ class QueryCore:
         self.connections[connection_name] = retval
 
         if retval:
-            self.logfiles[connection_name] = self.open_logfile(retval)
+            self.logfiles[connection_name] = self.open_logfile(conn_config)
             return retval
 
         if dbtype == 'sqlite':
