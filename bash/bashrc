@@ -53,12 +53,12 @@ function gitchanged
 # recursive grep, ignoring vcs data, log files, preferences, etc.
 
 function fc {
- ack -g "^(?!.*(fonts/|combined_\d*\.js|\.log|min\.css|swfobject\.js|jquery.*\.js).*).*$" . | ack --nogroup -x "$@"
+ ack -g "^(?!.*(fonts/|combined_\d*\.js|\.log|min\.css|swfobject\.js|jquery.*\.js).*).*$" . | ack --nogroup -x "$@" | cut -c -500
 }
 
 # same as fc, but case insensitive
 function fl {
- fc -i "$@"
+ fc -i "$@" | cut -c -500
 }
 
 # use fl, then grep for def at the beginning, followed by the argument (find definition of a method)
