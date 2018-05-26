@@ -189,3 +189,10 @@ function gitmls {
 # export PATH="$MAGICK_HOME/bin:$PATH"
 # export DYLD_LIBRARY_PATH="$MAGICK_HOME/lib/"
 
+
+#-------------
+# youtube-dl:
+#-------------
+alias ydmp3='youtube-dl --extract-audio --audio-format mp3'
+alias yd480="youtube-dl -f '[ext=mp4][height<=480]'"
+alias yd720="youtube-dl -f '[ext=mp4][height<=720]'"
