@@ -115,9 +115,13 @@ class QueryRunnerThread(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
-        for stmt in self.stmt_list:
-            if not self.run_one_query(stmt):
-                return
+        try:
+            for stmt in self.stmt_list:
+                if not self.run_one_query(stmt):
+                    return
+        except Exception as excpt:
+            self.query_core.output_text(False, "unexpected error: " + str(excpt) + "\n")
+            raise
 
     def log_query(self, stmt, output):
         self.query_core.log_text(self.connection_name, True, stmt)
