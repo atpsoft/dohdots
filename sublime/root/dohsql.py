@@ -325,7 +325,7 @@ class QueryCore:
 
         self.connections[connection_name] = retval
         if retval:
-            self.logfiles[connection_name] = self.open_logfile(retval)
+            self.logfiles[connection_name] = self.open_logfile(conn_config)
         return retval
 
     def try_connect_once(self, conn_config, vars_msg, vars_cmd):
