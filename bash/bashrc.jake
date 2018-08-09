@@ -186,8 +186,9 @@ function gitmls {
 
 # imagemagick
 # export MAGICK_HOME="$HOME/Dropbox/bin/ImageMagick"
-# export PATH="$MAGICK_HOME/bin:$PATH"
-# export DYLD_LIBRARY_PATH="$MAGICK_HOME/lib/"
+export MAGICK_HOME="$HOME/BTSync/main/bin/ImageMagick"
+export PATH="$MAGICK_HOME/bin:$PATH"
+export DYLD_LIBRARY_PATH="$MAGICK_HOME/lib/"
 
 
 #-------------
