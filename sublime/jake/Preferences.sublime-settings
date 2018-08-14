@@ -3,6 +3,7 @@
 	"font_size": 11.0,
 	"ignored_packages":
 	[
+		"Twitter Bootstrap Snippets",
 		"Vintage"
 	],
 	"theme": "Adaptive.sublime-theme",
