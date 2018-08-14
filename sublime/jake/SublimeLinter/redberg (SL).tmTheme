@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
     <key>name</key>
-    <string>Iceberg</string>
+    <string>Redberg</string>
     <key>settings</key>
     <array>
         <dict>
             <key>settings</key>
             <dict>
                 <key>background</key>
-                <string>#323B3D</string>
+                <string>#920B0D</string>
                 <key>caret</key>
                 <string>#f8f8f0</string>
                 <key>foreground</key>
@@ -490,7 +490,7 @@
             </dict>
         </dict>
 
-
+        
         <dict>
             <key>name</key>
             <string>Markdown Titles</string>
@@ -671,13 +671,13 @@
         </dict>
     <dict>
             <key>name</key>
-            <string>SublimeLinter Error</string>
+            <string>SublimeLinter Warning</string>
             <key>scope</key>
-            <string>sublimelinter.mark.error</string>
+            <string>sublimelinter.mark.warning</string>
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#DA2000</string>
+                <string>#DDB700</string>
             </dict>
         </dict><dict>
             <key>name</key>
@@ -691,13 +691,13 @@
             </dict>
         </dict><dict>
             <key>name</key>
-            <string>SublimeLinter Warning</string>
+            <string>SublimeLinter Error</string>
             <key>scope</key>
-            <string>sublimelinter.mark.warning</string>
+            <string>sublimelinter.mark.error</string>
             <key>settings</key>
             <dict>
                 <key>foreground</key>
-                <string>#EDBA00</string>
+                <string>#D02000</string>
             </dict>
         </dict></array>
     <key>uuid</key>
