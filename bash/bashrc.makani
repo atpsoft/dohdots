@@ -2,6 +2,7 @@ export VISUAL=subl
 export EDITOR=subl
 export PAGER=cat
 export MCSERVER=/Users/makani/stuff/minecraft/server
+export TOOLCHAINS=swift
 
 # same as fl, but ruby code only
 function flr {
