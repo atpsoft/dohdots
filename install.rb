@@ -110,6 +110,9 @@ def link_files
   if (File.exist?(get_path("src/dohdots/git/gitconfig.#{user}")))
     link_file("src/dohdots/git/gitconfig.#{user}", '.gitconfig.user')
   end
+  if (File.exist?(get_path("Library/Application Support/Code/User")))
+    link_file("src/dohdots/vscode/settings.json", 'Library/Application Support/Code/User/settings.json')
+  end
 end
 
 get_dohdots
