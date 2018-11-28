@@ -232,6 +232,8 @@
      "context": [{"key": "panel", "operand": "replace"}, {"key": "panel_has_focus"}]
   },
 
+  {"keys": ["super+0"], "command": "repeat"},
+
   { "keys": ["ctrl+j", "ctrl+d"], "command": "noop"},
   { "keys": ["ctrl+j", "d"], "command": "git_raw", "args": { "command": "git difftool", "append_current_file": true, "may_change_files": false } },
   { "keys": ["ctrl+j", "u"], "command": "git_raw", "args": { "command": "git checkout", "append_current_file": true } },
