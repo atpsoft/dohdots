@@ -648,10 +648,18 @@ This function could be in the list `comint-output-filter-functions'."
 			 (setq todo-file t)
 			 (setq curword (concat my-todo-directory curword))))
 	 (if (string-match ".*\\.txt$" curword)
-		  (setq todo-file t))
+      (progn
+        (setq todo-file t))
+     )
+	 (if (or (string-match ".*\\.png$" curword)
+           (string-match ".*\\.jpg$" curword)
+           (string-match ".*\\.gif$" curword))
+      (progn
+        (setq todo-file nil))
+     )
 	 (if (directory-p curword)
 		  (dired curword)
-		(progn
+     (progn
 		  (find-file curword)
 		  (if todo-file
 				(todo-mode)
