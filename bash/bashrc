@@ -144,6 +144,22 @@ function ht50 {
   history -n; history | grep "$@" | tail -n50
 }
 
+# gitmtim will change the modification time of the file to the last commit time in git
+if [ "$(uname -s)" == "Darwin" ]; then
+
+function gitmtim() {
+  for var in "$@"
+  do
+    last_modified=`git log --pretty=%at -n1 -- "$var"`
+    readable=`date -j -f %s $last_modified +'%Y%m%d%H%M.%S'`
+    touch -t $readable $var
+  done
+}
+
+else
+gitmtim(){ local f;for f;do touch -d @0`git log --pretty=%at -n1 -- "$f"` "$f"; done;}; gitmtim configure.ac
+fi
+
 
 function stopdots {
   touch .metadata_never_index; rm -rf .Spotlight-*; sudo rm -rf .Trashes; touch .Trashes; rm -rf .fseventsd; mkdir .fseventsd; touch .fseventsd/no_log;
