@@ -42,7 +42,6 @@ alias gitamend='git commit --amend -m'
 alias gitbranchdiff='git diff master..HEAD'
 alias gitbranchlog='git log master..HEAD'
 alias gitwhatwillupdate='git fetch; git diff master origin/master'
-alias irb='echo "use pry instead"; pry'
 alias fixlineendings="perl -pi -e 's/\r/\n/g' "
 alias watchtimemachine="sudo dtrace -n 'syscall::open*:entry /execname == \"backupd\"/ { printf (\"%s\", copyinstr(arg0)); }'"
 #show what will be merged if you merge the given branch to the master (... means changes since the branch branched)
