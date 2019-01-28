@@ -157,7 +157,7 @@ function gitmtim() {
 }
 
 else
-gitmtim(){ local f;for f;do touch -d @0`git log --pretty=%at -n1 -- "$f"` "$f"; done;}; gitmtim configure.ac
+gitmtim(){ local f;for f;do touch -d @0`git log --pretty=%at -n1 -- "$f"` "$f"; done;}
 fi
 
 
