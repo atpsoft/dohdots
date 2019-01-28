@@ -14,7 +14,8 @@
 	[
 		"*.log"
 	],
-	"font_size": 26.0,
+	"font_size": 21.0,
+	"git_gutter_show_line_annotation": false,
 	"ignored_packages":
 	[
 		"Vintage"
@@ -27,6 +28,5 @@
 	"show_full_path": true,
 	"tab_size": 2,
 	"translate_tabs_to_spaces": true,
-	"trim_trailing_white_space_on_save": true,
-  "git_gutter_show_line_annotation": false
+	"trim_trailing_white_space_on_save": true
 }

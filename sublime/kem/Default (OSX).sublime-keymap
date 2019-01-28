@@ -217,7 +217,7 @@
 */
 
   ////////////////////////////////////////// put all my custom ones here so I can overwrite if needed
-
+  {"keys": ["super+0"], "command": "repeat"},
   { "keys": ["ctrl+z"], "command": "noop"},
   { "keys": ["ctrl+/"], "command": "undo"},
 
