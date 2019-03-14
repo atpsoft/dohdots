@@ -27,3 +27,4 @@ Release
 *.last-run
 *.sublime-workspace
 *.tmLanguage.cache
+node_modules
