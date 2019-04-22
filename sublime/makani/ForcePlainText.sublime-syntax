@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+file_extensions:
+  - txt
+scope: source.forceplaintext
+contexts:
+  main:
+    - match: 'idontknowhowtogetridofallrulessothisshouldnevermatch'
+      scope: nothing.forceplaintext
