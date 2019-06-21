@@ -501,6 +501,7 @@ def get_query_core(view):
         sourceViewToCoreRegistry[idkey] = retval
     return retval
 
+# expected to have as the first line something like this: -- /Users/george/frog.sqlite3
 def get_sqlite_path(view):
     cursor = view.sel()[0]
     lreg = view.line(cursor.a)
