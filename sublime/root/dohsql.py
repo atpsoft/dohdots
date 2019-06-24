@@ -369,9 +369,13 @@ class QueryCore:
             sublime.error_message("unrecognized statement type: " + first_word)
             raise Exception("unrecognized statement type")
 
-    def is_query_allowed(self, stmt_type):
+    def is_query_allowed(self, stmt, stmt_type):
         if stmt_type == 'neutral':
             return True
+
+        if (stmt_type == 'write') and 'where' not in stmt:
+            sublime.error_message("unable to execute write statements without a where clause")
+            return False
 
         if (stmt_type == 'read') and self.allow_read_stmts:
             return True
@@ -409,7 +413,7 @@ class QueryCore:
         broadest_type_needed = 'neutral'
         for stmt in self.stmt_list:
             stmt_type = self.check_statement_type(stmt)
-            if not self.is_query_allowed(stmt_type):
+            if not self.is_query_allowed(stmt, stmt_type):
                 return
             if stmt_type == 'write':
                 broadest_type_needed = 'write'
