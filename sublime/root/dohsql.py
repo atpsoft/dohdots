@@ -373,7 +373,7 @@ class QueryCore:
         if stmt_type == 'neutral':
             return True
 
-        if (stmt_type == 'write') and 'where' not in stmt:
+        if (stmt_type == 'write') and ' where ' not in stmt.lower():
             sublime.error_message("unable to execute write statements without a where clause")
             return False
 
