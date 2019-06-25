@@ -12,7 +12,10 @@
 	},
 	"file_exclude_patterns":
 	[
-		"*.log", ".#*", "*.crt", "*.merged-ca-bundle"
+		"*.log",
+		".#*",
+		"*.crt",
+		"*.merged-ca-bundle"
 	],
 	"font_size": 21.0,
 	"git_gutter_show_line_annotation": false,
