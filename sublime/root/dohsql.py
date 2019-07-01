@@ -357,8 +357,7 @@ class QueryCore:
             self.output_text(True, str(excpt))
         return retval
 
-    def check_statement_type(self, stmt):
-        first_word = stmt.partition(' ')[0].lower().strip()
+    def check_statement_type(self, first_word):
         if first_word in self.NEUTRAL_CMDS:
             return 'neutral'
         elif first_word in self.READ_CMDS:
@@ -412,7 +411,8 @@ class QueryCore:
     def start_queries(self):
         broadest_type_needed = 'neutral'
         for stmt in self.stmt_list:
-            stmt_type = self.check_statement_type(stmt)
+            first_word = stmt.partition(' ')[0].lower().strip()
+            stmt_type = self.check_statement_type(first_word)
             if not self.is_query_allowed(stmt, stmt_type):
                 return
             if stmt_type == 'write':
