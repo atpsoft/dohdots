@@ -199,6 +199,7 @@ class QueryRunnerThread(threading.Thread):
 class QueryCore:
     READ_CMDS = frozenset(['select','describe','desc','explain','show'])
     WRITE_CMDS = frozenset(['update','delete','insert','replace','load','create','alter','truncate','commit','drop','rename','flush','analyze','kill','optimize','start','commit','rollback','grant'])
+    NEED_WHERE_CMDS = frozenset(['update','delete'])
     NEUTRAL_CMDS = frozenset(['use','set'])
 
     def __init__(self, source_view):
@@ -368,11 +369,11 @@ class QueryCore:
             sublime.error_message("unrecognized statement type: " + first_word)
             raise Exception("unrecognized statement type")
 
-    def is_query_allowed(self, stmt, stmt_type):
+    def is_query_allowed(self, stmt, stmt_type, first_word):
         if stmt_type == 'neutral':
             return True
 
-        if (stmt_type == 'write') and ' where ' not in stmt.lower():
+        if (first_word in self.NEED_WHERE_CMDS) and ' where ' not in stmt.lower():
             sublime.error_message("unable to execute write statements without a where clause")
             return False
 
@@ -413,7 +414,7 @@ class QueryCore:
         for stmt in self.stmt_list:
             first_word = stmt.partition(' ')[0].lower().strip()
             stmt_type = self.check_statement_type(first_word)
-            if not self.is_query_allowed(stmt, stmt_type):
+            if not self.is_query_allowed(stmt, stmt_type, first_word):
                 return
             if stmt_type == 'write':
                 broadest_type_needed = 'write'
