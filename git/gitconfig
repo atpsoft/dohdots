@@ -20,6 +20,8 @@
   synctags = !git tag -l | xargs git tag -d && git fetch -t
 [include]
   path = ~/.gitconfig.user
+[include]
+  path = ~/.gitconfig.local
 [push]
 	default = current
 [difftool "sourcetree"]
