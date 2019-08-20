@@ -84,15 +84,22 @@ function openlast
   open $1`ls -rt $1 | tail -1`
 }
 
+function gitlog
+{
+  local gitpath="${2:-.}"
+  git lg -n$1 --follow --decorate $gitpath | grep -v '^\.\.\.\s*$'
+}
+
 alias gs='git status'
 alias gco='git checkout'
 alias gcm='git checkout master'
 alias gdc='gitdiffcommit'
 alias gc='git commit -m'
-alias gl='git log -n10 --decorate'
-alias gll='git log -n50 --decorate'
-alias glll='git log -n500 --decorate'
-alias gls='git log -n3'
+alias gl='gitlog 10'
+alias gll='gitlog 50'
+alias glll='gitlog 500'
+alias gls='gitlog 3'
+
 alias gb='git blame HEAD'
 alias gp='git push'
 #git pull, then push
