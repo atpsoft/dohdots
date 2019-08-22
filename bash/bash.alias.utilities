@@ -34,7 +34,6 @@ alias show_options='shopt'
 # various 'ls' shortcuts
 lll () { /bin/ls -aOle "$@" | /usr/bin/more ; }
 lt ()  { /bin/ls -lt "$@" | /usr/bin/more ; }
-lsr () { /bin/ls -l "$@"/..namedfork/rsrc ; }
 
 # cdf: cd's to frontmost window of Finder
 cdf ()
