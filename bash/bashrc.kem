@@ -33,12 +33,12 @@ alias gdc='gitdiffcommit'
 #alias gsl='git svn log -n10'
 #alias gsu='git svn rebase'
 #alias gsi='git svn info'
-#alias lsr='ls -latr'
+alias lsr='ls -latr'
 
-# function lsrt
-# {
-#   lsr $1 | tail
-# }
+function lsrt
+{
+  lsr $1 | tail
+}
 
 
 alias gdd='git difftool'
