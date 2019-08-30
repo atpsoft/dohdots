@@ -28,3 +28,4 @@ Release
 *.sublime-workspace
 *.tmLanguage.cache
 node_modules
+.vscode
