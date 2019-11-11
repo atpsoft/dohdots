@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+<svg><use xlink:href="#${1:icon}"></use></svg>
+]]></content>
+  <tabTrigger>svi</tabTrigger>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <!-- <scope>source.python</scope> -->
+</snippet>
