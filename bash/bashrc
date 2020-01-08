@@ -133,6 +133,11 @@ function catlast
     cat $1/`ls -rt $1 | tail -1` | cut -c -500
 }
 
+function elast
+{
+    emacs $1/`ls -rt $1 | tail -1`
+}
+
 function taillast
 {
     tail -f $1/`ls -rt $1 | tail -1`
