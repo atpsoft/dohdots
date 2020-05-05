@@ -1,12 +1,8 @@
-#!/usr/bin/env python
 from . import dbapi20
 import pymysql
 from pymysql.tests import base
 
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest
+import unittest
 
 
 class test_MySQLdb(dbapi20.DatabaseAPI20Test):
@@ -169,7 +165,6 @@ class test_MySQLdb(dbapi20.DatabaseAPI20Test):
         'If cleaning up is needed after nextSetTest'
         cur.execute("drop procedure deleteme")
 
-    @unittest.expectedFailure
     def test_nextset(self):
         from warnings import warn
         con = self._connect()
@@ -205,7 +200,3 @@ class test_MySQLdb(dbapi20.DatabaseAPI20Test):
 
         finally:
             con.close()
-
-
-if __name__ == '__main__':
-    unittest.main()
