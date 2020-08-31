@@ -212,7 +212,8 @@
   { "keys": ["ctrl+z"], "command": "noop"},
   { "keys": ["ctrl+/"], "command": "undo"},
   { "keys": ["super+b"], "command": "goto_open_file"},
-  { "keys": ["ctrl+x", "b"], "command": "noop"},
+  { "keys": ["ctrl+x", "ctrl+b"], "command": "goto_open_file"},
+  { "keys": ["ctrl+x", "b"], "command": "goto_open_file"},
 
   { "keys": ["super+u"], "command": "upper_case" },
   { "keys": ["super+l"], "command": "lower_case" },
