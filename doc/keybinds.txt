@@ -1,0 +1,81 @@
+****** movement keys - should extend selection when a selection block is active
+ctrl+a: start of line - ignore whitespace or not? - in sublime hitting it repeatedly toggles this
+ctrl+e: end of line
+ctrl+f: forward character
+ctrl+b: backward character
+ctrl+p: previous line
+ctrl+n: next line
+ctrl+u: backward word (definition of word varies)
+ctrl+o: forward word (definition of word varies)
+ctrl+,: backward page
+ctrl+.: forward page
+ctrl+j,ctrl+a: beginning of file
+ctrl+j,ctrl+e: end of file
+
+
+****** delete/cut/copy/paste/undo/redo
+ctrl+h: backward delete character
+ctrl+d: forward delete character
+
+ctrl+w or cmd+x: cut
+ctrl+c or cmd+c: copy
+ctrl+y or cmd+v: paste
+
+ctrl+k: kill line
+- the original emacs functionality is hard to reproduce across editors
+- instead, switching it to a a single line simple delete (not cut to clipboard) for non multi cursor case
+
+ctrl+z: do nothing; instead, keep this reserved for putting emacs in the background
+ctrl+/: undo
+cmd+y: redo
+
+
+****** other
+ctrl+space: toggle selection block on/off
+cmd+shift+g: find all instances of cursor text and multi select them
+
+ctrl+g: cancel
+- if multi selection is active, switch to single selection
+- if single selection is active, turn it off
+- hide/cancel auto complete
+- hiding overlays/panels
+cmd+u: make current selection or word uppercase
+cmd+l: make current selection or word lowercase
+
+ctrl+x,ctrl+s: save current file
+ctrl+j,ctrl+i: reindent/reformat
+cmd+0,#,<something>: repeat <something>
+
+
+****** switching files
+ctrl+x,b or ctrl+x,ctrl+b or cmd+b: switch to already open file
+
+
+****** pane/buffer/file layout management
+ctrl+x,0: remove current pane from layout
+ctrl+x,1: single pane layout
+ctrl+x,2: horizontal double pane layout
+ctrl+x,3: vertical double pane layout
+ctrl+x,o: switch to other pane
+
+****** searching
+ctrl+j,ctrl+l: goto line in current file
+ctrl+j,ctrl+f: goto function in current file
+ctrl+s: enter incremental forward search mode and find next when in that mode already
+ctrl+r: same as ctrl+s but searching backward
+ctrl+j,ctrl+r: search & replace with confirmation interactively
+- then cmd+enter to replace all
+k: find next - in search buffer
+j: find prev - in search buffer
+
+
+****** sql
+ctrl+j,ctrl+m,ctrl+m: read-only query
+ctrl+j,ctrl+m,ctrl+x: write-only query
+ctrl+j,ctrl+m,ctrl+l: read or write query; local connection
+ctrl+j,ctrl+m,ctrl+p: change profile
+ctrl+j,ctrl+m,ctrl+f: change path (sqlite)
+
+****** git
+ctrl+j,d: git difftool
+ctrl+j,u: git checkout on current file
