@@ -24,6 +24,7 @@ ctrl+y or cmd+v: paste
 ctrl+k: kill line
 - the original emacs functionality is hard to reproduce across editors
 - instead, switching it to a a single line simple delete (not cut to clipboard) for non multi cursor case
+- or could just do end of line
 
 ctrl+z: do nothing; instead, keep this reserved for putting emacs in the background
 ctrl+/: undo
@@ -32,7 +33,9 @@ cmd+y: redo
 
 ****** other
 ctrl+space: toggle selection block on/off
-cmd+shift+g: find all instances of cursor text and multi select them
+cmd+shift+g: find all instances of cursor text and multi select them (in sublime)
+- in vscode: clear search results?
+cmd+shift+l: turn current single selection into multi selection by line
 
 ctrl+g: cancel
 - if multi selection is active, switch to single selection
@@ -42,9 +45,12 @@ ctrl+g: cancel
 cmd+u: make current selection or word uppercase
 cmd+l: make current selection or word lowercase
 
-ctrl+x,ctrl+s: save current file
+ctrl+x,ctrl+s: save current file (or save all?)
 ctrl+j,ctrl+i: reindent/reformat
 cmd+0,#,<something>: repeat <something>
+ctrl+j,ctrl+j: jumpy word mode
+ctrl+j,ctrl+x: jumpy exit (seems like should be able to just use ctrl+g for this)
+ctrl+l: re-center buffer
 
 
 ****** switching files
@@ -57,10 +63,13 @@ ctrl+x,1: single pane layout
 ctrl+x,2: horizontal double pane layout
 ctrl+x,3: vertical double pane layout
 ctrl+x,o: switch to other pane
+cmd+i: switch to terminal (vscode only)
+cmd+1 to cmd+8: switch to file/buffer tab by number
+cmd+k,1: move editor to first group (not sure if this will stay)
 
 ****** searching
 ctrl+j,ctrl+l: goto line in current file
-ctrl+j,ctrl+f: goto function in current file
+ctrl+j,ctrl+f: goto function/symbol in current file
 ctrl+s: enter incremental forward search mode and find next when in that mode already
 ctrl+r: same as ctrl+s but searching backward
 ctrl+j,ctrl+r: search & replace with confirmation interactively
