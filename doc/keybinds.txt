@@ -20,16 +20,13 @@ ctrl+d: forward delete character
 ctrl+w or cmd+x: cut
 ctrl+c or cmd+c: copy
 ctrl+y or cmd+v: paste
-
-ctrl+k: kill line
-- the original emacs functionality is hard to reproduce across editors
-- instead, switching it to a a single line simple delete (not cut to clipboard) for non multi cursor case
-- or could just do end of line
-
-ctrl+z: do nothing; instead, keep this reserved for putting emacs in the background
+ctrl+k: kill line (can be hard to get perfect, get as close as we can)
 ctrl+/: undo
-cmd+y: redo
+ctrl+shift+/: redo
 
+****** do nothing - explicitly unbind these so we are forced to develop habits with others
+ctrl+z: keep this reserved for something that wouldn't be used while running emacs over ssh
+cmd+y: by default bound to redo, but we have a different bind for that
 
 ****** other
 ctrl+space: toggle selection block on/off
