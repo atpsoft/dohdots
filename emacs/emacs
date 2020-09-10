@@ -874,6 +874,15 @@ This function could be in the list `comint-output-filter-functions'."
 (global-set-key "\C-j\C-s\C-e\C-r" 'activate-mac-root-emacs)
 (global-set-key "\C-j\C-s\C-l\C-e" 'activate-linux-emacs)
 (global-set-key "\C-j\C-s\C-l\C-r" 'activate-linux-root-emacs)
+
+(defun replace-sexp()
+  "Replace sexp before point by result of its evaluation."
+  (interactive)
+  (let ((result  (pp-to-string (eval (pp-last-sexp) lexical-binding))))
+    (delete-region (save-excursion (backward-sexp) (point)) (point))
+    (insert result)))
+
+
 ;(call-process "/usr/local/bin/xwit" nil nil nil "-pop" "-focus" "-names" "mac_root_emacs")
 ;(call-process "/usr/bin/sudo" nil nil nil "-pop" "-focus" "-names" "mac_root_emacs")
 (custom-set-variables

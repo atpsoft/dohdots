@@ -66,3 +66,9 @@ function openlast
 
 . ~/src/dohdots/bash/bash.alias.utilities
 . ~/src/dohdots/bash/bash.iterm.utilities
+
+function sscr
+{
+    screentype=${2-default};
+    ssh -t $1 "screen -S ${USER}_$screentype -rd || screen -S ${USER}_$screentype"
+}
