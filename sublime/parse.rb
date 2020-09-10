@@ -9,14 +9,15 @@ class SublimeFiles
   attr_reader :status
   def initialize
     # DEFAULT = repo, USER = account name, OUTPUT =  sublime user default
+    @user = ENV['USER']
     @full_path = File.expand_path("../", __FILE__)
     determine_sublime_path
     @doh_link_path = @sublime_path + '/doh'
     @default_path = @full_path + '/root'
     @default_file = @default_path + '/Default (OSX).sublime-keymap'
-    @user_path = @full_path + '/' + ENV['USER']
+    @user_path = @full_path + '/' + @user
     @user_link_path = @sublime_path + '/User'
-    @user_file = @user_path + '/' + ENV['USER'] + '.sublime-keymap'
+    @user_file = @user_path + '/' + @user + '.sublime-keymap'
     @output_file = @user_path + '/Default (OSX).sublime-keymap'
     @auto_msg = "\n\n/*\n  -=- #{@user_file} -=-\n*/\n\n"
     @output_contents = nil
@@ -25,9 +26,9 @@ class SublimeFiles
   end
 
   def determine_sublime_path
-    @sublime_path = '/Users/' + ENV['USER'] + '/Library/Application Support/Sublime Text 3/Packages'
+    @sublime_path = '/Users/' + @user + '/Library/Application Support/Sublime Text 3/Packages'
     if !File.exist?(@sublime_path)
-      @sublime_path = '/Users/' + ENV['USER'] + '/Library/Application Support/Sublime Text 2/Packages'
+      @sublime_path = '/Users/' + @user + '/Library/Application Support/Sublime Text 2/Packages'
     end
     if !File.exist?(@sublime_path)
       raise "unable to find Sublime Text 2 or 3 packages directory"
