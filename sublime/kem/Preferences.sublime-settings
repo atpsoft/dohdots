@@ -15,7 +15,8 @@
 		"*.log",
 		".#*",
 		"*.crt",
-		"*.merged-ca-bundle"
+		"*.merged-ca-bundle",
+		"*.sublime-workspace"
 	],
 	"font_size": 21.0,
 	"git_gutter_show_line_annotation": false,
