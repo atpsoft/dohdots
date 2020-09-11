@@ -196,7 +196,6 @@
     "context": [{"key": "selector", "operator": "equal", "operand": "text.find-in-files" }]
   },
 
-
   ////////////// split windows
   {
     "keys": ["ctrl+x","1"],
