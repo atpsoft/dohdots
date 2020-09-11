@@ -5,15 +5,14 @@ require 'FileUtils'
 class SublimeFiles
   attr_reader :status
   def initialize
-    @user = ENV['USER']
-    # @user = 'kem'
+    @user = ARGV[0] || ENV['USER']
     @full_path = File.expand_path("../", __FILE__)
     @default_path = @full_path + '/root'
     @default_file = @default_path + '/Default (OSX).sublime-keymap'
     @user_path = @full_path + '/' + @user
     @user_file = @user_path + '/' + @user + '.sublime-keymap'
     @output_file = @user_path + '/Default (OSX).sublime-keymap'
-    @auto_msg = "\n\n/*\n  -=- #{@user}.sublime-keymap -=-\n*/\n\n"
+    @auto_msg = "\n\n/*\n  -=- custom bindings below -=-\n*/\n\n"
     @output_contents = nil
     @user_contents = nil
     @default_contents = nil
