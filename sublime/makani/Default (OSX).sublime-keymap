@@ -175,22 +175,15 @@
   // },
 
   ////////////// misc emacs like stuff
-  { "keys": ["ctrl+z"], "command": "undo"},
+
+  // quick panel of only currently open files - sort of like emacs switch buffer
   { "keys": ["ctrl+x", "b"], "command": "goto_open_file"},
+  // may not keep this long term, but it's handy for transition if nothing else
   { "keys": ["ctrl+x", "ctrl+s"], "command": "save"},
   { "keys": ["ctrl+h"], "command": "left_delete"},
   { "keys": ["ctrl+d"], "command": "right_delete"},
 
-  ////////////// split windows
-  { "keys": ["ctrl+x", "2"], "command": "create_pane_with_file", "args": {"direction": "down"} },
-  { "keys": ["ctrl+x", "3"], "command": "create_pane_with_file", "args": {"direction": "right"} },
-
-/*
-  -=- /Users/makani/src/dohdots/sublime/makani/makani.sublime-keymap -=-
-*/
-
-  ////////////////////////////////////////// put all my custom ones here so I can overwrite if needed
-
+  /////////////////////// in a find files window
   {
     "keys": ["k"],
     "command": "find_next",
@@ -203,22 +196,8 @@
     "context": [{"key": "selector", "operator": "equal", "operand": "text.find-in-files" }]
   },
 
-  { "keys": ["ctrl+j", "ctrl+m", "ctrl+m"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": false}},
-  { "keys": ["ctrl+j", "ctrl+m", "ctrl+x"], "command": "dohmysql_query", "args": {"allow_read": false, "allow_write": true}},
-  { "keys": ["ctrl+j", "ctrl+m", "ctrl+l"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": true, "connection": "local"}},
-  { "keys": ["ctrl+j", "ctrl+m", "ctrl+p"], "command": "dohmysql_change_profile"},
-  { "keys": ["ctrl+j", "ctrl+m", "ctrl+f"], "command": "dohsql_change_path"},
 
-  { "keys": ["ctrl+z"], "command": "noop"},
-  { "keys": ["ctrl+/"], "command": "undo"},
-  { "keys": ["super+b"], "command": "goto_open_file"},
-  { "keys": ["ctrl+x", "ctrl+b"], "command": "goto_open_file"},
-  { "keys": ["ctrl+x", "b"], "command": "goto_open_file"},
-
-  { "keys": ["super+u"], "command": "upper_case" },
-  { "keys": ["super+l"], "command": "lower_case" },
-  { "keys": ["super+shift+g"], "command": "find_all_under" },
-
+  ////////////// split windows
   {
     "keys": ["ctrl+x","1"],
     "command": "set_layout",
@@ -229,19 +208,47 @@
       "cells": [[0, 0, 1, 1]]
     }
   },
+  { "keys": ["ctrl+x", "2"], "command": "create_pane_with_file", "args": {"direction": "down"} },
+  { "keys": ["ctrl+x", "3"], "command": "create_pane_with_file", "args": {"direction": "right"} },
   { "keys": ["ctrl+x", "o"], "command": "doh_cycle_focus_group"},
 
+  ////////////// misc other to organize
+  { "keys": ["ctrl+j", "ctrl+r"], "command": "show_panel", "args": {"panel": "replace"} },
   { "keys": ["super+enter"], "command": "replace_all", "args": {"close_panel": true},
      "context": [{"key": "panel", "operand": "replace"}, {"key": "panel_has_focus"}]
   },
 
-  {"keys": ["super+0"], "command": "repeat"},
-
-  { "keys": ["ctrl+j", "ctrl+d"], "command": "noop"},
-  { "keys": ["ctrl+j", "d"], "command": "git_raw", "args": { "command": "git difftool", "append_current_file": true, "may_change_files": false } },
-  { "keys": ["ctrl+j", "u"], "command": "git_raw", "args": { "command": "git checkout", "append_current_file": true } },
   { "keys": ["ctrl+j", "ctrl+i"], "command": "reindent"},
-  { "keys": ["ctrl+j", "ctrl+r"], "command": "show_panel", "args": {"panel": "replace"} },
   { "keys": ["ctrl+j","ctrl+l"], "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
-  { "keys": ["ctrl+j","ctrl+f"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} }
+  { "keys": ["ctrl+j","ctrl+f"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
+  { "keys": ["super+0"], "command": "repeat"},
+  { "keys": ["super+u"], "command": "upper_case" },
+  { "keys": ["super+l"], "command": "lower_case" },
+  { "keys": ["super+shift+g"], "command": "find_all_under" },
+
+  { "keys": ["ctrl+z"], "command": "noop"},
+  { "keys": ["ctrl+/"], "command": "undo"},
+
+  { "keys": ["ctrl+j", "ctrl+d", "ctrl+c"], "command": "toggle_keep_console_active"},
+  { "keys": ["ctrl+j", "ctrl+d", "ctrl+l"], "command": "toggle_log_commands"},
+
+
+/*
+  -=- /Users/makani/src/dohdots/sublime/makani/makani.sublime-keymap -=-
+*/
+
+  ////////////////////////////////////////// put all my custom ones here so I can overwrite if needed
+
+
+  { "keys": ["ctrl+j", "ctrl+m", "ctrl+m"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": false}},
+  { "keys": ["ctrl+j", "ctrl+m", "ctrl+x"], "command": "dohmysql_query", "args": {"allow_read": false, "allow_write": true}},
+  { "keys": ["ctrl+j", "ctrl+m", "ctrl+l"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": true, "connection": "local"}},
+  { "keys": ["ctrl+j", "ctrl+m", "ctrl+p"], "command": "dohmysql_change_profile"},
+  { "keys": ["ctrl+j", "ctrl+m", "ctrl+f"], "command": "dohsql_change_path"},
+
+  { "keys": ["super+b"], "command": "goto_open_file"},
+  { "keys": ["ctrl+x", "ctrl+b"], "command": "goto_open_file"},
+
+  { "keys": ["ctrl+j", "d"], "command": "git_raw", "args": { "command": "git difftool", "append_current_file": true, "may_change_files": false } },
+  { "keys": ["ctrl+j", "u"], "command": "git_raw", "args": { "command": "git checkout", "append_current_file": true } }
 ]
