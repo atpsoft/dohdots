@@ -1,4 +1,9 @@
 [
+  ////////////////////////////////////////////////////// mac only
+
+
+  ////////////////////////////////////////////////////// cross platform
+
   // kill and yank
   { "keys": ["ctrl+y"], "command": "yank_from_clipboard"},
   { "keys": ["ctrl+k"], "command": "kill_to_clipboard"},

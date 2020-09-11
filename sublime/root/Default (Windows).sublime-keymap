@@ -1,4 +1,250 @@
 [
-	{ "keys": ["alt+p"], "command": "shoew_overlay", "args": {"overlay": "goto", "show_files": true} },
-	{ "keys": ["alt+shift+p"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
+  ////////////////////////////////////////////////////// windows only
+  { "keys": ["alt+p"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} },
+  { "keys": ["alt+shift+p"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
+
+  { "keys": ["ctrl+x"], "command": "doh_cut", "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+c"], "command": "doh_copy", "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+
+  ////////////////////////////////////////////////////// cross platform (where super is replaced by alt)
+
+  // kill and yank
+  { "keys": ["ctrl+y"], "command": "yank_from_clipboard"},
+  { "keys": ["ctrl+k"], "command": "kill_to_clipboard"},
+
+  // block select
+  { "keys": ["ctrl+space"], "command": "doh_start_select" },
+  { "keys": ["ctrl+space"], "command": "doh_cancel_select", "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+
+  { "keys": ["alt+x"], "command": "doh_cut", "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["alt+c"], "command": "doh_copy", "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+
+  { "keys": ["ctrl+w"], "command": "cut"},
+  { "keys": ["ctrl+w"], "command": "doh_cut", "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+
+  { "keys": ["ctrl+c"], "command": "copy"},
+  { "keys": ["ctrl+c"], "command": "doh_copy", "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+
+  // tweaked pseudo incremental search stuff
+  { "keys": ["ctrl+s"], "command": "doh_show_find"},
+  { "keys": ["ctrl+s"], "command": "doh_find_next", "context":
+    [
+      {"key": "panel", "operand": "find"},
+      {"key": "panel_visible", "operator": "equal", "operand": true }
+    ]
+  },
+
+  { "keys": ["ctrl+r"], "command": "doh_show_reverse_find"},
+  { "keys": ["ctrl+r"], "command": "doh_find_next", "context":
+    [
+      {"key": "panel", "operand": "find"},
+      {"key": "panel_visible", "operator": "equal", "operand": true }
+    ]
+  },
+
+  ////////////// basic movement keybinds from native Emacs
+  { "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol", "extend": false}},
+  { "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol", "extend": true}, "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+e"], "command": "move_to", "args": {"to": "eol", "extend": false}},
+  { "keys": ["ctrl+e"], "command": "move_to", "args": {"to": "eol", "extend": true}, "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+f"], "command": "move", "args": {"by": "characters", "forward": true, "extend": false}},
+  { "keys": ["ctrl+f"], "command": "move", "args": {"by": "characters", "forward": true, "extend": true}, "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+b"], "command": "move", "args": {"by": "characters", "forward": false, "extend": false}},
+  { "keys": ["ctrl+b"], "command": "move", "args": {"by": "characters", "forward": false, "extend": true}, "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+p"], "command": "move", "args": {"by": "lines", "forward": false, "extend": false}},
+  { "keys": ["ctrl+p"], "command": "move", "args": {"by": "lines", "forward": false, "extend": true}, "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+n"], "command": "move", "args": {"by": "lines", "forward": true, "extend": false}},
+  { "keys": ["ctrl+n"], "command": "move", "args": {"by": "lines", "forward": true, "extend": true}, "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+
+  ////////////// additional basic movement keybinds from our customized Emacs
+  { "keys": ["ctrl+u"], "command": "move", "args": {"by": "words", "forward": false, "extend": false}},
+  { "keys": ["ctrl+u"], "command": "move", "args": {"by": "words", "forward": false, "extend": true}, "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+o"], "command": "move", "args": {"by": "word_ends", "forward": true, "extend": false}},
+  { "keys": ["ctrl+o"], "command": "move", "args": {"by": "word_ends", "forward": true, "extend": true}, "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+,"], "command": "move", "args": {"by": "pages", "forward": false, "extend": false}},
+  { "keys": ["ctrl+,"], "command": "move", "args": {"by": "pages", "forward": false, "extend": true}, "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+."], "command": "move", "args": {"by": "pages", "forward": true, "extend": false}},
+  { "keys": ["ctrl+."], "command": "move", "args": {"by": "pages", "forward": true, "extend": true}, "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+j","ctrl+a"], "command": "move_to", "args": {"to": "bof", "extend": false}},
+  { "keys": ["ctrl+j","ctrl+a"], "command": "move_to", "args": {"to": "bof", "extend": true}, "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+j","ctrl+e"], "command": "move_to", "args": {"to": "eof", "extend": false}},
+  { "keys": ["ctrl+j","ctrl+e"], "command": "move_to", "args": {"to": "eof", "extend": true}, "context":
+    [
+      { "key": "doh_toggle_select", "operator": "equal", "operand": true }
+    ]
+  },
+
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////// ctrl+g to cancel //////////////////////////////////////////////////////////////////////////////////////////
+  //////////// also has a few uses of enter to cancel, need to review those //////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  { "keys": ["ctrl+g"], "command": "doh_cancel_select"},
+  { "keys": ["ctrl+g"], "command": "single_selection", "context":
+    [
+      { "key": "num_selections", "operator": "not_equal", "operand": 1 },
+      { "key": "doh_toggle_select", "operator": "equal", "operand": false }
+    ]
+  },
+  { "keys": ["ctrl+g"], "command": "clear_fields", "context":
+    [
+      { "key": "has_next_field", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+g"], "command": "clear_fields", "context":
+    [
+      { "key": "has_prev_field", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+g"], "command": "hide_overlay", "context":
+    [
+      { "key": "overlay_visible", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+g"], "command": "hide_auto_complete", "context":
+    [
+      { "key": "auto_complete_visible", "operator": "equal", "operand": true }
+    ]
+  },
+  { "keys": ["ctrl+g"], "command": "hide_panel", "args": {"cancel": true},
+    "context":
+    [
+      { "key": "panel_visible", "operator": "equal", "operand": true }
+    ]
+  },
+  // seems like ctrl+g should be good for hide_panel, and maybe use enter for something else
+  // { "keys": ["enter"], "command": "hide_panel", "args": {"cancel": true},
+  //   "context":
+  //   [
+  //     { "key": "panel_visible", "operator": "equal", "operand": true }
+  //   ]
+  // },
+
+  ////////////// misc emacs like stuff
+
+  // quick panel of only currently open files - sort of like emacs switch buffer
+  { "keys": ["ctrl+x", "b"], "command": "goto_open_file"},
+  // may not keep this long term, but it's handy for transition if nothing else
+  { "keys": ["ctrl+x", "ctrl+s"], "command": "save"},
+  { "keys": ["ctrl+h"], "command": "left_delete"},
+  { "keys": ["ctrl+d"], "command": "right_delete"},
+
+  /////////////////////// in a find files window
+  {
+    "keys": ["k"],
+    "command": "find_next",
+    "context": [{"key": "selector", "operator": "equal", "operand": "text.find-in-files" }]
+  },
+  {
+    "keys": ["j"],
+    "command": "find_prev",
+    "args": {"forward": false},
+    "context": [{"key": "selector", "operator": "equal", "operand": "text.find-in-files" }]
+  },
+
+  ////////////// split windows
+  {
+    "keys": ["ctrl+x","1"],
+    "command": "set_layout",
+    "args":
+    {
+      "cols": [0.0, 1.0],
+      "rows": [0.0, 1.0],
+      "cells": [[0, 0, 1, 1]]
+    }
+  },
+  { "keys": ["ctrl+x", "2"], "command": "create_pane_with_file", "args": {"direction": "down"} },
+  { "keys": ["ctrl+x", "3"], "command": "create_pane_with_file", "args": {"direction": "right"} },
+  { "keys": ["ctrl+x", "o"], "command": "doh_cycle_focus_group"},
+
+  ////////////// misc other to organize
+  { "keys": ["ctrl+j", "ctrl+r"], "command": "show_panel", "args": {"panel": "replace"} },
+  { "keys": ["alt+enter"], "command": "replace_all", "args": {"close_panel": true},
+     "context": [{"key": "panel", "operand": "replace"}, {"key": "panel_has_focus"}]
+  },
+
+  { "keys": ["ctrl+j", "ctrl+i"], "command": "reindent"},
+  { "keys": ["ctrl+j","ctrl+l"], "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
+  { "keys": ["ctrl+j","ctrl+f"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
+  { "keys": ["alt+0"], "command": "repeat"},
+  { "keys": ["alt+u"], "command": "upper_case" },
+  { "keys": ["alt+l"], "command": "lower_case" },
+  { "keys": ["alt+shift+g"], "command": "find_all_under" },
+
+  { "keys": ["ctrl+z"], "command": "noop"},
+  { "keys": ["ctrl+/"], "command": "undo"},
+
+  { "keys": ["ctrl+j", "ctrl+d", "ctrl+c"], "command": "toggle_keep_console_active"},
+  { "keys": ["ctrl+j", "ctrl+d", "ctrl+l"], "command": "toggle_log_commands"}
 ]
