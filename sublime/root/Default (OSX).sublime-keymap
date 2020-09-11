@@ -176,7 +176,9 @@
 
   ////////////// misc emacs like stuff
   { "keys": ["ctrl+z"], "command": "undo"},
+  // quick panel of only currently open files - sort of like emacs switch buffer
   { "keys": ["ctrl+x", "b"], "command": "goto_open_file"},
+  // may not keep this long term, but it's handy for transition if nothing else
   { "keys": ["ctrl+x", "ctrl+s"], "command": "save"},
   { "keys": ["ctrl+h"], "command": "left_delete"},
   { "keys": ["ctrl+d"], "command": "right_delete"},
