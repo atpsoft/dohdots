@@ -1,0 +1,4 @@
+[
+	{ "keys": ["alt+p"], "command": "shoew_overlay", "args": {"overlay": "goto", "show_files": true} },
+	{ "keys": ["alt+shift+p"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
+]
