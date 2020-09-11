@@ -1,10 +1,50 @@
 [  ////////////////////////////////////////// put all my custom ones here so I can overwrite if needed
+
+  {
+    "keys": ["k"],
+    "command": "find_next",
+    "context": [{"key": "selector", "operator": "equal", "operand": "text.find-in-files" }]
+  },
+  {
+    "keys": ["j"],
+    "command": "find_prev",
+    "args": {"forward": false},
+    "context": [{"key": "selector", "operator": "equal", "operand": "text.find-in-files" }]
+  },
+
   { "keys": ["ctrl+j", "ctrl+m", "ctrl+m"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": false}},
   { "keys": ["ctrl+j", "ctrl+m", "ctrl+x"], "command": "dohmysql_query", "args": {"allow_read": false, "allow_write": true}},
   { "keys": ["ctrl+j", "ctrl+m", "ctrl+l"], "command": "dohmysql_query", "args": {"allow_read": true, "allow_write": true, "connection": "local"}},
   { "keys": ["ctrl+j", "ctrl+m", "ctrl+p"], "command": "dohmysql_change_profile"},
-  { "keys": ["ctrl+j", "ctrl+m", "ctrl+f"], "command": "dohsql_change_path"},
 
-  { "keys": ["super+b"], "command": "goto_open_file"},
-  { "keys": ["ctrl+x", "ctrl+b"], "command": "goto_open_file"}
+  { "keys": ["ctrl+z"], "command": "noop"},
+  { "keys": ["ctrl+/"], "command": "undo"},
+
+  { "keys": ["super+u"], "command": "upper_case" },
+  { "keys": ["super+l"], "command": "lower_case" },
+  { "keys": ["super+shift+g"], "command": "find_all_under" },
+
+  {
+    "keys": ["ctrl+x","1"],
+    "command": "set_layout",
+    "args":
+    {
+      "cols": [0.0, 1.0],
+      "rows": [0.0, 1.0],
+      "cells": [[0, 0, 1, 1]]
+    }
+  },
+  { "keys": ["ctrl+x", "o"], "command": "doh_cycle_focus_group"},
+
+  { "keys": ["super+enter"], "command": "replace_all", "args": {"close_panel": true},
+     "context": [{"key": "panel", "operand": "replace"}, {"key": "panel_has_focus"}]
+  },
+
+  { "keys": ["ctrl+j", "ctrl+d"], "command": "noop"},
+  { "keys": ["ctrl+j", "ctrl+g", "ctrl+d"], "command": "git_raw", "args": { "command": "git difftool", "append_current_file": true, "may_change_files": false } },
+  { "keys": ["ctrl+j", "ctrl+g", "ctrl+c"], "command": "git_raw", "args": { "command": "git checkout", "append_current_file": true } },
+  { "keys": ["ctrl+j", "ctrl+i"], "command": "reindent"},
+  { "keys": ["ctrl+j", "ctrl+r"], "command": "show_panel", "args": {"panel": "replace"} },
+  { "keys": ["ctrl+j","ctrl+l"], "command": "show_overlay", "args": {"overlay": "goto", "text": ":"} },
+  { "keys": ["ctrl+j","ctrl+f"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} }
 ]
