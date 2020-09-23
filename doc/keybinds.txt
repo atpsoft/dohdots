@@ -1,39 +1,24 @@
 movement keys should extend selection when a selection block is active
 
-****** delete/cut/copy/paste/undo/redo
-ctrl+w or cmd+x: cut
-ctrl+c or cmd+c: copy
-ctrl+y or cmd+v: paste
-
-****** do nothing - explicitly unbind these so we are forced to develop habits with others
-ctrl+z: keep this reserved for something that wouldn't be used while running emacs over ssh
-cmd+y: by default bound to redo, but we have a different bind for that
+****** ctrl-g behavior
+if multi selection is active, switch to single selection
+if single selection is active, turn it off
+hide/cancel auto complete
+hiding overlays/panels
 
 ****** other
-ctrl+space: toggle selection block on/off
 cmd+shift+g: find all instances of cursor text and multi select them (in sublime)
 - in vscode: clear search results?
 cmd+shift+l: turn current single selection into multi selection by line
-
-ctrl+g: cancel
-- if multi selection is active, switch to single selection
-- if single selection is active, turn it off
-- hide/cancel auto complete
-- hiding overlays/panels
-cmd+u: make current selection or word uppercase
-cmd+l: make current selection or word lowercase
 
 ctrl+x,ctrl+s: save current file (or save all?)
 ctrl+j,ctrl+i: reindent/reformat
 cmd+0,#,<something>: repeat <something>
 ctrl+j,ctrl+j: jumpy word mode
 ctrl+j,ctrl+x: jumpy exit (seems like should be able to just use ctrl+g for this)
-ctrl+l: re-center buffer
-
 
 ****** switching files
 ctrl+x,b or ctrl+x,ctrl+b or cmd+b: switch to already open file
-
 
 ****** pane/buffer/file layout management
 ctrl+x,0: remove current pane from layout
