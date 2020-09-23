@@ -1,28 +1,9 @@
-****** movement keys - should extend selection when a selection block is active
-ctrl+a: start of line - ignore whitespace or not? - in sublime hitting it repeatedly toggles this
-ctrl+e: end of line
-ctrl+f: forward character
-ctrl+b: backward character
-ctrl+p: previous line
-ctrl+n: next line
-ctrl+u: backward word (definition of word varies)
-ctrl+o: forward word (definition of word varies)
-ctrl+,: backward page
-ctrl+.: forward page
-ctrl+j,ctrl+a: beginning of file
-ctrl+j,ctrl+e: end of file
-
+movement keys should extend selection when a selection block is active
 
 ****** delete/cut/copy/paste/undo/redo
-ctrl+h: backward delete character
-ctrl+d: forward delete character
-
 ctrl+w or cmd+x: cut
 ctrl+c or cmd+c: copy
 ctrl+y or cmd+v: paste
-ctrl+k: kill line (can be hard to get perfect, get as close as we can)
-ctrl+/: undo
-ctrl+shift+/: redo
 
 ****** do nothing - explicitly unbind these so we are forced to develop habits with others
 ctrl+z: keep this reserved for something that wouldn't be used while running emacs over ssh
