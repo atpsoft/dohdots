@@ -45,7 +45,7 @@ function parse_git_branch {
 #     ;;
 # esac
 
-PS1="\w: \$(parse_git_branch)\$ "
+PS1="%~: \$(parse_git_branch)\$ "
 
 . ~/src/dohdots/zsh/zsh.alias.utilities
 . ~/src/dohdots/zsh/zsh.iterm.utilities
