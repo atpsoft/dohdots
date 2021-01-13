@@ -120,14 +120,14 @@ alias gd='git diff'
 # You can subsequently move to one of the saved directories by using cd with
 # the abbreviation you chose. Eg. cd ms  (Note that no '$' is necessary.)
 # (I got this technique from Michael Boyle in the late 1980's at Visual Edge)
-alias sdirs='source ~/.dirs'
-alias show='cat ~/.dirs'
-save () { sed "/^$@/d" ~/.dirs > ~/.dirs1; \mv ~/.dirs1 ~/.dirs; echo "$@"=\"`pwd`\" >> ~/.dirs; source ~/.dirs ; }
+alias sdirs='source ~/.dirs.zsh'
+alias show='cat ~/.dirs.zsh'
+save () { sed "/^$@/d" ~/.dirs.zsh > ~/.dirs1.zsh; \mv ~/.dirs1.zsh ~/.dirs.zsh; echo "alias -g $@"=\"`pwd`\" >> ~/.dirs.zsh; source ~/.dirs.zsh ; }
 
 # Initialization for the above 'save' facility:
 # source the .dirs file:
-touch ~/.dirs
-source ~/.dirs
+touch ~/.dirs.zsh
+source ~/.dirs.zsh
 
 function catlast
 {
