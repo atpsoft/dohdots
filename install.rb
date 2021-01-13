@@ -83,7 +83,8 @@ def get_dohdots
   end
 end
 
-def link_files
+def link_files(bash_or_zsh)
+  puts "linking #{bash_or_zsh}"
   user = getuser
   puts "linking dotfiles for user: #{user}"
   if is_mac
@@ -95,12 +96,12 @@ def link_files
     # copy_file("src/dohdots/mac/moom_preferences.#{user}.plist", 'Library/Preferences/com.manytricks.Moom.plist')
   end
   link_file('src/dohdots/git/gitignore', '.gitignore')
-  link_file('src/dohdots/bash/bash_profile', '.bash_profile')
-  link_file('src/dohdots/bash/screenrc', '.screenrc')
-  if (File.exist?(get_path("src/dohdots/bash/bashrc.#{user}")))
-    link_file("src/dohdots/bash/bashrc.#{user}", '.bashrc.user')
+  link_file("src/dohdots/#{bash_or_zsh}/#{bash_or_zsh}_profile", ".#{bash_or_zsh}_profile")
+  link_file("src/dohdots/#{bash_or_zsh}/screenrc", ".screenrc")
+  if (File.exist?(get_path("src/dohdots/#{bash_or_zsh}/#{bash_or_zsh}rc.#{user}")))
+    link_file("src/dohdots/#{bash_or_zsh}/#{bash_or_zsh}rc.#{user}", ".#{bash_or_zsh}rc.user")
   end
-  link_file('src/dohdots/bash/bashrc', '.bashrc')
+  link_file("src/dohdots/#{bash_or_zsh}/#{bash_or_zsh}rc", ".#{bash_or_zsh}rc")
   link_file('src/dohdots/emacs/emacs', '.emacs')
   link_file('src/dohdots/emacs/emacs.d', '.emacs.d')
   if (File.exist?(get_path("src/dohdots/emacs/emacs.#{user}")))
@@ -116,4 +117,4 @@ def link_files
 end
 
 get_dohdots
-link_files
+link_files(ARGV[0] || 'bash')

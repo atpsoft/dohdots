@@ -1,0 +1,51 @@
+export VISUAL=subl
+export EDITOR=subl
+export PAGER=cat
+export MCSERVER=/Users/makani/stuff/minecraft/server
+export TOOLCHAINS=swift
+
+# same as fl, but ruby code only
+function flr {
+ fl --ruby "$@"
+}
+
+# same as fc, but ruby code only
+function fcr {
+ fc --ruby "$@"
+}
+
+alias ll='ls -lA'
+alias llr='ls -lAtr'
+
+alias gd='git difftool'
+alias gds='git difftool --staged'
+function gdc {
+  git difftool "$1^..$1" $2
+}
+alias dtd='dohtest -odont_rebuild_db'
+alias dte='dohtest -f1 -e1'
+alias dtf='dohtest -odont_rebuild_db -f1 -e1'
+function gbb {
+  git checkout $1 .
+  git reset .
+}
+
+function parse_git_branch {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo "("${ref#refs/heads/}")"
+}
+
+# sets prompt style
+# case $TERM in
+#   xterm*)
+#     PS1="\[\033]0;\w\007\]\w: \$(parse_git_branch)\$ "
+#     ;;
+#   *)
+#     PS1="\w: \$(parse_git_branch)\$ "
+#     ;;
+# esac
+
+PS1="\w: \$(parse_git_branch)\$ "
+
+. ~/src/dohdots/zsh/zsh.alias.utilities
+. ~/src/dohdots/zsh/zsh.iterm.utilities

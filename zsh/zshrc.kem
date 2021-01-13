@@ -1,0 +1,74 @@
+export VISUAL=emacs
+export PAGER=cat
+#note: $* expands to $1 $2 $3
+#for functions
+#while $@ expands to "$1 $2 $3 ..."
+function parse_git_branch {
+  ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+  echo "("${ref#refs/heads/}")"
+}
+
+PS1="%~: \$(parse_git_branch)\$ "
+
+alias cl='create_database.rb -z'
+
+# use this to go to a dev directory
+function cdd {
+		cd ~/dev
+		if [ $# -gt 0 ]
+		then
+				cd $@
+		fi
+}
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+alias top='top -o cpu'
+alias gr='git remote -v'
+alias gco='git checkout'
+alias gcm='git checkout master'
+alias gcd='git checkout deploy'
+alias gcdd='git checkout -b deploy'
+alias grmd='git branch -d deploy'
+alias gdc='gitdiffcommit'
+#alias gsc='git svn dcommit'
+#alias gsl='git svn log -n10'
+#alias gsu='git svn rebase'
+#alias gsi='git svn info'
+alias lsr='ls -latr'
+
+function lsrt
+{
+  lsr $1 | tail
+}
+
+
+alias gdd='git difftool'
+alias herokudb='heroku pg:psql'
+alias gitpulltags='git fetch --tags'
+alias gitpushtags='git push --tags'
+alias gitundocommit='git reset --soft HEAD^'
+alias gitamend='git commit --amend -m'
+alias gitbranchdiff='git diff master..HEAD'
+alias gitbranchlog='git log master..HEAD'
+alias gitwhatwillupdate='git fetch; git diff master origin/master'
+alias fixlineendings="perl -pi -e 's/\r/\n/g' "
+alias watchtimemachine="sudo dtrace -n 'syscall::open*:entry /execname == \"backupd\"/ { printf (\"%s\", copyinstr(arg0)); }'"
+#show what will be merged if you merge the given branch to the master (... means changes since the branch branched)
+
+function cpsshkey
+{
+		cat ~/.ssh/id_dsa.pub | ssh $1 "cat >> ~/.ssh/authorized_keys"
+}
+
+function openlast
+{
+    open $1/`ls -rt $1 | tail -1`
+}
+
+. ~/src/dohdots/zsh/zsh.alias.utilities
+. ~/src/dohdots/zsh/zsh.iterm.utilities
+
+function sscr
+{
+    screentype=${2-default};
+    ssh -t $1 "screen -S ${USER}_$screentype -rd || screen -S ${USER}_$screentype"
+}

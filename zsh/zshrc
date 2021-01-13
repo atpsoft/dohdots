@@ -1,0 +1,204 @@
+# attempts to standardize dot file loading for the different kinds of shell contexts (login, non-interactive, etc.)
+
+# emacs focused setup
+export VISUAL=emacs
+export EDITOR=emacs
+export PAGER=cat
+export LANG=en_US.UTF-8
+
+### this section of commands is to make losing command history less likely, especially when having multiple terminals open
+# limits the number of lines in the history file
+# you can use this script: https://raw.github.com/atpsoft/dohdots/master/bash/archive_bash_history
+# if you want to archive them above 100k lines -- cron it up weekly or something
+export HISTFILESIZE=100000
+# number of commands to remember in ram
+export HISTSIZE=30000
+# before the prompt is displayed, any history being buffered is flushed
+export PROMPT_COMMAND="history -a"
+# history is appended to the file, rather than overwriting (for multiple shell instances running at same time)
+setopt share_history
+
+# allow substitution in prompts
+setopt prompt_subst
+
+
+# clone and make master be rebase default
+function gitclone {
+  dir=`git clone "$@" | ruby -e 'STDIN.readlines.join("") =~ /Cloning into .(\w+)./; puts $1'`
+  cd $dir
+  git config branch.master.rebase true
+  cd -
+}
+
+# typically used for bug fix branches
+function gitmergecommit
+{
+  git cherry-pick $1
+  git reset --soft HEAD^
+  git commit -m "merge of commit $1"
+}
+
+function gitdiffbranch
+{
+		git diff master...$@
+}
+
+function gitdiffcommit
+{
+		git difftool $1^..$1 $2
+}
+
+#show the filenames that changed in a given commit
+function gitchanged
+{
+		git diff --name-status $1^..$1 | cut -f2
+}
+
+# recursive grep, ignoring vcs data, log files, preferences, etc.
+
+function fc {
+ ack -g "^(?!.*(fonts/|combined_\d*\.js|\.log|min\.css|swfobject\.js|jquery.*\.js).*).*$" . | ack --nogroup -x "$@" | cut -c -500
+}
+
+# same as fc, but case insensitive
+function fl {
+ fc -i "$@" | cut -c -500
+}
+
+# use fl, then grep for def at the beginning, followed by the argument (find definition of a method)
+function fd {
+ fl -i "$@" | grep -E "^.*:.*:[[:space:]]*def[[:space:]]+(self\.)?$@"
+}
+
+# same as fl, but only list the filenames
+function ff {
+ fl -l "$@"
+}
+
+function fn {
+  find . -name "*$@*" -print
+}
+
+function mfn {
+  mdfind -onlyin . -name "$@"
+}
+
+function openlast
+{
+  open $1`ls -rt $1 | tail -1`
+}
+
+function gitlog
+{
+  local gitpath="${2:-.}"
+  git lg -n$1 --follow --decorate $gitpath | grep -v '^\.\.\.\s*$'
+}
+
+alias gs='git status'
+alias gco='git checkout'
+alias gcm='git checkout master'
+alias gdc='gitdiffcommit'
+alias gc='git commit -m'
+alias gl='gitlog 10'
+alias gll='gitlog 50'
+alias glll='gitlog 500'
+alias gls='gitlog 3'
+
+alias gb='git blame HEAD'
+alias gp='git push'
+#git pull, then push
+alias gpp='git pp'
+#git pull with logging
+alias gpl='git pl'
+alias ll='ls -latrL'
+alias llt='ls -latrL /tmp'
+#use gd -b to ignore whitespace
+alias gd='git diff'
+
+# The following aliases (save & show) are for saving frequently used directories
+# You can save a directory using an abbreviation of your choosing. Eg. save ms
+# You can subsequently move to one of the saved directories by using cd with
+# the abbreviation you chose. Eg. cd ms  (Note that no '$' is necessary.)
+# (I got this technique from Michael Boyle in the late 1980's at Visual Edge)
+alias sdirs='source ~/.dirs'
+alias show='cat ~/.dirs'
+save () { sed "/^$@/d" ~/.dirs > ~/.dirs1; \mv ~/.dirs1 ~/.dirs; echo "$@"=\"`pwd`\" >> ~/.dirs; source ~/.dirs ; }
+
+# Initialization for the above 'save' facility:
+# source the .dirs file:
+touch ~/.dirs
+source ~/.dirs
+
+function catlast
+{
+    cat $1/`ls -rt $1 | tail -1` | cut -c -500
+}
+
+function elast
+{
+    emacs $1/`ls -rt $1 | tail -1`
+}
+
+function taillast
+{
+    tail -f $1/`ls -rt $1 | tail -1`
+}
+
+function catlastnocut
+{
+    cat $1/`ls -rt $1 | tail -1`
+}
+
+function ht {
+  history -n; history | grep "$@" | tail
+}
+
+function ht50 {
+  history -n; history | grep "$@" | tail -n50
+}
+
+# gitmtim will change the modification time of the file to the last commit time in git
+if [ "$(uname -s)" = "Darwin" ]
+then
+# Setting PATH for Python 3.7
+PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
+export PATH
+
+function gitmtim() {
+  for var in "$@"
+  do
+    last_modified=`git log --pretty=%at -n1 -- "$var"`
+    readable=`date -j -f %s $last_modified +'%Y%m%d%H%M.%S'`
+    touch -t $readable $var
+  done
+}
+
+else
+gitmtim(){ local f;for f;do touch -d @0`git log --pretty=%at -n1 -- "$f"` "$f"; done;}
+fi
+
+
+function stopdots {
+  touch .metadata_never_index; rm -rf .Spotlight-*; sudo rm -rf .Trashes; touch .Trashes; rm -rf .fseventsd; mkdir .fseventsd; touch .fseventsd/no_log;
+}
+
+# note that to disconnect from a screen, allowing you to reattach to it later, you want to hit ctrl-z d (default for screen is ctrl-a d if you don't have a modified .screenrc)
+function ssc {
+# this is the bash way of saying screentype = $2 || 'default'
+  screentype=${2-default}
+  ssh -t $1 "screen -S ${USER}_$screentype -rd || screen -S ${USER}_$screentype"
+}
+
+#for windows, harmless elsewhere
+export CYGWIN="binmode ntsec tty"
+
+# hook for user specific additions
+[[ -s "$HOME/.zshrc.user" ]] && source "$HOME/.zshrc.user"
+
+# hook for environment specific additions
+[[ -s "$HOME/.zshrc.env" ]] && source "$HOME/.zshrc.env"
+
+# hook for box specific additions
+[[ -s "$HOME/.zshrc.local" ]] && source "$HOME/.zshrc.local"
+
+export PATH="$HOME/.cargo/bin:$PATH"
