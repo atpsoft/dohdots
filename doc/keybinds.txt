@@ -40,7 +40,6 @@ ctrl+j,ctrl+r: search & replace with confirmation interactively
 k: find next - in search buffer
 j: find prev - in search buffer
 
-
 ****** sql
 ctrl+j,ctrl+m,ctrl+m: read-only query
 ctrl+j,ctrl+m,ctrl+x: write-only query
