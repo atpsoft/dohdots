@@ -96,7 +96,11 @@ def link_files(bash_or_zsh)
     # copy_file("src/dohdots/mac/moom_preferences.#{user}.plist", 'Library/Preferences/com.manytricks.Moom.plist')
   end
   link_file('src/dohdots/git/gitignore', '.gitignore')
-  link_file("src/dohdots/#{bash_or_zsh}/#{bash_or_zsh}_profile", ".#{bash_or_zsh}_profile")
+  if bash_or_zsh == 'bash'
+    link_file("src/dohdots/bash/bash_profile", ".bash_profile")
+  elsif bash_or_zsh == 'zsh'
+    link_file("src/dohdots/zsh/zprofile", ".zprofile")
+  end
   link_file("src/dohdots/#{bash_or_zsh}/screenrc", ".screenrc")
   if (File.exist?(get_path("src/dohdots/#{bash_or_zsh}/#{bash_or_zsh}rc.#{user}")))
     link_file("src/dohdots/#{bash_or_zsh}/#{bash_or_zsh}rc.#{user}", ".#{bash_or_zsh}rc.user")
