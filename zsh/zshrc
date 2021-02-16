@@ -76,7 +76,7 @@ function ff {
 }
 
 function fn {
-  find . -name "*$@*" -print
+  find . -name "*$@*" -print 2>&1
 }
 
 function mfn {
