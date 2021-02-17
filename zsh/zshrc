@@ -122,7 +122,26 @@ alias gd='git diff'
 # (I got this technique from Michael Boyle in the late 1980's at Visual Edge)
 alias sdirs='source ~/.dirs.zsh'
 alias show='cat ~/.dirs.zsh'
-save () { sed "/^$@/d" ~/.dirs.zsh > ~/.dirs1.zsh; \mv ~/.dirs1.zsh ~/.dirs.zsh; echo "alias -g $@"=\"`pwd`\" >> ~/.dirs.zsh; source ~/.dirs.zsh ; }
+save () {
+    # if the passed in value is already an alias, it'll be a directory, so overwrite it
+    if [[ -d $@ ]]
+    then
+      echo "the string you're using is already an alias, replacing it with current directory -- old file in ~/.dirs.zsh.old"
+      cp ~/.dirs.zsh ~/.dirs.zsh.old
+      sed "s~\"$@\"~\"`pwd`\"~g" ~/.dirs.zsh > ~/.dirs1.zsh
+      mv ~/.dirs1.zsh ~/.dirs.zsh
+    else
+      # remove the existing entry
+      echo "$@ is a not a current alias, adding new one"
+      sed "/^alias -g $@/d" ~/.dirs.zsh > ~/.dirs1.zsh
+      mv ~/.dirs1.zsh ~/.dirs.zsh
+      # add the new entry
+      echo "alias -g $@"=\"`pwd`\" >> ~/.dirs.zsh
+    fi
+    # source it in either case
+    source ~/.dirs.zsh
+}
+
 
 # Initialization for the above 'save' facility:
 # source the .dirs file:
