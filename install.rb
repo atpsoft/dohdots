@@ -69,6 +69,13 @@ def is_mac_m1
   `uname -a`.downcase.include?('arm64')
 end
 
+def is_mac_atleast_bigsur
+  return true if is_mac_m1
+  return true if `sw_vers -productVersion`.split('.')[0].to_i >= 11
+  return true if `sw_vers -productVersion`.split('.')[1].to_i >= 16
+  return false
+end
+
 def getuser
   user = ENV['USER']
   usermap = {'kmason' => 'kem', 'mmason' => 'makani', 'tlarson' => 'trent'}
@@ -87,7 +94,21 @@ def get_dohdots
   end
 end
 
-def link_files(shell_name)
+SHELL_NAMES = ['', 'bash', 'zsh']
+def link_files(input)
+  shell_name = input.to_s.strip.downcase
+  if !SHELL_NAMES.include?(shell_name)
+    puts "please enter a valid shell name: bash or zsh"
+    exit
+  end
+  if shell_name.empty?
+    if is_mac_atleast_bigsur
+      shell_name = 'zsh'
+    else
+      shell_name = 'bash'
+    end
+  end
+
   puts "linking #{shell_name}"
   user = getuser
   puts "linking dotfiles for user: #{user}"
@@ -125,4 +146,4 @@ def link_files(shell_name)
 end
 
 get_dohdots
-link_files(ARGV[0] || 'bash')
+link_files(ARGV[0])
