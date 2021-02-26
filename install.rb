@@ -65,6 +65,10 @@ def is_mac
   `uname -a` =~ /Darwin/
 end
 
+def is_mac_m1
+  `uname -a`.downcase.include?('arm64')
+end
+
 def getuser
   user = ENV['USER']
   usermap = {'kmason' => 'kem', 'mmason' => 'makani', 'tlarson' => 'trent'}
