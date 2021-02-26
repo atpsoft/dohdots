@@ -70,6 +70,7 @@ def is_mac_m1
 end
 
 def is_mac_atleast_bigsur
+  return false if !is_mac
   return true if is_mac_m1
   return true if `sw_vers -productVersion`.split('.')[0].to_i >= 11
   return true if `sw_vers -productVersion`.split('.')[1].to_i >= 16
