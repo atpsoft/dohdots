@@ -1,4 +1,4 @@
-If you want to use and make changes to dohdots, you need to generate an ssh key (if you haven't already), and add it to your github account.
+If you want to use and make changes to dohdots, you need to generate an ssh key (if you haven't already), and add it to your github account.  Remember to pick a passphrase for your key, and store it safely.
 ``` bash
 ssh-keygen
 ```
