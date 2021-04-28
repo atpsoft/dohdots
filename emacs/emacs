@@ -169,11 +169,13 @@
 ;; this will make emacs track the directory, regardless of how you got there, so autocomplete will work properly with aliases that cd, e.g.
 (defun my-dirtrack-mode ()
   "Add to shell-mode-hook to use dirtrack mode in shell buffers."
-  (shell-dirtrack-mode 0)
-;;  (set-variable 'dirtrack-list '("^.*[^ ]+:\\(.*\\)>" 1 nil)
-  (set-variable 'dirtrack-list '("\\(.*+\\):[ ]" 1 nil)
-  (dirtrack-mode 1)))
+  (dirtrack-mode 1)
+  (shell-dirtrack-mode nil)
+  (set-variable 'dirtrack-list '("\\(.*+\\):[ ]" 1)
+  (message "my-dirtrack-mode called")))
 (add-hook 'shell-mode-hook 'my-dirtrack-mode)
+;; below is old dirtrack-list regexp
+;;  (set-variable 'dirtrack-list '("^.*[^ ]+:\\(.*\\)>" 1 nil)
 
 ;;(add-to-list 'load-path "~/.emacs.d/elisp/emacs-bash-completion/")
 ;;(require 'bash-completion)
