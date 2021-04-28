@@ -26,7 +26,7 @@
  '(font-lock-variable-name-face ((((class color) (min-colors 88) (background light)) (:foreground "SeaGreen")))))
 (setq grepped-file-keep-current-window nil)
 
-(set-default-font "Menlo 18")
+;;(set-default-font "Menlo 18")
 
 (autoload 'octave-mode "octave-mod" nil t)
 (setq auto-mode-alist
