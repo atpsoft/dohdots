@@ -9,6 +9,10 @@ function parse_git_branch {
 }
 
 PS1="%~: \$(parse_git_branch)\$ "
+if [ $INSIDE_EMACS ]; then
+  echo "inside emacs"
+  term=vanilla
+fi
 
 alias cl='create_database.rb -z'
 
@@ -39,7 +43,7 @@ function lsrt
 {
   lsr $1 | tail
 }
-
+setopt PROMPT_SUBST
 
 alias gdd='git difftool'
 alias herokudb='heroku pg:psql'
