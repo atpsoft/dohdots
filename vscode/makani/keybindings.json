@@ -282,6 +282,33 @@
     "when": "textInputFocus && !editorReadonly"
   },
   {
+    "key": "ctrl+w",
+    "command": "sticky-selection.exitStickySelectionMode",
+    "args": {
+      "command": "editor.action.clipboardCutAction",
+      "interval": 100
+    },
+    "when": "textInputFocus && !editorReadonly && inStickySelectionMode"
+  },
+  {
+    "key": "cmd+c",
+    "command": "sticky-selection.exitStickySelectionMode",
+    "args": {
+      "command": "editor.action.clipboardCopyAction",
+      "interval": 100
+    },
+    "when": "textInputFocus && inStickySelectionMode"
+  },
+  {
+    "key": "cmd+v",
+    "command": "sticky-selection.exitStickySelectionMode",
+    "args": {
+      "command": "editor.action.clipboardPasteAction",
+      "interval": 100
+    },
+    "when": "textInputFocus && !editorReadonly && inStickySelectionMode"
+  },
+  {
     "key": "ctrl+/",
     "command": "undo",
     "when": "textInputFocus && !editorReadonly"
