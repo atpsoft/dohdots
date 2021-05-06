@@ -48,7 +48,8 @@ alias fix_stty='stty sane'
 alias cic='set completion-ignore-case On'
 
 # show_options: display bash options settings
-alias show_options='shopt'
+# this wasn't working in zsh, so I commented it out
+# alias show_options='shopt'
 
 # use 'tput' to access terminfo - e.g. 'tput cols' to get number of columns
 
@@ -84,7 +85,8 @@ touch ~/.dirs
 source ~/.dirs
 
 # set the bash option so that no '$' is required when using the above facility
-shopt -s cdable_vars
+# this wasn't working in zsh, so I commented it out
+# shopt -s cdable_vars
 
 # cdf: cd's to frontmost window of Finder
 cdf ()
