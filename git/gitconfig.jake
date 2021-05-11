@@ -20,3 +20,5 @@
   prompt = false
 [merge]
   tool = Kaleidoscope
+[branch]
+  autosetuprebase = always
