@@ -20,7 +20,7 @@ end
 def safely_remove_dir(path)
   fullpath = get_path(path)
   if File.exist?(fullpath)
-    `rmdir #{fullpath}`
+    `rmdir "#{fullpath}"`
   end
   if File.exist?(fullpath)
     raise "failed to remove directory #{fullpath}"
@@ -34,7 +34,7 @@ def copy_file(src, dest)
     return
   end
   dest = get_path(dest)
-  `cp -n #{src} "#{dest}"`
+  `cp -n "#{src}" "#{dest}"`
   puts "copied #{src} to #{dest}"
 end
 
