@@ -17,6 +17,16 @@ def link_file(src, dest, hard_link = false)
   puts "linked #{src} to #{dest}"
 end
 
+def safely_remove_dir(path)
+  fullpath = get_path(path)
+  if File.exist?(fullpath)
+    `rmdir #{fullpath}`
+  end
+  if File.exist?(fullpath)
+    raise "failed to remove directory #{fullpath}"
+  end
+end
+
 def copy_file(src, dest)
   src = get_path(src)
   if !File.exist?(src)
@@ -47,9 +57,10 @@ def merge_files(user, src, dest)
   file << lines.join("")
 end
 
-def get_path(file, fromhome = true)
+def get_path(file)
+  fromhome = file[0] != '/'
   root = fromhome ? ENV['HOME'] : '/'
-  File.join(root, file)
+  return File.join(root, file)
 end
 
 def ensure_exists(file)
@@ -120,6 +131,10 @@ def link_files(input)
     # ensure_exists('Library/Application Support/Karabiner')
     # link_file('src/dohdots/mac/karabiner.xml', 'Library/Application Support/Karabiner/private.xml')
     # copy_file("src/dohdots/mac/moom_preferences.#{user}.plist", 'Library/Preferences/com.manytricks.Moom.plist')
+    link_file('/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl', '/opt/doh/bin/subl')
+    link_file('src/dohdots/sublime/root' 'Library/Application Support/Sublime Text 3/Packages/doh')
+    safely_remove_dir('Library/Application Support/Sublime Text 3/Packages/User')
+    link_file("src/dohdots/sublime/#{user}", 'Library/Application Support/Sublime Text 3/Packages/User')
   end
   link_file('src/dohdots/git/gitignore', '.gitignore')
   if shell_name == 'bash'
