@@ -13,7 +13,7 @@ def link_file(src, dest, hard_link = false)
   else
     opts = ' -s'
   end
-  `ln#{opts} #{src} "#{dest}"`
+  `ln#{opts} "#{src}" "#{dest}"`
   puts "linked #{src} to #{dest}"
 end
 
