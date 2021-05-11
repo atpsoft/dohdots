@@ -132,7 +132,7 @@ def link_files(input)
     # link_file('src/dohdots/mac/karabiner.xml', 'Library/Application Support/Karabiner/private.xml')
     # copy_file("src/dohdots/mac/moom_preferences.#{user}.plist", 'Library/Preferences/com.manytricks.Moom.plist')
     link_file('/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl', '/opt/doh/bin/subl')
-    link_file('src/dohdots/sublime/root' 'Library/Application Support/Sublime Text 3/Packages/doh')
+    link_file('src/dohdots/sublime/root', 'Library/Application Support/Sublime Text 3/Packages/doh')
     safely_remove_dir('Library/Application Support/Sublime Text 3/Packages/User')
     link_file("src/dohdots/sublime/#{user}", 'Library/Application Support/Sublime Text 3/Packages/User')
   end
