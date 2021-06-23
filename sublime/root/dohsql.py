@@ -338,7 +338,7 @@ class QueryCore:
                 if sqlite_path is None:
                     sqlite_path = conn_config.get('path')
                 if sqlite_path is None:
-                    self.output_text(True, "no sqlite path found in source file or settings")
+                    self.output_text(True, "no sqlite path found in source file or settings; need to run dohsql_change_path; use C-j,C-m,C-f")
                     return None
                 retval = sqlite3.connect(sqlite_path)
             elif dbtype == 'mysql':
