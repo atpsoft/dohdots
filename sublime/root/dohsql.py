@@ -4,6 +4,7 @@ import time
 import threading
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 import pymysql
+import psycopg2
 import sqlite3
 import traceback
 
