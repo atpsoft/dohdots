@@ -1,6 +1,6 @@
 [user]
   name = pquimo
-  email = gitauthor@pquimo.com
+  email = pquimo@users.noreply.github.com
 [diff]
   tool = Kaleidoscope
 [difftool "winmerge"]
