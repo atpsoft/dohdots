@@ -113,7 +113,14 @@ class QueryRunnerThread(threading.Thread):
         self.connection_name = connection_name
         self.stmt_list = stmt_list
         self.table_builder = table_builder
+        self.customize_for_language()
         threading.Thread.__init__(self)
+
+    def customize_for_language(self):
+        dbtype = self.query_core.get_dbtype()
+        self.commit_after_execute = False
+        if dbtype == 'sqlite':
+            self.commit_after_execute = True
 
     def run(self):
         try:
@@ -166,7 +173,7 @@ class QueryRunnerThread(threading.Thread):
         try:
             start_time = time.time()
             cursor.execute(stmt)
-            if ('sqlite' in self.connection_name):
+            if self.commit_after_execute:
                 dbconn.commit()
             elapsed_amt = round(time.time() - start_time, 2)
             elapsed_str = str(elapsed_amt) + ' sec'
@@ -218,6 +225,9 @@ class QueryCore:
         self.allow_write_stmts = False
         self.specific_connection_name = None
         self.all_settings = sublime.load_settings('doh.sublime-settings')
+
+    def get_dbtype(self):
+        return self.profile_config.get('dbtype')
 
     def update_output_view_name(self):
         name = '%s: %s' % (self.source_tab_name, self.selected_profile)
