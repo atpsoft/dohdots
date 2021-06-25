@@ -288,14 +288,19 @@ class QueryCore:
             return None
 
         dbtype = self.profile_config.get('dbtype')
+        vars_cmd = ''
         if dbtype == 'mysql':
             msg = "using '%s' connection settings" % (connection_name)
             self.output_text(True, msg)
+            vars_cmd = 'SET autocommit=1'
+        elif dbtype == 'pg':
+            vars_cmd = 'SHOW DATABASE'
 
-        vars_cmd = 'SET autocommit=1'
         extra_vars = conn_config.get('server_variables')
         if extra_vars:
-            vars_cmd = vars_cmd + ", " + extra_vars
+            if vars_cmd != "":
+                vars_cmd = vars_cmd + ", "
+            vars_cmd = vars_cmd + extra_vars
         vars_msg = "(%s) %s" %  (connection_name, vars_cmd)
 
         retval = self.try_connect_once(conn_config, vars_msg, vars_cmd)
@@ -344,6 +349,11 @@ class QueryCore:
                 retval = sqlite3.connect(sqlite_path)
             elif dbtype == 'mysql':
                 retval = pymysql.connect(conn_config.get('host'), conn_config.get('user'), conn_config.get('pass'), conn_config.get('db'), conn_config.get('port'))
+                cursor = retval.cursor()
+                self.output_text(True, vars_msg)
+                cursor.execute(vars_cmd)
+            elif dbtype == 'pg':
+                retval = psycopg2.connect(host=conn_config.get('host'), user=conn_config.get('user'), database=conn_config.get('db'), port=conn_config.get('port'), sslmode = "disable")
                 cursor = retval.cursor()
                 self.output_text(True, vars_msg)
                 cursor.execute(vars_cmd)
