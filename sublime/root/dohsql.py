@@ -119,8 +119,12 @@ class QueryRunnerThread(threading.Thread):
     def customize_for_language(self):
         dbtype = self.query_core.get_dbtype()
         self.commit_after_execute = False
+        self.rollback_on_exception = False
         if dbtype == 'sqlite':
             self.commit_after_execute = True
+        if dbtype == 'pg':
+            self.commit_after_execute = True
+            self.rollback_on_exception = True
 
     def run(self):
         try:
@@ -199,6 +203,8 @@ class QueryRunnerThread(threading.Thread):
                 output = self.table_builder.build_line_per_row(data, headers)
             output += str(row_count) + " rows (" + elapsed_str + ")\n"
         except Exception as excpt:
+            if self.rollback_on_exception:
+                dbconn.rollback()
             error = excpt
             output = str(excpt) + "\n"
         return (error, output)
