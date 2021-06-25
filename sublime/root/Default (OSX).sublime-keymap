@@ -171,13 +171,15 @@
       { "key": "panel_visible", "operator": "equal", "operand": true }
     ]
   },
-  // seems like ctrl+g should be good for hide_panel, and maybe use enter for something else
-  // { "keys": ["enter"], "command": "hide_panel", "args": {"cancel": true},
-  //   "context":
-  //   [
-  //     { "key": "panel_visible", "operator": "equal", "operand": true }
-  //   ]
-  // },
+  // this is a duplicate of ctrl-g.  ideally ctrl-g would have different behavior
+  // like vscode does where it goes back to where you started the search
+  // but this at least makes enter the same between them
+  { "keys": ["enter"], "command": "hide_panel", "args": {"cancel": true},
+     "context":
+     [
+       { "key": "panel_visible", "operator": "equal", "operand": true }
+     ]
+  },
 
   ////////////// misc emacs like stuff
 
