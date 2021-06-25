@@ -188,7 +188,10 @@ class QueryRunnerThread(threading.Thread):
                 # when lastrowid does not apply (not an insert statement), None is returned from sqlite, but zero from mysql
                 if insert_id and insert_id > 0:
                     return (None, 'last insert id: ' + str(insert_id) + ' (' + elapsed_str + ')\n')
-                return (None, str(cursor.rowcount) + ' rows affected (' + elapsed_str + ')\n')
+                rowcount = cursor.rowcount
+                if rowcount and rowcount >= 0:
+                    return (None, str(rowcount) + ' rows affected (' + elapsed_str + ')\n')
+                return (None, "success")
             data = cursor.fetchall()
             headers = []
             for header_detail in cursor.description:
