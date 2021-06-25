@@ -17,6 +17,7 @@ export HISTSIZE=30000
 export PROMPT_COMMAND="history -a"
 # history is appended to the file, rather than overwriting (for multiple shell instances running at same time)
 setopt share_history
+setopt EXTENDED_HISTORY
 
 # allow substitution in prompts
 setopt prompt_subst
@@ -169,11 +170,11 @@ function catlastnocut
 }
 
 function ht {
-  history -n; history | grep "$@" | tail
+  cat ~/.zsh_history | grep "$@" | tail
 }
 
 function ht50 {
-  history -n; history | grep "$@" | tail -n50
+  cat ~/.zsh_history | grep "$@" | tail -n50
 }
 
 # gitmtim will change the modification time of the file to the last commit time in git
