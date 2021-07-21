@@ -1,6 +1,6 @@
 [user]
-  name = Kem Mason
-  email = bulbous@gmail.com
+  name = eegrok
+  email = 304507+eegrok@users.noreply.github.com
 [Alias]
 	ksreview = "!f() { local SHA=${1:-HEAD}; local BRANCH=${2:-master}; if [ $SHA == $BRANCH ]; then SHA=HEAD; fi; git difftool -y -t Kaleidoscope $BRANCH...$SHA; }; f"
 	lg = log --color --date=local --graph --pretty=tformat:'%Cred%h%Creset -%C(blue)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
