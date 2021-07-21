@@ -171,8 +171,8 @@
   "Add to shell-mode-hook to use dirtrack mode in shell buffers."
   (dirtrack-mode 1)
   (shell-dirtrack-mode nil)
-  (set-variable 'dirtrack-list '("\\(.*+\\):[ ]" 1)
-                (message "my-dirtrack-mode called")))
+  (set-variable 'dirtrack-list '("[:space:]*\\([^[:space:]]*\\):.*$" 1))
+                (message "my-dirtrack-mode called"))
 ;; atm adding my-dirtrack-mode causes issues for "fl stopsearch", e.g. -- when in ~/src/vsc-incremental-search
 ;;(add-hook 'shell-mode-hook 'my-dirtrack-mode)
 ;; below is old dirtrack-list regexp
