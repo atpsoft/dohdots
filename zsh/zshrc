@@ -170,11 +170,11 @@ function catlastnocut
 }
 
 function ht {
-  cat ~/.zsh_history | grep "$@" | tail
+  history 1 -1 | grep "$@" | tail
 }
 
 function ht50 {
-  cat ~/.zsh_history | grep "$@" | tail -n50
+  history 1 -1 | grep "$@" | tail -n50
 }
 
 # gitmtim will change the modification time of the file to the last commit time in git
