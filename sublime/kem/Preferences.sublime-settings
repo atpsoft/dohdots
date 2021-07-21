@@ -8,7 +8,7 @@
 	"ensure_newline_at_eof_on_save": true,
 	"env":
 	{
-		"PATH": "/tmp:/bin"
+		"PATH": "/tmp:/bin",
 	},
 	"file_exclude_patterns":
 	[
@@ -22,7 +22,7 @@
 	"git_gutter_show_line_annotation": false,
 	"ignored_packages":
 	[
-		"Vintage"
+		"Vintage",
 	],
 	"open_files_in_new_window": false,
 	"rulers":
@@ -32,5 +32,5 @@
 	"show_full_path": true,
 	"tab_size": 2,
 	"translate_tabs_to_spaces": true,
-	"trim_trailing_white_space_on_save": true
+	"trim_trailing_white_space_on_save": true,
 }
