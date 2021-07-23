@@ -1007,7 +1007,6 @@ Don't ask about killing processes -- just kill them."
 					))))
 
 (if (and (< (length command-line-args) 2) (shell-system-p))
-	 (progn
-		(shell)
-		)
- )
+    (let ((default-directory "~"))
+      (shell))
+  )
