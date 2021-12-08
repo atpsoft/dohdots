@@ -4,7 +4,7 @@ import time
 import threading
 sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 import pymysql
-import psycopg2
+# import psycopg2
 import sqlite3
 import traceback
 
@@ -369,12 +369,12 @@ class QueryCore:
                 cursor = retval.cursor()
                 self.output_text(True, vars_msg)
                 cursor.execute(vars_cmd)
-            elif dbtype == 'pg':
-                retval = psycopg2.connect(host=conn_config.get('host'), user=conn_config.get('user'), database=conn_config.get('db'), port=conn_config.get('port'), sslmode = "disable")
-                cursor = retval.cursor()
-                self.output_text(True, vars_msg)
-                if vars_cmd != "":
-                    cursor.execute(vars_cmd)
+#            elif dbtype == 'pg':
+#                retval = psycopg2.connect(host=conn_config.get('host'), user=conn_config.get('user'), database=conn_config.get('db'), port=conn_config.get('port'), sslmode = "disable")
+#                cursor = retval.cursor()
+#                self.output_text(True, vars_msg)
+#                if vars_cmd != "":
+#                    cursor.execute(vars_cmd)
             elif dbtype is None:
                 self.output_text(True, "no dbtype set in profile")
                 return None
