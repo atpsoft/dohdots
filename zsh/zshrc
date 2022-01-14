@@ -14,6 +14,8 @@ export HISTFILESIZE=100000
 export HISTFILE="$HOME/.zsh_history"
 # number of commands to remember in ram
 export HISTSIZE=30000
+# number of commands to save in file
+export SAVEHIST=10000000
 # before the prompt is displayed, any history being buffered is flushed
 export PROMPT_COMMAND="history -a"
 # history is appended to the file, rather than overwriting (for multiple shell instances running at same time)
