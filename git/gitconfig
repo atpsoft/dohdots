@@ -5,6 +5,8 @@
   editor = subl -w
 [difftool]
   prompt = false
+[mergetool]
+  prompt = false
 [branch]
   autosetuprebase = never
 [Alias]
@@ -24,24 +26,18 @@
   path = ~/.gitconfig.local
 [push]
 	default = current
-[difftool "sourcetree"]
-#	cmd = /usr/local/bin/ksdiff -w \"$LOCAL\" \"$REMOTE\"
-	cmd = /usr/local/bin/smerge mergetool \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /usr/local/bin/ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
-	trustExitCode = true
+[pull]
+  rebase = true
 [filter "lfs"]
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
   required = true
   clean = git-lfs clean -- %f
-
-# note this file is linked / shared -- use ~/.gitconfig.user for user specific changes
-[filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
-[pull]
-  rebase = true
+[difftool "Kaleidoscope"]
+  cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+[diff]
+  tool = Kaleidoscope
+[mergetool "Kaleidoscope"]
+  cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+[merge]
+  tool = Kaleidoscope
