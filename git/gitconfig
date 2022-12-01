@@ -20,6 +20,8 @@
   st = status
   unci = reset --soft HEAD~
   synctags = !git tag -l | xargs git tag -d && git fetch -t
+  lg = log --color --date=local --graph --pretty=tformat:'%Cred%h%Creset -%C(blue)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
+
 [include]
   path = ~/.gitconfig.user
 [include]
