@@ -76,3 +76,9 @@ function sscr
     screentype=${2-default};
     ssh -t $1 "screen -S ${USER}_$screentype -rd || screen -S ${USER}_$screentype"
 }
+
+function gt
+{
+    git tag $1
+    git push origin $1
+}
