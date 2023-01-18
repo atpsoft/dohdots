@@ -119,6 +119,12 @@ alias llt='ls -latrL /tmp'
 #use gd -b to ignore whitespace
 alias gd='git diff'
 
+function gt
+{
+    git tag -a $1 -m $1
+    git push origin $1
+}
+
 # The following aliases (save & show) are for saving frequently used directories
 # You can save a directory using an abbreviation of your choosing. Eg. save ms
 # You can subsequently move to one of the saved directories by using cd with
