@@ -922,7 +922,8 @@ This function could be in the list `comint-output-filter-functions'."
  '(large-file-warning-threshold nil)
  '(line-move-visual nil)
  '(show-paren-mode nil)
- '(tool-bar-mode nil))
+ '(tool-bar-mode nil)
+ '(word-wrap t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
