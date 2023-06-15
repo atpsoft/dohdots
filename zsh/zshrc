@@ -206,6 +206,11 @@ else
 gitmtim(){ local f;for f;do touch -d @0`git log --pretty=%at -n1 -- "$f"` "$f"; done;}
 fi
 
+function startssh {
+  ssh-agent -k &> /dev/null
+  eval "$(ssh-agent -s)"
+  ssh-add ~/.ssh/id_ed25519
+}
 
 function stopdots {
   touch .metadata_never_index; rm -rf .Spotlight-*; sudo rm -rf .Trashes; touch .Trashes; rm -rf .fseventsd; mkdir .fseventsd; touch .fseventsd/no_log;
