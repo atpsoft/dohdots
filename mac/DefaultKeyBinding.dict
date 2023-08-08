@@ -1,3 +1,6 @@
+/* this file must be hard-linked or copied to ~/Library/Keybindings/DefaultKeyBinding.dict
+   a soft link will not work
+*/
 {
   "^o" = "moveWordForward:";
   "^u" = "moveWordBackward:";
