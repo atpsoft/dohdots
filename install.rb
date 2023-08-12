@@ -127,7 +127,7 @@ def link_files(input)
   if is_mac
     puts "Since we're on a mac, we'll link DefaultKeyBinding.dict"
     ensure_exists('Library/KeyBindings')
-    link_file('src/dohdots/mac/DefaultKeyBinding.dict', 'Library/KeyBindings/DefaultKeyBinding.dict')
+    link_file('src/dohdots/mac/DefaultKeyBinding.dict', 'Library/KeyBindings/DefaultKeyBinding.dict', true)
     # ensure_exists('Library/Application Support/Karabiner')
     # link_file('src/dohdots/mac/karabiner.xml', 'Library/Application Support/Karabiner/private.xml')
     # copy_file("src/dohdots/mac/moom_preferences.#{user}.plist", 'Library/Preferences/com.manytricks.Moom.plist')
