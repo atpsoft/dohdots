@@ -107,6 +107,8 @@ alias gl='gitlog 10'
 alias gll='gitlog 50'
 alias glll='gitlog 500'
 alias gls='gitlog 3'
+# searches through a files history for diffs containing the given regex
+# $1 is regex, $2 is the file to search through
 function glsearch
 {
     git log -G"$1" -- $2
