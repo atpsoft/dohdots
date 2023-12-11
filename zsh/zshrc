@@ -107,6 +107,10 @@ alias gl='gitlog 10'
 alias gll='gitlog 50'
 alias glll='gitlog 500'
 alias gls='gitlog 3'
+function glsearch
+{
+    git log -G"$1" -- $2
+}
 
 alias gb='git blame HEAD'
 alias gp='git push'
