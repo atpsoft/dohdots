@@ -64,7 +64,7 @@
   },
   {
     "key": "ctrl+j d",
-    "command": "gitlens.externalDiff"
+    "command": "dohvscode.externaldiff"
   },
   {
     "key": "ctrl+j ctrl+f",
@@ -150,14 +150,6 @@
   {
     "key": "ctrl+r",
     "command": "-workbench.action.openRecent"
-  },
-  {
-    "key": "shift+cmd+g",
-    "command": "search.action.clearSearchResults"
-  },
-  {
-    "key": "ctrl+j ctrl+j",
-    "command": "extension.jumpy-word"
   },
   {
     "key": "cmd+k 1",
@@ -321,7 +313,7 @@
   {
     "key": "ctrl+g",
     "command": "removeSecondaryCursors",
-    "when": "editorHasMultipleSelections && textInputFocus && !editorHasSelectionc"
+    "when": "editorHasMultipleSelections && textInputFocus"
   },
   {
     "key": "ctrl+u",
@@ -505,10 +497,6 @@
     "command": "extension.emacsKillLine.kill-line"
   },
   {
-    "key": "ctrl+j ctrl+x",
-    "command": "extension.jumpy-exit"
-  },
-  {
     "key": "cmd+u",
     "command": "editor.action.transformToUppercase"
   },
@@ -575,5 +563,90 @@
     "key": "ctrl+alt+i",
     "command": "-extension.incrementalSearch.expand",
     "when": "incrementalSearch"
+  },
+  {
+    "key": "cmd+r",
+    "command": "extension.incrementalSearch.toggleRegExp",
+    "when": "incrementalSearch"
+  },
+  {
+    "key": "alt+r",
+    "command": "-extension.incrementalSearch.toggleRegExp",
+    "when": "incrementalSearch"
+  },
+  {
+    "key": "cmd+c",
+    "command": "extension.incrementalSearch.toggleCaseSensitivity",
+    "when": "incrementalSearch"
+  },
+  {
+    "key": "alt+c",
+    "command": "-extension.incrementalSearch.toggleCaseSensitivity",
+    "when": "incrementalSearch"
+  },
+  {
+    "key": "ctrl+.",
+    "command": "cursorPageDownSelect",
+    "when": "editorTextFocus && inStickySelectionMode"
+  },
+  {
+    "key": "ctrl+,",
+    "command": "cursorPageUpSelect",
+    "when": "editorTextFocus && inStickySelectionMode"
+  },
+  {
+    "key": "ctrl+j ctrl+a",
+    "command": "cursorTopSelect",
+    "when": "editorTextFocus && inStickySelectionMode"
+  },
+  {
+    "key": "ctrl+j ctrl+e",
+    "command": "cursorBottomSelect",
+    "when": "editorTextFocus && inStickySelectionMode"
+  },
+  {
+    "key": "shift+cmd+g",
+    "command": "-editor.action.previousMatchFindAction",
+    "when": "editorFocus"
+  },
+  {
+    "key": "shift+cmd+g",
+    "command": "-workbench.action.terminal.findPrevious",
+    "when": "terminalFindFocused && terminalProcessSupported || terminalFocus && terminalProcessSupported"
+  },
+  {
+    "key": "shift+cmd+g",
+    "command": "editor.action.selectHighlights"
+  },
+  {
+    "key": "ctrl+x ctrl+b",
+    "command": "workbench.action.closeSidebar"
+  },
+  {
+    "key": "cmd+o",
+    "command": "-workbench.action.files.openFile",
+    "when": "false"
+  },
+  {
+    "key": "cmd+o",
+    "command": "-workbench.action.files.openFolderViaWorkspace",
+    "when": "!openFolderWorkspaceSupport && workbenchState == 'workspace'"
+  },
+  {
+    "key": "cmd+o",
+    "command": "-workbench.action.files.openFileFolder",
+    "when": "isMacNative && openFolderWorkspaceSupport"
+  },
+  {
+    "key": "cmd+o",
+    "command": "workbench.action.quickOpen"
+  },
+  {
+    "key": "cmd+p",
+    "command": "-workbench.action.quickOpen"
+  },
+  {
+    "key": "cmd+p",
+    "command": "workbench.action.showCommands"
   }
 ]
