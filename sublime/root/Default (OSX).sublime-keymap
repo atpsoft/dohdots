@@ -237,5 +237,9 @@
   { "keys": ["ctrl+/"], "command": "undo"},
 
   { "keys": ["ctrl+j", "ctrl+d", "ctrl+c"], "command": "toggle_keep_console_active"},
-  { "keys": ["ctrl+j", "ctrl+d", "ctrl+l"], "command": "toggle_log_commands"}
+  { "keys": ["ctrl+j", "ctrl+d", "ctrl+l"], "command": "toggle_log_commands"},
+
+  { "keys": ["super+b"], "command": "goto_open_file"},
+  { "keys": ["super+o"], "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} },
+  { "keys": ["super+p"], "command": "show_overlay", "args": {"overlay": "command_palette"} }
 ]

@@ -5,7 +5,6 @@
   { "keys": ["ctrl+j", "ctrl+m", "ctrl+p"], "command": "dohmysql_change_profile"},
   { "keys": ["ctrl+j", "ctrl+m", "ctrl+f"], "command": "dohsql_change_path"},
 
-  { "keys": ["super+b"], "command": "goto_open_file"},
   { "keys": ["ctrl+x", "ctrl+b"], "command": "goto_open_file"},
 
   { "keys": ["ctrl+j", "d"], "command": "git_raw", "args": { "command": "git difftool", "append_current_file": true, "may_change_files": false } },
