@@ -29,6 +29,9 @@ function gbb {
   git checkout $1 .
   git reset .
 }
+function pep {
+  ~/src/ihp/web/bin/parse_sssp.rb -e $1 -p ~/stuff/obsidian/dojo/notes
+}
 
 function parse_git_branch {
   ref=$(git symbolic-ref HEAD 2> /dev/null) || return
