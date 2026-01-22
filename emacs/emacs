@@ -921,6 +921,7 @@ This function could be in the list `comint-output-filter-functions'."
  '(js-indent-level 2)
  '(large-file-warning-threshold nil)
  '(line-move-visual nil)
+ '(package-selected-packages '(vlf ##))
  '(show-paren-mode nil)
  '(tool-bar-mode nil)
  '(word-wrap t))
@@ -1014,3 +1015,12 @@ Don't ask about killing processes -- just kill them."
     (let ((default-directory "~"))
       (shell))
   )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :extend nil :stipple nil :background "White" :foreground "Black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 180 :width normal :foundry "nil" :family "Menlo"))))
+ '(font-lock-string-face ((((class color) (min-colors 88) (background light)) (:foreground "orange4"))))
+ '(font-lock-type-face ((((class color) (min-colors 88) (background light)) (:foreground "ForestGreen"))))
+ '(font-lock-variable-name-face ((((class color) (min-colors 88) (background light)) (:foreground "SeaGreen")))))
