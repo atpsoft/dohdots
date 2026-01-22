@@ -18,7 +18,7 @@
 		"*.merged-ca-bundle",
 		"*.sublime-workspace"
 	],
-	"font_size": 19.0,
+	"font_size": 20,
 	"git_gutter_show_line_annotation": false,
 	"ignored_packages":
 	[
@@ -34,4 +34,8 @@
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": true,
 	"index_files": true,
+	"in_process_packages":
+	[
+	],
+	"theme": "auto",
 }
