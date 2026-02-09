@@ -38,7 +38,6 @@
 *.pidb
 *.pyc
 *.sln.cache
-*.sublime-workspace
 *.suo
 *.tar.gz
 *.tmLanguage.cache
