@@ -237,6 +237,8 @@ function xswiftui {
 #for windows, harmless elsewhere
 export CYGWIN="binmode ntsec tty"
 
+alias clssh='limactl shell claude-dev'
+
 # hook for user specific additions
 [[ -s "$HOME/.zshrc.user" ]] && source "$HOME/.zshrc.user"
 
@@ -249,4 +251,3 @@ export CYGWIN="binmode ntsec tty"
 export PATH="$HOME/.cargo/bin:$PATH"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
