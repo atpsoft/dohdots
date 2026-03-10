@@ -14,3 +14,8 @@ But if you want to simply install dohdots, and not make any changes, you can jus
 ``` bash
 curl -B https://raw.githubusercontent.com/atpsoft/dohdots/master/install.rb | ruby
 ```
+
+On linux, without ruby (inside lima is my primary use case):
+``` bash
+curl -fsSL https://raw.githubusercontent.com/atpsoft/dohdots/master/lima-install.sh | bash
+```
