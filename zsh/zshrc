@@ -238,6 +238,7 @@ function xswiftui {
 export CYGWIN="binmode ntsec tty"
 
 alias clssh='limactl shell claude-dev'
+alias clfree='echo "You need to run clssh first, running claude free here could be bad"'
 
 # hook for user specific additions
 [[ -s "$HOME/.zshrc.user" ]] && source "$HOME/.zshrc.user"
