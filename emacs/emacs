@@ -132,7 +132,12 @@
   (interactive)
   (eq system-type 'darwin))
 
-(if (not (osx-p))
+(defun lima-p()
+  "Return t if running inside a Lima VM."
+  (interactive)
+  (file-exists-p "/mnt/lima-cidata"))
+
+(if (and (not (osx-p)) (not (lima-p)))
 (set-face-foreground 'minibuffer-prompt "white")
 )
 
@@ -149,7 +154,8 @@
 	(add-hook 'comint-output-filter-functions 'ansi-color-process-output)
 	(setq shell-dirstack-query "echo $PWD")
 	(setq comint-input-ring-size 1000)
-	(setq foreground-color "LightSlateBlue")
+	(if (not (lima-p))
+		(setq foreground-color "LightSlateBlue"))
 ;;	(add-to-list 'exec-path "/usr/share/emacs/site-lisp/")
 	(setq comint-input-ring (make-ring comint-input-ring-size))
 	(setq comint-inhibit-carriage-motion nil)
@@ -1015,12 +1021,13 @@ Don't ask about killing processes -- just kill them."
     (let ((default-directory "~"))
       (shell))
   )
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :extend nil :stipple nil :background "White" :foreground "Black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 180 :width normal :foundry "nil" :family "Menlo"))))
- '(font-lock-string-face ((((class color) (min-colors 88) (background light)) (:foreground "orange4"))))
- '(font-lock-type-face ((((class color) (min-colors 88) (background light)) (:foreground "ForestGreen"))))
- '(font-lock-variable-name-face ((((class color) (min-colors 88) (background light)) (:foreground "SeaGreen")))))
+(if (not (lima-p))
+    (custom-set-faces
+     ;; custom-set-faces was added by Custom.
+     ;; If you edit it by hand, you could mess it up, so be careful.
+     ;; Your init file should contain only one such instance.
+     ;; If there is more than one, they won't work right.
+     '(default ((t (:inherit nil :extend nil :stipple nil :background "White" :foreground "Black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 180 :width normal :foundry "nil" :family "Menlo"))))
+     '(font-lock-string-face ((((class color) (min-colors 88) (background light)) (:foreground "orange4"))))
+     '(font-lock-type-face ((((class color) (min-colors 88) (background light)) (:foreground "ForestGreen"))))
+     '(font-lock-variable-name-face ((((class color) (min-colors 88) (background light)) (:foreground "SeaGreen"))))))
