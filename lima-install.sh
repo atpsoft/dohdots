@@ -139,11 +139,8 @@ link_files() {
 
   link_file "src/dohdots/git/gitconfig" ".gitconfig"
 
-  local user_gitconfig
-  user_gitconfig=$(get_path "src/dohdots/git/gitconfig.$user")
-  if [[ -e "$user_gitconfig" ]]; then
-    link_file "src/dohdots/git/gitconfig.$user" ".gitconfig.user"
-  fi
+  # NOTE: .gitconfig.user is intentionally NOT linked here.
+  # It must be manually configured on each new install.
 }
 
 get_dohdots
